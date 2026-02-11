@@ -15,14 +15,23 @@ export const ServiceAI: React.FC = () => {
       />
 
       {/* SECTION 1: Hero */}
-      <section className="bg-brand-navy text-white py-20 lg:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: `url('${IMAGES.services.aiHero}')` }}></div>
+      <section className="relative py-24 lg:py-32 bg-brand-navy overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={IMAGES.services.aiHero} 
+            alt="AI Background" 
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/90 via-brand-navy/80 to-brand-light/5 dark:to-brand-dark/5"></div>
+        </div>
+
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               AI Automation & <span className="text-brand-cyan">Operational Efficiency</span>
             </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl">
+            <p className="text-xl text-gray-200 mb-8 max-w-2xl">
               Harness the power of Artificial Intelligence to streamline your operations, reduce overheads, and boost ROI. We build intelligent systems that work while you sleep.
             </p>
             <Link to="/contact">
@@ -33,11 +42,11 @@ export const ServiceAI: React.FC = () => {
       </section>
 
       {/* SECTION 2: Intelligent Solutions Grid */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-brand-dark transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy mb-4">Intelligent Automation Suite</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-4">Intelligent Automation Suite</h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               From managing customer relationships to predicting market trends, our AI solutions cover every aspect of modern business.
             </p>
           </div>
@@ -78,12 +87,12 @@ export const ServiceAI: React.FC = () => {
       </section>
 
       {/* SECTION 3: The Impact Stats */}
-      <section className="py-20 bg-brand-light">
+      <section className="py-20 bg-brand-light dark:bg-slate-900 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
              <div>
-               <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy mb-6">Why Automate?</h2>
-               <p className="text-gray-600 mb-6 text-lg">
+               <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-6">Why Automate?</h2>
+               <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
                  Manual processes are the bottleneck of growth. By implementing AI automation, our UK clients typically see:
                </p>
                <ul className="space-y-4">
@@ -92,15 +101,15 @@ export const ServiceAI: React.FC = () => {
                  <ImpactItem label="Savings on operational costs" value="40%" />
                </ul>
              </div>
-             <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-               <h3 className="text-xl font-bold text-brand-navy mb-4">Real World Example</h3>
-               <p className="text-gray-600 mb-4">
+             <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
+               <h3 className="text-xl font-bold text-brand-navy dark:text-white mb-4">Real World Example</h3>
+               <p className="text-gray-600 dark:text-gray-300 mb-4">
                  <span className="font-semibold text-brand-blue">Client:</span> UK Recruitment Agency
                </p>
-               <p className="text-gray-600 mb-4">
+               <p className="text-gray-600 dark:text-gray-300 mb-4">
                  <span className="font-semibold text-brand-blue">Challenge:</span> Recruiters spending 4 hours/day manually screening CVs.
                </p>
-               <p className="text-gray-600">
+               <p className="text-gray-600 dark:text-gray-300">
                  <span className="font-semibold text-brand-blue">Solution:</span> We built an AI parser that scores CVs against job descriptions and auto-schedules interviews with top candidates.
                </p>
              </div>
@@ -109,9 +118,9 @@ export const ServiceAI: React.FC = () => {
       </section>
 
       {/* SECTION 4: Integration Ecosystem */}
-      <section className="py-20 bg-white border-t border-gray-100">
+      <section className="py-20 bg-white dark:bg-brand-dark border-t border-gray-100 dark:border-gray-800 transition-colors duration-300">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-brand-navy mb-12">We Connect Your Favorite Tools</h2>
+          <h2 className="text-3xl font-bold text-brand-navy dark:text-white mb-12">We Connect Your Favorite Tools</h2>
           <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
             {/* Using text representations for logos for simplicity, in a real app these would be SVGs */}
             <span className="text-2xl font-bold text-gray-400">HubSpot</span>
@@ -147,18 +156,18 @@ export const ServiceAI: React.FC = () => {
 };
 
 const ServiceDetailCard: React.FC<{icon: React.ReactNode, title: string, description: string}> = ({ icon, title, description }) => (
-  <div className="p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white hover:-translate-y-1 transform duration-300">
-    <div className="mb-4 bg-brand-light w-14 h-14 rounded-lg flex items-center justify-center">
+  <div className="p-8 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-slate-800 hover:-translate-y-1 transform duration-300">
+    <div className="mb-4 bg-brand-light dark:bg-slate-700 w-14 h-14 rounded-lg flex items-center justify-center">
       {icon}
     </div>
-    <h3 className="text-xl font-bold mb-3 text-brand-navy">{title}</h3>
-    <p className="text-gray-600 leading-relaxed text-sm">{description}</p>
+    <h3 className="text-xl font-bold mb-3 text-brand-navy dark:text-white">{title}</h3>
+    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">{description}</p>
   </div>
 );
 
 const ImpactItem: React.FC<{label: string, value: string}> = ({ label, value }) => (
-  <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm">
-    <span className="text-gray-700 font-medium">{label}</span>
+  <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+    <span className="text-gray-700 dark:text-gray-300 font-medium">{label}</span>
     <span className="text-2xl font-bold text-brand-cyan">{value}</span>
   </div>
 );

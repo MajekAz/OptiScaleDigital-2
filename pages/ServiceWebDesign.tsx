@@ -15,14 +15,23 @@ export const ServiceWebDesign: React.FC = () => {
       />
 
       {/* SECTION 1: Hero */}
-      <section className="bg-brand-navy text-white py-20 lg:py-28 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-brand-blue/10 skew-x-12 transform origin-top-right"></div>
+      <section className="relative py-24 lg:py-32 bg-brand-navy overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={IMAGES.services.webDesign} 
+            alt="Web Design Background" 
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/90 via-brand-navy/80 to-brand-light/5 dark:to-brand-dark/5"></div>
+        </div>
+
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">
               Bespoke Website Design & <span className="text-brand-cyan">Development</span>
             </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl">
+            <p className="text-xl text-gray-200 mb-8 max-w-2xl">
               We craft high-performance, aesthetically stunning websites tailored for the UK market. From custom coding to WordPress mastery, we build your digital foundation.
             </p>
             <Link to="/contact">
@@ -33,11 +42,11 @@ export const ServiceWebDesign: React.FC = () => {
       </section>
 
       {/* SECTION 2: Comprehensive Services Grid */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-brand-dark transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy mb-4">Our Web Solutions</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-4">Our Web Solutions</h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Whether you need a simple brochure site or a complex web application, our team delivers pixel-perfect results.
             </p>
           </div>
@@ -78,12 +87,12 @@ export const ServiceWebDesign: React.FC = () => {
       </section>
 
       {/* SECTION 3: The Process */}
-      <section className="py-20 bg-brand-light">
+      <section className="py-20 bg-brand-light dark:bg-slate-900 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy mb-6">How We Build</h2>
-              <p className="text-gray-600 mb-8 text-lg">
+              <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-6">How We Build</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
                 We don't just guess; we follow a proven methodology to ensure your project launches on time and exceeds expectations.
               </p>
               <div className="space-y-6">
@@ -135,11 +144,11 @@ export const ServiceWebDesign: React.FC = () => {
       </section>
 
       {/* SECTION 5: CTA */}
-      <section className="py-24 bg-white text-center">
+      <section className="py-24 bg-white dark:bg-brand-dark text-center transition-colors duration-300">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto bg-brand-light p-10 rounded-3xl border border-gray-200 shadow-lg">
-            <h2 className="text-3xl font-bold text-brand-navy mb-4">Ready to upgrade your online presence?</h2>
-            <p className="text-gray-600 mb-8">
+          <div className="max-w-3xl mx-auto bg-brand-light dark:bg-slate-800 p-10 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg">
+            <h2 className="text-3xl font-bold text-brand-navy dark:text-white mb-4">Ready to upgrade your online presence?</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-8">
               Get a free consultation and website audit. Let's discuss how we can improve your conversion rates.
             </p>
             <Link to="/contact">
@@ -153,12 +162,12 @@ export const ServiceWebDesign: React.FC = () => {
 };
 
 const ServiceDetailCard: React.FC<{icon: React.ReactNode, title: string, description: string}> = ({ icon, title, description }) => (
-  <div className="p-8 border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white group">
-    <div className="mb-4 bg-brand-light w-14 h-14 rounded-lg flex items-center justify-center group-hover:bg-brand-blue/10 transition-colors">
+  <div className="p-8 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-slate-800 group">
+    <div className="mb-4 bg-brand-light dark:bg-slate-700 w-14 h-14 rounded-lg flex items-center justify-center group-hover:bg-brand-blue/10 dark:group-hover:bg-brand-blue/20 transition-colors">
       {icon}
     </div>
-    <h3 className="text-xl font-bold mb-3 text-brand-navy">{title}</h3>
-    <p className="text-gray-600 leading-relaxed text-sm">{description}</p>
+    <h3 className="text-xl font-bold mb-3 text-brand-navy dark:text-white">{title}</h3>
+    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">{description}</p>
   </div>
 );
 
@@ -166,8 +175,8 @@ const ProcessStep: React.FC<{number: string, title: string, desc: string}> = ({ 
   <div className="flex gap-4">
     <div className="text-3xl font-bold text-brand-blue/30">{number}</div>
     <div>
-      <h4 className="text-xl font-bold text-brand-navy">{title}</h4>
-      <p className="text-gray-600 text-sm">{desc}</p>
+      <h4 className="text-xl font-bold text-brand-navy dark:text-white">{title}</h4>
+      <p className="text-gray-600 dark:text-gray-300 text-sm">{desc}</p>
     </div>
   </div>
 );

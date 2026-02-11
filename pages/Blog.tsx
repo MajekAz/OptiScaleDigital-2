@@ -1,41 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
-
-const BLOG_POSTS = [
-  {
-    id: '1',
-    title: 'The Future of AI in UK Small Business',
-    excerpt: 'How local SMEs are leveraging automation to compete with industry giants in 2024.',
-    date: 'Oct 15, 2023',
-    category: 'AI Automation'
-  },
-  {
-    id: '2',
-    title: 'Top Web Design Trends for London Agencies',
-    excerpt: 'Minimalism, dark mode, and brutalism: What is trending in the capital\'s design scene.',
-    date: 'Sep 28, 2023',
-    category: 'Web Design'
-  },
-  {
-    id: '3',
-    title: 'GDPR Compliance: A Guide for Digital Marketing',
-    excerpt: 'Ensure your marketing funnels are fully compliant with UK data protection laws.',
-    date: 'Sep 10, 2023',
-    category: 'Legal'
-  },
-  {
-    id: '4',
-    title: 'Why SEO Matters More Than Ever',
-    excerpt: 'With AI-generated content flooding the web, technical SEO is your competitive advantage.',
-    date: 'Aug 22, 2023',
-    category: 'SEO'
-  }
-];
+import { BlogPost } from '../types';
 
 export const Blog: React.FC = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('./api/blog.php');
+        
+        // Check content type to ensure we got JSON (avoids syntax error if HTML is returned)
+        const contentType = response.headers.get("content-type");
+        if (!response.ok || (contentType && !contentType.includes("application/json"))) {
+           throw new Error('API unavailable or not returning JSON');
+        }
+
+        const data = await response.json();
+        setPosts(Array.isArray(data) ? data : []);
+      } catch (err) {
+        // Use console.warn instead of console.error to avoid alarming logs in dev mode
+        console.warn("Blog API unavailable, loading fallback data."); 
+        
+        // Fallback data
+        const fallbackPosts: BlogPost[] = [
+          {
+            id: '1',
+            title: 'The Future of AI in UK Small Business',
+            excerpt: 'How local SMEs are leveraging automation to compete with industry giants in 2024.',
+            content: '<p>Full content would go here...</p>',
+            date: 'Oct 15, 2023',
+            author: 'OptiScale',
+            category: 'AI Automation'
+          },
+          {
+            id: '2',
+            title: 'Mastering GDPR for Digital Marketing',
+            excerpt: 'A comprehensive guide to staying compliant while maximizing your outreach in the UK market.',
+            content: '<p>Full content...</p>',
+            date: 'Nov 02, 2023',
+            author: 'Sarah Collins',
+            category: 'Digital Marketing'
+          },
+          {
+            id: '3',
+            title: 'Web Design Trends to Watch in 2024',
+            excerpt: 'From bento grids to neo-brutalism, here is what is defining the London design aesthetic this year.',
+            content: '<p>Full content...</p>',
+            date: 'Dec 10, 2023',
+            author: 'David Thorne',
+            category: 'Web Design'
+          }
+        ];
+        
+        setPosts(fallbackPosts);
+        setError(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <div className="w-full bg-brand-light dark:bg-brand-dark min-h-screen transition-colors duration-300">
       <SEO 
@@ -66,29 +98,52 @@ export const Blog: React.FC = () => {
 
       <section className="py-16">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {BLOG_POSTS.map((post) => (
-              <article key={post.id} className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700 flex flex-col">
-                <div className="h-48 bg-gray-200 dark:bg-slate-700 w-full relative">
-                  <div className="absolute top-4 left-4 bg-brand-blue text-white text-xs px-2 py-1 rounded">
-                    {post.category}
+          {isLoading ? (
+            <div className="flex justify-center py-20">
+              <Loader2 className="animate-spin text-brand-blue" size={48} />
+            </div>
+          ) : error ? (
+             <div className="text-center py-20 text-gray-500">
+                <AlertCircle className="mx-auto mb-4 text-red-500" size={48} />
+                <p>{error}</p>
+             </div>
+          ) : posts.length === 0 ? (
+             <div className="text-center py-20 text-gray-500">
+                <p className="text-xl">No articles found yet. Check back soon!</p>
+             </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post) => (
+                <article key={post.id} className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700 flex flex-col">
+                  <div className="h-48 bg-gray-200 dark:bg-slate-700 w-full relative">
+                    {/* Placeholder for post image or fallback pattern */}
+                    <div className="w-full h-full bg-gradient-to-br from-brand-navy/10 to-brand-blue/10 flex items-center justify-center text-gray-400">
+                        {/* If image exists, use it, otherwise show category */}
+                        <span className="text-4xl opacity-20">OptiScale</span>
+                    </div>
+                    <div className="absolute top-4 left-4 bg-brand-blue text-white text-xs px-2 py-1 rounded">
+                      {post.category}
+                    </div>
                   </div>
-                </div>
-                <div className="p-6 flex-grow flex flex-col">
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{post.date}</div>
-                  <h2 className="text-xl font-bold mb-3 text-brand-navy dark:text-white hover:text-brand-blue dark:hover:text-brand-cyan transition-colors cursor-pointer">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow">
-                    {post.excerpt}
-                  </p>
-                  <Link to={`/blog`} className="text-brand-blue dark:text-brand-cyan font-semibold text-sm flex items-center gap-1 mt-auto">
-                    Read Article <ArrowRight size={14} />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+                  <div className="p-6 flex-grow flex flex-col">
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{post.date}</div>
+                    <Link to={`/blog/${post.id}`}>
+                      <h2 className="text-xl font-bold mb-3 text-brand-navy dark:text-white hover:text-brand-blue dark:hover:text-brand-cyan transition-colors cursor-pointer line-clamp-2">
+                        {post.title}
+                      </h2>
+                    </Link>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    
+                    <Link to={`/blog/${post.id}`} className="text-brand-blue dark:text-brand-cyan font-semibold text-sm flex items-center gap-1 mt-auto hover:underline">
+                      Read Article <ArrowRight size={14} />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </div>

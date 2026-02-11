@@ -18,7 +18,7 @@ To make your application work on Hostinger Shared Hosting and visualize data, fo
     *   **Username:** e.g., `u123456789_admin`
     *   **Password:** (Create a strong password and save it)
 4.  Click **Enter phpMyAdmin**.
-5.  Click the **SQL** tab and paste the following code to create your tables, then click **Go**:
+5.  Click the **SQL** tab and paste the following code to create your tables (Contact, Booking, and **Blog Posts**), then click **Go**:
 
 ```sql
 CREATE TABLE contacts (
@@ -39,6 +39,16 @@ CREATE TABLE bookings (
     booking_time VARCHAR(20) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE blog_posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    excerpt TEXT,
+    content LONGTEXT,
+    author VARCHAR(100),
+    category VARCHAR(50),
+    created_at DATE NOT NULL
+);
 ```
 
 ---
@@ -57,7 +67,7 @@ This creates a `dist` (or `build`) folder containing `index.html`, `assets/`, et
 
 ## Step 3: Create Backend Files
 
-Create a folder named `api` on your computer. Inside it, create the following 4 PHP files. These have been updated to send emails to **info@optiscaledigital.co.uk**.
+Create a folder named `api` on your computer. Inside it, create the following 5 PHP files. 
 
 ### 1. `db_connect.php`
 
@@ -66,7 +76,8 @@ Create a folder named `api` on your computer. Inside it, create the following 4 
 ```php
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
 $host = "localhost";
 $username = "u123456789_admin"; // YOUR HOSTINGER USERNAME
@@ -81,7 +92,7 @@ if ($conn->connect_error) {
 ?>
 ```
 
-### 2. `contact.php` (Updated with Email Logic)
+### 2. `contact.php`
 
 ```php
 <?php
@@ -104,7 +115,6 @@ if($data) {
                 "Service: " . $data->service . "\n\n" .
                 "Message:\n" . $data->message;
         
-        // Use a sender address from your own domain to prevent spam filtering
         $headers = "From: noreply@optiscaledigital.co.uk"; 
 
         mail($to, $subject, $body, $headers);
@@ -119,7 +129,7 @@ $conn->close();
 ?>
 ```
 
-### 3. `booking.php` (Updated with Email Logic)
+### 3. `booking.php`
 
 ```php
 <?php
@@ -157,64 +167,108 @@ $conn->close();
 ?>
 ```
 
-### 4. `view_data.php` (Admin Dashboard)
-
-*Security Note: Change `secret123` to a secure password or key.*
+### 4. `blog.php` (New: Handles CRUD for Admin)
 
 ```php
 <?php
-// SIMPLE SECURITY: Change 'secret123' to a hard password.
-if (!isset($_GET['key']) || $_GET['key'] != 'secret123') {
-    die("Access Denied");
-}
-
 include 'db_connect.php';
 
+$method = $_SERVER['REQUEST_METHOD'];
+$key = isset($_GET['key']) ? $_GET['key'] : '';
+$adminKey = 'secret123'; // CHANGE THIS TO YOUR STRONG PASSWORD
+
+// Handle Preflight for React
+if ($method == 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+// GET: Fetch posts (Public or Admin)
+if ($method == 'GET') {
+    $sql = "SELECT * FROM blog_posts ORDER BY created_at DESC";
+    $result = $conn->query($sql);
+    $posts = [];
+    while($row = $result->fetch_assoc()) {
+        $row['date'] = $row['created_at']; // Alias for frontend
+        $posts[] = $row;
+    }
+    echo json_encode($posts);
+    exit;
+}
+
+// SECURITY CHECK FOR WRITE OPERATIONS
+if ($key != $adminKey) {
+    http_response_code(403);
+    echo json_encode(["success" => false, "message" => "Access Denied"]);
+    exit;
+}
+
+// READ INPUT JSON
+$data = json_decode(file_get_contents("php://input"));
+
+// POST: Create New Post
+if ($method == 'POST') {
+    $stmt = $conn->prepare("INSERT INTO blog_posts (title, excerpt, content, author, category, created_at) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $data->title, $data->excerpt, $data->content, $data->author, $data->category, $data->date);
+    
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Post Created"]);
+    } else {
+        echo json_encode(["success" => false, "message" => $conn->error]);
+    }
+}
+
+// PUT: Update Existing Post
+if ($method == 'PUT') {
+    $stmt = $conn->prepare("UPDATE blog_posts SET title=?, excerpt=?, content=?, author=?, category=?, created_at=? WHERE id=?");
+    $stmt->bind_param("ssssssi", $data->title, $data->excerpt, $data->content, $data->author, $data->category, $data->date, $data->id);
+    
+    if ($stmt->execute()) {
+        echo json_encode(["success" => true, "message" => "Post Updated"]);
+    } else {
+        echo json_encode(["success" => false, "message" => $conn->error]);
+    }
+}
+
+// DELETE: Delete Post
+if ($method == 'DELETE') {
+    $id = $_GET['id'];
+    if($id) {
+        $stmt = $conn->prepare("DELETE FROM blog_posts WHERE id=?");
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            echo json_encode(["success" => true, "message" => "Post Deleted"]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Error deleting"]);
+        }
+    }
+}
+
+$conn->close();
+?>
+```
+
+### 5. `view_data.php` (Admin Dashboard for Leads)
+
+```php
+<?php
+if (!isset($_GET['key']) || $_GET['key'] != 'secret123') { die("Access Denied"); }
+include 'db_connect.php';
 $contacts = $conn->query("SELECT * FROM contacts ORDER BY created_at DESC");
 $bookings = $conn->query("SELECT * FROM bookings ORDER BY created_at DESC");
 ?>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>OptiScale Admin</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background: #f0f2f5; }
-        h2 { color: #0047AB; border-bottom: 2px solid #0047AB; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
-        th { background-color: #f8f9fa; }
-    </style>
-</head>
+<head><title>Admin</title><style>body{font-family:sans-serif;padding:20px}table{border-collapse:collapse;width:100%;margin-bottom:20px}th,td{border:1px solid #ddd;padding:8px}</style></head>
 <body>
-    <h1>Data Dashboard</h1>
-    
-    <h2>Recent Bookings</h2>
-    <table>
-        <tr><th>Name</th><th>Email</th><th>Service</th><th>Date</th><th>Time</th><th>Submitted</th></tr>
-        <?php while($row = $bookings->fetch_assoc()): ?>
-        <tr>
-            <td><?= htmlspecialchars($row['name']) ?></td>
-            <td><?= htmlspecialchars($row['email']) ?></td>
-            <td><?= htmlspecialchars($row['service']) ?></td>
-            <td><?= htmlspecialchars($row['booking_date']) ?></td>
-            <td><?= htmlspecialchars($row['booking_time']) ?></td>
-            <td><?= htmlspecialchars($row['created_at']) ?></td>
-        </tr>
-        <?php endwhile; ?>
+    <h1>Leads Dashboard</h1>
+    <h2>Bookings</h2>
+    <table><tr><th>Name</th><th>Email</th><th>Date</th></tr>
+    <?php while($row = $bookings->fetch_assoc()): ?><tr><td><?=$row['name']?></td><td><?=$row['email']?></td><td><?=$row['booking_date']?></td></tr><?php endwhile; ?>
     </table>
-
-    <h2>Contact Messages</h2>
-    <table>
-        <tr><th>Name</th><th>Email</th><th>Service</th><th>Message</th><th>Date</th></tr>
-        <?php while($row = $contacts->fetch_assoc()): ?>
-        <tr>
-            <td><?= htmlspecialchars($row['name']) ?></td>
-            <td><?= htmlspecialchars($row['email']) ?></td>
-            <td><?= htmlspecialchars($row['service']) ?></td>
-            <td><?= htmlspecialchars($row['message']) ?></td>
-            <td><?= htmlspecialchars($row['created_at']) ?></td>
-        </tr>
-        <?php endwhile; ?>
+    <h2>Messages</h2>
+    <table><tr><th>Name</th><th>Message</th></tr>
+    <?php while($row = $contacts->fetch_assoc()): ?><tr><td><?=$row['name']?></td><td><?=$row['message']?></td></tr><?php endwhile; ?>
     </table>
 </body>
 </html>
@@ -231,31 +285,17 @@ $bookings = $conn->query("SELECT * FROM bookings ORDER BY created_at DESC");
 
 2.  **Prepare the Public Directory:**
     *   Double-click to open the `public_html` folder.
-    *   (Optional) If you see a default `default.php` file, you can delete it.
 
 3.  **Upload Frontend (React App):**
-    *   On your computer, open the `dist` folder created in Step 2.
-    *   Select all files inside `dist` (e.g., `index.html`, `assets` folder, etc.).
-    *   Drag and drop them into the `public_html` folder in Hostinger File Manager.
-    *   *Check:* `index.html` should be visible directly inside `public_html`.
+    *   Drag and drop `dist` files (index.html, etc) into `public_html`.
 
 4.  **Upload Backend (PHP Files):**
-    *   Inside `public_html`, right-click (or use the toolbar) and select **New Folder**.
-    *   Name it `api` and click **Create**.
-    *   Double-click to open the new `api` folder.
-    *   **Option A (Upload):** If you created the PHP files on your computer, click the **Upload** icon (up arrow) in the top right, select the 4 files (`db_connect.php`, `contact.php`, `booking.php`, `view_data.php`), and upload them.
-    *   **Option B (Create Directly):**
-        *   Click the **New File** icon.
-        *   Name it `db_connect.php`.
-        *   Paste the code from Step 3.1 and click **Save**.
-        *   Repeat for `contact.php`, `booking.php`, and `view_data.php`.
+    *   Inside `public_html`, ensure you have the `api` folder.
+    *   Upload/Create: `db_connect.php`, `contact.php`, `booking.php`, `blog.php`, `view_data.php`.
 
 ---
 
-## Step 5: Visualize Data
+## Step 5: Access Admin Dashboard
 
-To see your data, visit:
-
-`https://yourdomain.com/api/view_data.php?key=secret123`
-
-*(Remember to replace 'secret123' with the key you set in `view_data.php`)*
+1.  Navigate to `https://yourdomain.com/#/admin`
+2.  Enter your secret key (Default: `secret123`) to manage blog posts.
