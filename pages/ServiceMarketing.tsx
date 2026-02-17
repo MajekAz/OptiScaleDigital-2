@@ -141,7 +141,7 @@ export const ServiceMarketing: React.FC = () => {
               Stop guessing and start growing. Claim your free 30-minute strategy session and website audit.
             </p>
             <Link to="/contact">
-              <Button className="bg-white text-brand-navy hover:bg-gray-100 font-bold px-8 py-4 text-lg">
+              <Button className="!bg-white !text-brand-navy hover:!bg-gray-100 font-bold px-8 py-4 text-lg">
                 Boost Your Traffic
               </Button>
             </Link>

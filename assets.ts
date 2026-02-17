@@ -1,14 +1,11 @@
 /**
  * Centralized Asset Management
- * 
- * To use your own images:
- * 1. Upload your images to the 'images/' folder.
- * 2. Update the paths below to point to your local files (e.g., '/images/logo.png').
  */
 
 export const IMAGES = {
   // Brand Identity
-  logo: "https://raw.githubusercontent.com/stackblitz/stackblitz-images/main/optiscale-digital-ltd/file-1741285497262.jpg",
+  logo: "./images/logo/company-logo.svg",
+  logoWhite: "./images/logo/company-logo-white.svg",
 
   // Page Specific Images
   home: {

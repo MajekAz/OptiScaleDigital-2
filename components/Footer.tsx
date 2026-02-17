@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE } from '../constants';
-import { Linkedin, Twitter, Facebook } from 'lucide-react';
-import { IMAGES } from '../assets';
+import { Linkedin, Twitter, Facebook, ExternalLink } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,13 +10,8 @@ export const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-1">
-            <div className="text-2xl font-bold mb-4 flex items-center gap-3">
-               <img 
-                 src={IMAGES.logo}
-                 alt="OptiScale Logo" 
-                 className="h-10 w-auto rounded-lg bg-white"
-               />
-               {COMPANY_NAME}
+            <div className="mb-6 flex items-center">
+               <Logo light={true} className="h-12 md:h-14 w-auto" />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Transforming UK businesses through intelligent design, AI automation, and data-driven marketing strategies.
@@ -45,6 +40,16 @@ export const Footer: React.FC = () => {
               <li><Link to="/blog" className="hover:text-white transition-colors">Insights Blog</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
               <li><Link to="/careers" className="hover:text-white transition-colors">Careers</Link></li>
+              <li>
+                <a 
+                  href="https://lookerstudio.google.com/reporting/50782672-741f-4283-a62f-923200aa6b44"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-2 group"
+                >
+                  Client Portal <ExternalLink size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -68,8 +73,11 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-gray-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-          <p>&copy; {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
-          <div className="flex flex-wrap gap-6 mt-4 md:mt-0 justify-center md:justify-end">
+          <div className="mb-4 md:mb-0 text-center md:text-left">
+            <p>&copy; {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
+            <p className="mt-1">Registration No. Registered in England & Wales: 16937899</p>
+          </div>
+          <div className="flex flex-wrap gap-6 justify-center md:justify-end">
             <Link to="/privacy-policy" className="hover:text-gray-300">Privacy Policy</Link>
             <Link to="/cookie-policy" className="hover:text-gray-300">Cookie Policy</Link>
             <Link to="/terms" className="hover:text-gray-300">Terms of Service</Link>

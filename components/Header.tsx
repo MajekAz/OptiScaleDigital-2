@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Moon, Sun } from 'lucide-react';
-import { NAV_LINKS, COMPANY_NAME } from '../constants';
-import { IMAGES } from '../assets';
+import { NAV_LINKS } from '../constants';
+import { Logo } from './Logo';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,21 +44,19 @@ export const Header: React.FC = () => {
 
   return (
     <header 
-      className="fixed w-full z-50 bg-brand-blue shadow-lg py-3 transition-all duration-300 dark:bg-brand-navy/95 dark:backdrop-blur-sm border-b dark:border-white/10"
+      className="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm py-3 transition-all duration-300 dark:bg-brand-navy/95 dark:backdrop-blur-sm border-b dark:border-white/10"
     >
-      <div className="container mx-auto px-6">
+      <div className="max-w-[1200px] mx-auto px-6">
         <nav className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo Component (Replacing broken IMG) */}
           <Link 
             to="/" 
-            className="text-2xl font-bold text-white tracking-tight flex items-center gap-3"
+            className="flex items-center group"
           >
-            <img 
-              src={IMAGES.logo} 
-              alt="OptiScale Logo" 
-              className="h-10 w-auto rounded-lg object-contain bg-white"
+            <Logo 
+              light={isDark} 
+              className="h-10 md:h-12 w-auto transition-transform group-hover:scale-105" 
             />
-            {COMPANY_NAME}
           </Link>
 
           {/* Desktop Navigation */}
@@ -67,7 +65,7 @@ export const Header: React.FC = () => {
               <div key={link.path} className="relative group">
                 {link.subLinks ? (
                   <div 
-                    className="flex items-center gap-1 text-blue-100 hover:text-white cursor-pointer py-2 transition-colors"
+                    className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan cursor-pointer py-2 transition-colors font-medium"
                     onMouseEnter={() => setDropdownOpen(true)}
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
@@ -93,7 +91,7 @@ export const Header: React.FC = () => {
                   <Link 
                     to={link.path} 
                     className={`text-sm font-medium transition-colors ${
-                      location.pathname === link.path ? 'text-white font-bold' : 'text-blue-100 hover:text-white'
+                      location.pathname === link.path ? 'text-brand-blue dark:text-brand-cyan font-bold underline underline-offset-8 decoration-2' : 'text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan'
                     }`}
                   >
                     {link.label}
@@ -105,14 +103,14 @@ export const Header: React.FC = () => {
             {/* Theme Toggle Desktop */}
             <button
               onClick={toggleTheme}
-              className="p-2 text-blue-100 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-cyan hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors"
               aria-label="Toggle Dark Mode"
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
 
             <Link to="/booking">
-              <button className="px-5 py-2 text-sm font-semibold bg-white text-brand-blue rounded-md hover:bg-gray-100 transition-colors shadow-sm dark:bg-brand-cyan dark:text-brand-navy dark:hover:bg-cyan-400">
+              <button className="px-5 py-2 text-sm font-semibold bg-brand-blue text-white rounded-md hover:bg-blue-600 transition-colors shadow-lg shadow-brand-blue/20 dark:bg-brand-cyan dark:text-brand-navy dark:hover:bg-cyan-400">
                 Book Consultation
               </button>
             </Link>
@@ -123,7 +121,7 @@ export const Header: React.FC = () => {
              {/* Theme Toggle Mobile */}
             <button
               onClick={toggleTheme}
-              className="p-2 text-white hover:bg-white/10 rounded-full transition-colors"
+              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors"
               aria-label="Toggle Dark Mode"
             >
               {isDark ? <Sun size={24} /> : <Moon size={24} />}
@@ -131,7 +129,7 @@ export const Header: React.FC = () => {
 
             {/* Mobile Menu Button */}
             <button 
-              className="text-white focus:outline-none"
+              className="text-gray-600 dark:text-gray-300 focus:outline-none"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
@@ -143,17 +141,17 @@ export const Header: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-brand-navy z-40 transform transition-transform duration-300 md:hidden ${
+        className={`fixed inset-0 bg-white dark:bg-brand-navy z-40 transform transition-transform duration-300 md:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{ top: '0', paddingTop: '64px' }}
       >
-        <div className="flex flex-col p-6 gap-6 bg-brand-navy dark:bg-slate-900 h-full">
+        <div className="flex flex-col p-6 gap-6 h-full">
           {NAV_LINKS.map((link) => (
             <div key={link.path} className="flex flex-col">
               <Link 
                 to={link.path} 
-                className="text-xl font-semibold text-white border-b border-white/10 pb-2"
+                className="text-xl font-semibold text-brand-navy dark:text-white border-b border-gray-100 dark:border-white/10 pb-2"
                 onClick={() => !link.subLinks && setIsOpen(false)}
               >
                 {link.label}
@@ -164,7 +162,7 @@ export const Header: React.FC = () => {
                     <Link
                       key={sub.path}
                       to={sub.path}
-                      className="text-gray-400 hover:text-brand-cyan"
+                      className="text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-cyan"
                       onClick={() => setIsOpen(false)}
                     >
                       {sub.label}
@@ -175,7 +173,7 @@ export const Header: React.FC = () => {
             </div>
           ))}
           <Link to="/booking" onClick={() => setIsOpen(false)} className="mt-4">
-            <button className="w-full py-4 text-center font-bold bg-brand-blue text-white rounded-lg border border-white/20 dark:bg-brand-cyan dark:text-brand-navy">
+            <button className="w-full py-4 text-center font-bold bg-brand-blue text-white rounded-lg dark:bg-brand-cyan dark:text-brand-navy">
               Book Consultation
             </button>
           </Link>

@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OptiScale Digital LTD | UK Web Design & AI Automation Agency</title>
     <meta name="description" content="OptiScale Digital LTD: Premier UK agency for Website Design, AI Automation, and Digital Marketing. Transforming businesses with tech-forward solutions." />
+    
+    <!-- Favicon Configuration -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+    <link rel="mask-icon" href="favicon.svg" color="#2563EB">
+    <meta name="theme-color" content="#0f172a">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -13,28 +20,37 @@
           extend: {
             colors: {
               brand: {
-                navy: '#0f172a', // Deep Navy (Slate 900)
-                dark: '#020617', // Darker Navy
-                blue: '#0047AB', // Cobalt Blue / Brand Blue updated for logo match
-                cyan: '#06b6d4', // Cyan accent
-                gray: '#64748b', // Slate Gray
-                light: '#f8fafc', // Off white
+                navy: '#0f172a',
+                dark: '#020617',
+                blue: '#2563EB', // Official Blue from logo
+                purple: '#A78BFA', // Official Purple from logo
+                cyan: '#06b6d4',
+                gray: '#64748b',
+                light: '#f8fafc',
               }
             },
             fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
+              sans: ['Open Sans', 'system-ui', 'sans-serif'],
+              heading: ['Poppins', 'sans-serif'],
             }
           }
         }
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-      body { font-family: 'Inter', sans-serif; }
+      html { font-size: 110%; } /* Increases base font scale globally */
+      body { font-family: 'Open Sans', sans-serif; }
+      h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
       .gradient-text {
-        background: linear-gradient(to right, #0047AB, #06b6d4);
+        background: linear-gradient(to right, #2563EB, #A78BFA);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+      }
+      .brand-stars-gradient {
+        background: linear-gradient(135deg, #2563EB, #A78BFA);
       }
     </style>
   <script type="importmap">
