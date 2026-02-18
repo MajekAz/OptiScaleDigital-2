@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -30,7 +31,7 @@ const App: React.FC = () => {
           <Route path="/services/ai-automation" element={<ServiceAI />} />
           <Route path="/services/digital-marketing" element={<ServiceMarketing />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPostPage />} />
+          <Route path="/post/:id" element={<BlogPostPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/thank-you" element={<ThankYou />} />

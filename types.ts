@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export interface ServiceItem {
@@ -9,14 +10,16 @@ export interface ServiceItem {
 }
 
 export interface BlogPost {
-  id?: string | number; // Optional for new posts before saving
+  id?: string | number;
   title: string;
   excerpt: string;
-  content?: string; // Full HTML or Text content
+  content?: string;
   date: string;
   author: string;
   category: string;
   image?: string;
+  status?: 'published' | 'draft' | 'scheduled';
+  scheduled_at?: string;
 }
 
 export interface NavLink {

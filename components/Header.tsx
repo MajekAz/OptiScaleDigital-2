@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Moon, Sun } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 import { Logo } from './Logo';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
 
   // Close mobile menu on route change
@@ -16,45 +15,42 @@ export const Header: React.FC = () => {
     setDropdownOpen(false);
   }, [location]);
 
-  // Theme toggle logic
+  // Body scroll lock when mobile menu is open
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
+      document.body.style.overflow = 'unset';
     }
-  }, []);
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
-  const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      setIsDark(true);
-    }
-  };
+  // Ensure dark mode is removed if previously set by user
+  useEffect(() => {
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('theme');
+  }, []);
 
   return (
     <header 
-      className="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm py-3 transition-all duration-300 dark:bg-brand-navy/95 dark:backdrop-blur-sm border-b dark:border-white/10"
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 border-b ${
+        isOpen 
+          ? 'bg-brand-navy border-transparent' 
+          : 'bg-white/95 backdrop-blur-md shadow-sm border-gray-100'
+      } py-3`}
     >
       <div className="max-w-[1200px] mx-auto px-6">
-        <nav className="flex items-center justify-between">
-          {/* Logo Component (Replacing broken IMG) */}
+        <nav className="flex items-center justify-between h-12 md:h-14">
+          {/* Logo */}
           <Link 
             to="/" 
-            className="flex items-center group"
+            className="flex items-center group relative z-[110]"
+            onClick={() => setIsOpen(false)}
           >
             <Logo 
-              light={isDark} 
+              light={isOpen} 
               className="h-10 md:h-12 w-auto transition-transform group-hover:scale-105" 
             />
           </Link>
@@ -65,7 +61,7 @@ export const Header: React.FC = () => {
               <div key={link.path} className="relative group">
                 {link.subLinks ? (
                   <div 
-                    className="flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan cursor-pointer py-2 transition-colors font-medium"
+                    className="flex items-center gap-1 text-gray-600 hover:text-brand-blue cursor-pointer py-2 transition-colors font-medium"
                     onMouseEnter={() => setDropdownOpen(true)}
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
@@ -74,12 +70,12 @@ export const Header: React.FC = () => {
                     
                     {/* Dropdown */}
                     <div className={`absolute top-full left-0 w-48 pt-2 transition-all duration-200 ${dropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
-                      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+                      <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-100">
                         {link.subLinks.map((sub) => (
                           <Link
                             key={sub.path}
                             to={sub.path}
-                            className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-brand-light dark:hover:bg-slate-700 hover:text-brand-blue dark:hover:text-brand-cyan transition-colors border-b last:border-0 border-gray-50 dark:border-gray-700"
+                            className="block px-4 py-3 text-sm text-gray-700 hover:bg-brand-light hover:text-brand-blue transition-colors border-b last:border-0 border-gray-50"
                           >
                             {sub.label}
                           </Link>
@@ -91,7 +87,7 @@ export const Header: React.FC = () => {
                   <Link 
                     to={link.path} 
                     className={`text-sm font-medium transition-colors ${
-                      location.pathname === link.path ? 'text-brand-blue dark:text-brand-cyan font-bold underline underline-offset-8 decoration-2' : 'text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan'
+                      location.pathname === link.path ? 'text-brand-blue font-bold underline underline-offset-8 decoration-2' : 'text-gray-600 hover:text-brand-blue'
                     }`}
                   >
                     {link.label}
@@ -100,83 +96,96 @@ export const Header: React.FC = () => {
               </div>
             ))}
             
-            {/* Theme Toggle Desktop */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-cyan hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors"
-              aria-label="Toggle Dark Mode"
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-
             <Link to="/booking">
-              <button className="px-5 py-2 text-sm font-semibold bg-brand-blue text-white rounded-md hover:bg-blue-600 transition-colors shadow-lg shadow-brand-blue/20 dark:bg-brand-cyan dark:text-brand-navy dark:hover:bg-cyan-400">
+              <button className="px-5 py-2 text-sm font-semibold bg-brand-blue text-white rounded-md hover:bg-blue-600 transition-colors shadow-lg shadow-brand-blue/20">
                 Book Consultation
               </button>
             </Link>
           </div>
 
-          {/* Mobile Actions */}
-          <div className="flex items-center gap-4 md:hidden">
-             {/* Theme Toggle Mobile */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors"
-              aria-label="Toggle Dark Mode"
-            >
-              {isDark ? <Sun size={24} /> : <Moon size={24} />}
-            </button>
-
-            {/* Mobile Menu Button */}
+          {/* Mobile Actions Button Group */}
+          <div className="flex items-center gap-1 md:hidden relative z-[110]">
             <button 
-              className="text-gray-600 dark:text-gray-300 focus:outline-none"
+              className={`p-3 focus:outline-none rounded-full transition-colors ${
+                isOpen 
+                  ? 'text-white hover:bg-white/10' 
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
               onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           </div>
         </nav>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Full-Width Centered Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 bg-white dark:bg-brand-navy z-40 transform transition-transform duration-300 md:hidden ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-0 bg-brand-navy z-[90] transition-all duration-500 ease-in-out md:hidden flex flex-col items-center justify-center ${
+          isOpen ? 'opacity-100 visible pointer-events-auto' : 'opacity-0 invisible pointer-events-none'
         }`}
-        style={{ top: '0', paddingTop: '64px' }}
       >
-        <div className="flex flex-col p-6 gap-6 h-full">
-          {NAV_LINKS.map((link) => (
-            <div key={link.path} className="flex flex-col">
-              <Link 
-                to={link.path} 
-                className="text-xl font-semibold text-brand-navy dark:text-white border-b border-gray-100 dark:border-white/10 pb-2"
-                onClick={() => !link.subLinks && setIsOpen(false)}
+        <div className="w-full max-w-lg px-10 py-20 flex flex-col h-full items-center text-center overflow-y-auto">
+          <div className="flex flex-col space-y-2 w-full mt-10">
+            {NAV_LINKS.map((link, idx) => (
+              <div 
+                key={link.path} 
+                className={`flex flex-col transition-all duration-500 ease-out ${
+                  isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: `${idx * 75}ms` }}
               >
-                {link.label}
-              </Link>
-              {link.subLinks && (
-                <div className="pl-4 mt-2 flex flex-col gap-3">
-                  {link.subLinks.map((sub) => (
-                    <Link
-                      key={sub.path}
-                      to={sub.path}
-                      className="text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-cyan"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+                <Link 
+                  to={link.path} 
+                  className={`text-4xl md:text-5xl font-black py-4 transition-all hover:scale-105 active:scale-95 ${
+                    location.pathname === link.path ? 'text-brand-cyan' : 'text-white'
+                  }`}
+                  onClick={() => !link.subLinks && setIsOpen(false)}
+                >
+                  {link.label}
+                </Link>
+                {link.subLinks && (
+                  <div className="flex flex-col space-y-3 pb-4">
+                    {link.subLinks.map((sub) => (
+                      <Link
+                        key={sub.path}
+                        to={sub.path}
+                        className={`text-xl md:text-2xl font-semibold py-1 transition-colors ${
+                          location.pathname === sub.path ? 'text-brand-cyan' : 'text-white/60 hover:text-white'
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div 
+            className={`mt-12 w-full transition-all duration-700 ease-out delay-300 ${
+              isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+          >
+            <Link to="/booking" onClick={() => setIsOpen(false)}>
+              <button className="w-full py-6 text-2xl font-black bg-brand-cyan text-brand-navy rounded-2xl shadow-2xl shadow-brand-cyan/20 hover:bg-white active:scale-95 transition-all uppercase tracking-widest">
+                Get Started
+              </button>
+            </Link>
+            
+            <div className="mt-12 flex justify-center gap-8">
+              <a href="#" className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm">LinkedIn</a>
+              <a href="#" className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm">Twitter</a>
+              <a href="#" className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm">Instagram</a>
             </div>
-          ))}
-          <Link to="/booking" onClick={() => setIsOpen(false)} className="mt-4">
-            <button className="w-full py-4 text-center font-bold bg-brand-blue text-white rounded-lg dark:bg-brand-cyan dark:text-brand-navy">
-              Book Consultation
-            </button>
-          </Link>
+            
+            <p className="mt-8 text-[10px] text-white/20 font-bold uppercase tracking-[0.2em]">
+              © {new Date().getFullYear()} OptiScale Digital LTD • London, UK
+            </p>
+          </div>
         </div>
       </div>
     </header>

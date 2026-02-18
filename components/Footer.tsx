@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE } from '../constants';
-import { Linkedin, Twitter, Facebook, ExternalLink } from 'lucide-react';
+import { Linkedin, Twitter, Facebook, ExternalLink, Lock } from 'lucide-react';
 import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
@@ -49,6 +50,11 @@ export const Footer: React.FC = () => {
                 >
                   Client Portal <ExternalLink size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />
                 </a>
+              </li>
+              <li>
+                <Link to="/admin" className="hover:text-white transition-colors flex items-center gap-2 mt-4 text-xs font-bold uppercase tracking-widest opacity-60 hover:opacity-100">
+                  <Lock size={12} /> Admin Dashboard
+                </Link>
               </li>
             </ul>
           </div>

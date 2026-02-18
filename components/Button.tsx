@@ -12,10 +12,10 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseStyles = "px-8 py-4 rounded-md font-bold text-lg transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyles = "px-8 py-4 rounded-xl font-bold text-body transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2";
   
   const variants = {
-    primary: "bg-brand-blue hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 focus:ring-brand-blue",
+    primary: "bg-brand-blue hover:bg-blue-600 text-white shadow-xl shadow-brand-blue/20 focus:ring-brand-blue",
     secondary: "bg-brand-navy hover:bg-brand-dark text-white shadow-lg focus:ring-brand-navy",
     outline: "border-2 border-brand-blue text-brand-blue hover:bg-brand-blue hover:text-white focus:ring-brand-blue"
   };
