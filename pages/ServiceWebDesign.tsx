@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
-import { Monitor, Smartphone, Zap, Search, Layers, RefreshCw, PenTool, ShoppingCart } from 'lucide-react';
+import { 
+  Monitor, Smartphone, Zap, Search, Layers, RefreshCw, 
+  PenTool, ShoppingCart, ArrowRight, ShieldCheck, CheckCircle2 
+} from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 
@@ -9,174 +12,152 @@ export const ServiceWebDesign: React.FC = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="Web Design Agency London | Custom Websites & E-Commerce"
-        description="High-performance website design and development services in the UK. React, WordPress, and Shopify solutions tailored for British businesses."
-        keywords="Web Design London, Custom Web Development UK, Shopify Experts, WordPress Agency, UI/UX Design"
+        title="Web Design London | High-Performance Business Websites"
+        description="Conversion-focused website design and development services built for the UK market."
       />
 
-      {/* SECTION 1: Hero */}
-      <section className="relative py-24 lg:py-32 bg-brand-navy overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={IMAGES.services.webDesign} 
-            alt="Web Design Background" 
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/90 via-brand-navy/80 to-brand-light/5 dark:to-brand-dark/5"></div>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">
-              Bespoke Website Design & <span className="text-brand-cyan">Development</span>
-            </h1>
-            <p className="text-xl text-gray-200 mb-8 max-w-2xl">
-              We craft high-performance, aesthetically stunning websites tailored for the UK market. From custom coding to WordPress mastery, we build your digital foundation.
-            </p>
-            <Link to="/contact">
-              <Button>Start Your Project</Button>
+      {/* 1. Hero with Service Promise */}
+      <section className="relative py-24 lg:py-40 bg-brand-secondary text-white overflow-hidden">
+        <div className="container relative z-10 text-center">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
+            The Digital Flagship Store
+          </div>
+          <h1 className="text-h1 mb-6">
+            Websites That <span className="text-brand-primary">Convert.</span>
+          </h1>
+          <p className="text-xl text-brand-textGrey mb-12 max-w-2xl mx-auto">
+            We build high-performance digital infrastructure designed to capture leads and outshine competitors in the crowded UK market.
+          </p>
+          <div className="flex justify-center">
+            <Link to="/booking">
+              <Button variant="primary" className="px-12 py-5 text-lg">Claim Your Free Design Audit</Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: Comprehensive Services Grid */}
-      <section className="py-20 bg-white dark:bg-brand-dark transition-colors duration-300">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-4">Our Web Solutions</h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Whether you need a simple brochure site or a complex web application, our team delivers pixel-perfect results.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceDetailCard 
-              icon={<Monitor className="text-brand-blue" size={32} />}
-              title="Custom Web Development"
-              description="Tailor-made websites built with React and modern frameworks for unmatched speed and scalability."
-            />
-            <ServiceDetailCard 
-              icon={<Layers className="text-brand-blue" size={32} />}
-              title="WordPress Development"
-              description="Professional WordPress themes and plugins customized to give you full control over your content."
-            />
-            <ServiceDetailCard 
-              icon={<ShoppingCart className="text-brand-blue" size={32} />}
-              title="E-Commerce Stores"
-              description="High-converting Shopify and WooCommerce stores designed to maximize sales and simplify management."
-            />
-            <ServiceDetailCard 
-              icon={<RefreshCw className="text-brand-blue" size={32} />}
-              title="Website Maintenance"
-              description="Ongoing support, security updates, and backups to keep your business online and secure 24/7."
-            />
-            <ServiceDetailCard 
-              icon={<Search className="text-brand-blue" size={32} />}
-              title="Technical Website Auditing"
-              description="Deep-dive analysis of your site's performance, SEO structure, and code quality with actionable insights."
-            />
-            <ServiceDetailCard 
-              icon={<PenTool className="text-brand-blue" size={32} />}
-              title="UI/UX Design"
-              description="User-centric design prototypes and wireframes that ensure an intuitive and engaging user experience."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: The Process */}
-      <section className="py-20 bg-brand-light dark:bg-slate-900 transition-colors duration-300">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* 2. Problem → Solution Narrative */}
+      <section className="py-section bg-white">
+        <div className="container max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-6">How We Build</h2>
-              <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg">
-                We don't just guess; we follow a proven methodology to ensure your project launches on time and exceeds expectations.
+              <span className="text-rose-500 font-bold uppercase tracking-widest text-xs">The Friction</span>
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">Your Website is Leaking Revenue.</h2>
+              <p className="text-brand-textGrey mb-6 leading-relaxed">
+                Most business sites are slow, cluttered, and fail to guide visitors toward a conversion. In the UK market, a 1-second delay in page load equals a 7% drop in conversions.
               </p>
-              <div className="space-y-6">
-                <ProcessStep number="01" title="Discovery & Strategy" desc="We analyze your competitors and define your target audience." />
-                <ProcessStep number="02" title="Design & Wireframing" desc="We create visual prototypes to map out the user journey." />
-                <ProcessStep number="03" title="Development" desc="Our engineers write clean, semantic code optimized for SEO." />
-                <ProcessStep number="04" title="Launch & Grow" desc="We deploy your site and help you scale with ongoing support." />
+              <ul className="space-y-4">
+                <li className="flex items-center gap-2 text-rose-500 font-medium">
+                   <ArrowRight size={16} /> High Bounce Rates
+                </li>
+                <li className="flex items-center gap-2 text-rose-500 font-medium">
+                   <ArrowRight size={16} /> Poor Mobile Experience
+                </li>
+                <li className="flex items-center gap-2 text-rose-500 font-medium">
+                   <ArrowRight size={16} /> Zero Lead Generation
+                </li>
+              </ul>
+            </div>
+            <div className="bg-brand-lightGrey p-12 rounded-[2.5rem] border border-brand-primary/20 shadow-xl">
+              <span className="text-brand-accent font-bold uppercase tracking-widest text-xs">The Growth Engine</span>
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">OptiScale Performance Architecture.</h2>
+              <p className="text-brand-textGrey mb-8 leading-relaxed">
+                We rebuild your presence using performance-first React technology and psychology-driven layouts to guide users toward your primary goals.
+              </p>
+              <div className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-brand-borderGrey">
+                <div className="w-12 h-12 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-accent">
+                   <CheckCircle2 size={24} />
+                </div>
+                <div>
+                   <p className="font-bold text-brand-secondary">Avg. 38% Increase</p>
+                   <p className="text-xs text-brand-textGrey uppercase">In Lead Quality</p>
+                </div>
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-brand-blue rounded-2xl transform rotate-3 opacity-20"></div>
-              <img 
-                src={IMAGES.services.webProcess}
-                alt="Web development code on screen" 
-                className="relative rounded-2xl shadow-xl w-full"
-              />
-            </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 4: Tech Stack & Performance */}
-      <section className="py-20 bg-brand-navy text-white">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-12">Built for Performance</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Zap className="text-brand-cyan mx-auto mb-4" size={40} />
-              <h3 className="text-xl font-bold">Blazing Fast</h3>
-              <p className="text-gray-400 text-sm mt-2">Core Web Vitals optimized</p>
-            </div>
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Smartphone className="text-brand-cyan mx-auto mb-4" size={40} />
-              <h3 className="text-xl font-bold">Mobile First</h3>
-              <p className="text-gray-400 text-sm mt-2">Responsive across all devices</p>
-            </div>
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Search className="text-brand-cyan mx-auto mb-4" size={40} />
-              <h3 className="text-xl font-bold">SEO Ready</h3>
-              <p className="text-gray-400 text-sm mt-2">Semantic HTML5 structure</p>
-            </div>
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Layers className="text-brand-cyan mx-auto mb-4" size={40} />
-              <h3 className="text-xl font-bold">Scalable</h3>
-              <p className="text-gray-400 text-sm mt-2">Built to grow with you</p>
-            </div>
+      {/* 3. Deliverables List */}
+      <section className="py-section bg-brand-lightGrey">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary">What You Get</h2>
+            <p className="text-brand-textGrey mt-4">Complete end-to-end digital deliverables.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Deliverable icon={<Monitor />} title="Custom React Frontends" desc="Blazing fast navigation with no page refreshes for superior UX." />
+            <Deliverable icon={<Smartphone />} title="Mobile-First UI" desc="Seamless experiences for the 60%+ of UK mobile-based traffic." />
+            <Deliverable icon={<Search />} title="SEO Core Setup" desc="Semantic markup and technical SEO built-in from the first line of code." />
+            <Deliverable icon={<Layers />} title="UX Prototyping" desc="Interactive blueprints focused on heatmaps and user flow analysis." />
+            <Deliverable icon={<RefreshCw />} title="Continuous Care" desc="24/7 security updates and performance optimization to stay competitive." />
+            <Deliverable icon={<PenTool />} title="Brand Visuals" desc="High-end, bespoke design that builds instant trust and authority." />
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: CTA */}
-      <section className="py-24 bg-white dark:bg-brand-dark text-center transition-colors duration-300">
-        <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto bg-brand-light dark:bg-slate-800 p-10 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg">
-            <h2 className="text-3xl font-bold text-brand-navy dark:text-white mb-4">Ready to upgrade your online presence?</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
-              Get a free consultation and website audit. Let's discuss how we can improve your conversion rates.
-            </p>
-            <Link to="/contact">
-              <Button className="px-8 py-4 text-lg shadow-xl shadow-blue-500/20">Request a Quote</Button>
-            </Link>
+      {/* 4. Process Steps */}
+      <section className="py-section bg-brand-secondary text-white">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-h2">Building Your Digital Asset</h2>
           </div>
+          <div className="grid md:grid-cols-4 gap-12">
+            <Step n="1" t="Audit" d="Mapping competitors and current SEO performance." />
+            <Step n="2" t="Blueprint" d="Designing the logic and conversion pathways." />
+            <Step n="3" t="Develop" d="Clean, modular coding with zero technical debt." />
+            <Step n="4" t="Scale" d="Launch, training, and conversion tracking." />
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Benefits */}
+      <section className="py-section bg-white">
+        <div className="container">
+          <div className="grid lg:grid-cols-3 gap-12">
+            <Benefit icon={<Zap />} title="Blazing Speed" desc="Pages load in under 1 second for higher search ranking." />
+            <Benefit icon={<ShieldCheck />} title="Enterprise Security" desc="Bank-grade protection and SSL certificates for peace of mind." />
+            <Benefit icon={<CheckCircle2 />} title="Built to Sell" desc="Every pixel and paragraph is optimized for business growth." />
+          </div>
+        </div>
+      </section>
+
+      {/* 6. CTA */}
+      <section className="py-24 bg-brand-primary text-center">
+        <div className="container">
+          <h2 className="text-h2 text-white mb-8">Stop Settling for "Just a Website".</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-xl mx-auto">Build a performance engine that works for you 24/7.</p>
+          <Link to="/contact">
+            <Button variant="secondary" className="px-12 py-5 text-lg">Start Your Rebuild</Button>
+          </Link>
         </div>
       </section>
     </div>
   );
 };
 
-const ServiceDetailCard: React.FC<{icon: React.ReactNode, title: string, description: string}> = ({ icon, title, description }) => (
-  <div className="p-8 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-slate-800 group">
-    <div className="mb-4 bg-brand-light dark:bg-slate-700 w-14 h-14 rounded-lg flex items-center justify-center group-hover:bg-brand-blue/10 dark:group-hover:bg-brand-blue/20 transition-colors">
-      {icon}
-    </div>
-    <h3 className="text-xl font-bold mb-3 text-brand-navy dark:text-white">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">{description}</p>
+const Deliverable = ({ icon, title, desc }: any) => (
+  <div className="p-10 bg-white rounded-3xl border border-brand-borderGrey hover:border-brand-primary transition-all shadow-sm hover:shadow-xl group">
+    <div className="text-brand-primary mb-6 transition-transform group-hover:scale-110">{React.cloneElement(icon, { size: 36 })}</div>
+    <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
+    <p className="text-brand-textGrey text-sm leading-relaxed">{desc}</p>
   </div>
 );
 
-const ProcessStep: React.FC<{number: string, title: string, desc: string}> = ({ number, title, desc }) => (
-  <div className="flex gap-4">
-    <div className="text-3xl font-bold text-brand-blue/30">{number}</div>
-    <div>
-      <h4 className="text-xl font-bold text-brand-navy dark:text-white">{title}</h4>
-      <p className="text-gray-600 dark:text-gray-300 text-sm">{desc}</p>
+const Step = ({ n, t, d }: any) => (
+  <div className="text-center">
+    <div className="text-5xl font-black text-white/10 mb-6">{n}</div>
+    <h4 className="text-xl font-bold mb-3">{t}</h4>
+    <p className="text-sm text-gray-400 leading-relaxed">{d}</p>
+  </div>
+);
+
+const Benefit = ({ icon, title, desc }: any) => (
+  <div className="text-center p-8 bg-brand-lightGrey rounded-3xl border border-brand-borderGrey">
+    <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-8 text-brand-primary shadow-md">
+      {React.cloneElement(icon, { size: 36 })}
     </div>
+    <h4 className="text-2xl font-bold mb-3 text-brand-secondary">{title}</h4>
+    <p className="text-brand-textGrey leading-relaxed">{desc}</p>
   </div>
 );

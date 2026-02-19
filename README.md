@@ -30,57 +30,45 @@ Follow these steps to connect your forms and go live.
 ---
 
 ## Database Schema Reference
-The `api/setup.php` script automatically creates the following tables. If you need to manage them manually via phpMyAdmin, here is the structure:
+The `api/setup.php` script automatically creates the following tables.
 
 ### 1. `contacts` (General Inquiries)
-Stores data from the "Contact Us" page form.
 | Column | Type | Description |
 | :--- | :--- | :--- |
-| `id` | INT | Primary Key, Auto-Increment |
-| `name` | VARCHAR(255) | Full name of the sender |
-| `email` | VARCHAR(255) | Contact email address |
-| `service` | VARCHAR(100) | Selected service (Web, AI, Marketing) |
-| `message` | TEXT | The detailed inquiry message |
-| `created_at` | TIMESTAMP | Auto-generated timestamp of submission |
+| `id` | INT | Primary Key |
+| `name` | VARCHAR(255) | Sender name |
+| `email` | VARCHAR(255) | Sender email |
+| `service` | VARCHAR(100) | Requested service |
+| `message` | TEXT | Inquiry details |
+| `created_at` | TIMESTAMP | Submission time |
 
 ### 2. `bookings` (Consultations)
-Stores scheduled discovery calls from the "Booking" page.
 | Column | Type | Description |
 | :--- | :--- | :--- |
-| `id` | INT | Primary Key, Auto-Increment |
+| `id` | INT | Primary Key |
 | `name` | VARCHAR(255) | Client name |
 | `email` | VARCHAR(255) | Client email |
-| `service` | VARCHAR(100) | Topic of consultation |
-| `booking_date` | DATE | Selected date for the call |
-| `booking_time` | VARCHAR(20) | Selected time slot (e.g., "14:30") |
-| `created_at` | TIMESTAMP | When the booking was placed |
+| `booking_date` | DATE | Selected date |
+| `booking_time` | VARCHAR(20) | Selected slot |
 
 ### 3. `blog_posts` (Content Management)
-Stores all articles managed via the Admin Dashboard.
 | Column | Type | Description |
 | :--- | :--- | :--- |
-| `id` | INT | Primary Key, Auto-Increment |
-| `title` | VARCHAR(255) | Post headline |
-| `excerpt` | TEXT | Short summary for the blog card |
-| `content` | LONGTEXT | Full HTML content of the article |
-| `author` | VARCHAR(100) | Name of the writer |
-| `category` | VARCHAR(50) | e.g., "AI Automation", "Web Design" |
-| `image` | LONGTEXT | Base64 encoded featured image data |
-| `status` | VARCHAR(20) | 'published', 'draft', or 'scheduled' |
-| `scheduled_at` | DATETIME | Future release time for scheduled posts |
-| `created_at` | DATE | Display date of the article |
+| `id` | INT | Primary Key |
+| `title` | VARCHAR(255) | Headline |
+| `content` | LONGTEXT | Article body |
+| `status` | VARCHAR(20) | 'published' / 'scheduled' |
+| `scheduled_at` | DATETIME | Future release time |
 
 ### 4. `subscribers` (Newsletter)
-Stores email addresses for newsletter signups.
 | Column | Type | Description |
 | :--- | :--- | :--- |
-| `id` | INT | Primary Key, Auto-Increment |
-| `email` | VARCHAR(255) | Unique email address (indexed) |
-| `subscribed_at` | TIMESTAMP | Timestamp of signup |
+| `id` | INT | Primary Key |
+| `email` | VARCHAR(255) | Unique email |
 
 ---
 
 ## Admin Dashboard
 - **URL**: `https://yourdomain.com/#/admin`
-- **Security Key**: `secret123` (Change this in `api/admin_data.php` for production)
+- **Security Key**: `secret123`
 - **Features**: Real-time Lead tracking, Newsletter list management, and Article Scheduling.

@@ -1,85 +1,289 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { 
+  Users, ShieldCheck, Zap, Target, Lightbulb, 
+  TrendingUp, Search, Rocket, BarChart3, CheckCircle2, 
+  ArrowRight, Award, Globe, HeartHandshake
+} from 'lucide-react';
 import { Button } from '../components/Button';
-import { Users, ShieldCheck, Zap } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 
 export const About: React.FC = () => {
   return (
-    <div className="w-full bg-white transition-colors duration-300">
+    <div className="w-full bg-brand-white">
       <SEO 
-        title="About Us | OptiScale Digital"
-        description="London-based tech agency transforming UK businesses with AI and web technology."
+        title="About Us | OptiScale Digital - UK Growth & AI Agency"
+        description="Learn about OptiScale Digital's mission to transform UK businesses through performance-driven web design and AI automation. Meet our founder and explore our proven process."
+        keywords="About OptiScale, UK Web Agency Mission, AI Automation Strategy, Business Growth London"
       />
 
-      {/* Hero */}
-      <section className="bg-brand-navy py-24 text-white">
-        <div className="container text-center">
-          <h1 className="text-h1 mb-6">About <span className="text-brand-cyan">OptiScale</span></h1>
-          <p className="text-lead text-gray-300 max-w-2xl mx-auto">We are strategists and engineers passionate about helping UK businesses thrive.</p>
+      {/* 1. Hero Section */}
+      <section className="relative py-24 lg:py-40 bg-brand-secondary text-white overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={IMAGES.about.heroBg} 
+            alt="London Office Architecture" 
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/80 to-transparent"></div>
+        </div>
+        
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <span className="inline-block px-4 py-1 rounded-full bg-brand-primary/20 border border-brand-primary/30 text-brand-primary text-xs font-bold uppercase tracking-widest mb-6">
+              Our Identity
+            </span>
+            <h1 className="text-h1 mb-6">
+              Engineering the <br /><span className="text-brand-primary">Growth Engines</span> of Tomorrow.
+            </h1>
+            <p className="text-xl text-brand-textGrey mb-10 leading-relaxed">
+              OptiScale Digital helps ambitious UK businesses bridge the gap between manual operations and automated, high-performance scale. We don't just build websites; we build digital assets that yield measurable returns.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/booking">
+                <Button variant="primary" className="px-10 py-5">Book a Strategy Call</Button>
+              </Link>
+              <Link to="/services">
+                <Button variant="outline" className="px-10 py-5 border-white/20 text-white hover:bg-white/10 hover:border-white">
+                  View Our Services
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Vision Section */}
+      {/* 2. Our Story */}
       <section className="py-section bg-white">
         <div className="container">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative">
+              <img 
+                src={IMAGES.about.mission} 
+                alt="Strategic planning session" 
+                className="rounded-[2.5rem] shadow-2xl relative z-10"
+              />
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-brand-accent/10 rounded-full blur-3xl"></div>
+            </div>
             <div>
-              <h2 className="text-h2 mb-6">Vision to Impact</h2>
-              <p className="text-body text-gray-600 leading-relaxed mb-6">
-                OptiScale Digital was founded to close the gap between enterprise-level digital capability and growing businesses across the UK.
-              </p>
-              <p className="text-body text-gray-600 leading-relaxed">
-                Today, we serve as trusted advisors to organisations focused on long-term growth, leveraging advanced platforms and AI automation.
+              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Origin</span>
+              <h2 className="text-h2 text-brand-secondary mt-2 mb-6">Born from a Need for Precision.</h2>
+              <div className="space-y-6 text-brand-textGrey text-lg leading-relaxed">
+                <p>
+                  OptiScale Digital was founded in London with a single conviction: most digital agencies focus on aesthetics while ignoring the underlying systems that actually drive business growth.
+                </p>
+                <p>
+                  We saw too many UK businesses struggling with manual processes, outdated lead-capture systems, and "silent" digital footprints. We were created to fix that—combining high-end design with deep AI integration to reclaim thousands of hours for our clients.
+                </p>
+                <p className="font-semibold text-brand-secondary italic">
+                  "Our mission isn't just to be another vendor. We aim to be the technical foundation upon which your next decade of growth is built."
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Mission & Vision */}
+      <section className="py-section bg-brand-lightGrey">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-12 rounded-[2rem] border border-brand-borderGrey shadow-sm">
+              <div className="w-14 h-14 bg-brand-primary/10 rounded-2xl flex items-center justify-center text-brand-primary mb-8">
+                <Target size={32} />
+              </div>
+              <h3 className="text-h3 text-brand-secondary mb-4">Our Mission</h3>
+              <p className="text-brand-textGrey leading-relaxed">
+                To empower 500+ UK businesses by 2030 with autonomous systems and conversion-focused design, effectively doubling their operational capacity without increasing overhead.
               </p>
             </div>
-            <div className="rounded-3xl overflow-hidden shadow-xl">
-              <img src={IMAGES.about.mission} alt="Our Mission" className="w-full" />
+            <div className="bg-white p-12 rounded-[2rem] border border-brand-borderGrey shadow-sm">
+              <div className="w-14 h-14 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent mb-8">
+                <Globe size={32} />
+              </div>
+              <h3 className="text-h3 text-brand-secondary mb-4">Our Vision</h3>
+              <p className="text-brand-textGrey leading-relaxed">
+                To become the premier UK partner for digital transformation—where "OptiScale" becomes synonymous with precision engineering and ethical AI business scaling.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-brand-blue text-white">
+      {/* 4. Core Values */}
+      <section className="py-section bg-white">
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div><div className="text-h2 mb-1">150+</div><div className="text-small opacity-80 uppercase font-bold tracking-widest">Clients</div></div>
-            <div><div className="text-h2 mb-1">250%</div><div className="text-small opacity-80 uppercase font-bold tracking-widest">Growth</div></div>
-            <div><div className="text-h2 mb-1">3x</div><div className="text-small opacity-80 uppercase font-bold tracking-widest">Avg ROI</div></div>
-            <div><div className="text-h2 mb-1">24/7</div><div className="text-small opacity-80 uppercase font-bold tracking-widest">Support</div></div>
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary mb-4">The Values We Live By</h2>
+            <p className="text-brand-textGrey max-w-xl mx-auto">These four pillars guide every decision, every line of code, and every client interaction.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <ValueCard 
+              icon={<ShieldCheck />} 
+              title="Radical Transparency" 
+              desc="No black-box metrics. We show you exactly what we're building and how it's performing in real-time."
+            />
+            <ValueCard 
+              icon={<Zap />} 
+              title="Precision Scale" 
+              desc="We don't just grow; we scale. Every system is built to handle 10x your current volume without breaking."
+            />
+            <ValueCard 
+              icon={<Lightbulb />} 
+              title="Ethical Innovation" 
+              desc="AI should augment human talent, not replace it. We deploy tech that empowers your existing team."
+            />
+            <ValueCard 
+              icon={<TrendingUp />} 
+              title="Outcome Obsession" 
+              desc="We aren't happy with a 'nice site'. We are only satisfied when we see your revenue and efficiency rise."
+            />
           </div>
         </div>
       </section>
 
-      {/* Team/Leadership */}
-      <section className="py-section bg-brand-light">
-        <div className="container">
-          <h2 className="text-h2 text-center mb-16">Meet the Minds</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <TeamCard name="David Thorne" role="CEO" />
-            <TeamCard name="Sarah Collins" role="Head of Marketing" />
-            <TeamCard name="Michael Chang" role="Lead Architect" />
+      {/* 5. Why Choose OptiScale */}
+      <section className="py-section bg-brand-secondary text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/5 rounded-full blur-3xl"></div>
+        <div className="container relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-h2 mb-8">The Strategic Advantage.</h2>
+              <p className="text-lg text-brand-textGrey mb-10">
+                Most agencies stop at the frontend. We go deep into your operations. By integrating **Systems Thinking** with **AI Intelligence**, we create a compounding effect of growth.
+              </p>
+              <ul className="space-y-6">
+                <li className="flex gap-4">
+                  <div className="shrink-0 w-8 h-8 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-accent">
+                    <CheckCircle2 size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Integrated Systems</h4>
+                    <p className="text-sm text-brand-textGrey">Your website, CRM, and AI agents work as one cohesive unit.</p>
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <div className="shrink-0 w-8 h-8 bg-brand-accent/20 rounded-full flex items-center justify-center text-brand-accent">
+                    <CheckCircle2 size={18} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">UK Domain Expertise</h4>
+                    <p className="text-sm text-brand-textGrey">We understand the UK legal, compliance, and market nuances perfectly.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white/5 p-10 rounded-[3rem] border border-white/10 backdrop-blur-sm">
+               <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
+                 <HeartHandshake className="text-brand-primary" /> Our Commitment to You
+               </h3>
+               <p className="text-brand-textGrey mb-8 leading-relaxed">
+                 When you partner with us, you aren't just hiring a service provider. You are investing in a technical partner committed to your long-term success. We treat your data with bank-grade security and your growth as our own.
+               </p>
+               <div className="flex items-center gap-4 py-4 border-t border-white/10">
+                 <div className="w-12 h-12 bg-brand-primary/20 rounded-xl flex items-center justify-center text-brand-primary">
+                    <Award size={24} />
+                 </div>
+                 <p className="font-bold">Award-Nominated Technical Team</p>
+               </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-section">
-        <div className="container text-center">
-          <h2 className="text-h2 mb-8">Ready to Scale Your Business?</h2>
-          <Link to="/contact"><Button>Get in Touch</Button></Link>
+      {/* 6. Process Overview */}
+      <section className="py-section bg-brand-lightGrey">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary mb-4">Structured & Repeatable Success</h2>
+            <p className="text-brand-textGrey">Our 4-step framework for taking you from static to scalable.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <ProcessCard num="01" title="Discovery" desc="Identifying bottlenecks and growth levers through a 360° digital audit." icon={<Search />} />
+            <ProcessCard num="02" title="Strategy" desc="Architecting a bespoke roadmap focused on your unique KPIs." icon={<FileText />} />
+            <ProcessStep num="03" title="Execution" desc="Rapid, clean development and integration of AI agents." icon={<Rocket />} />
+            <ProcessStep num="04" title="Optimisation" desc="Data-driven refinement to maximize ROI month-over-month." icon={<BarChart3 />} />
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Leadership Section */}
+      <section className="py-section bg-white">
+        <div className="container">
+          <div className="max-w-4xl mx-auto bg-brand-lightGrey rounded-[3rem] overflow-hidden border border-brand-borderGrey flex flex-col md:flex-row shadow-xl">
+            <div className="md:w-1/3 bg-brand-secondary relative min-h-[350px]">
+              <img 
+                src={IMAGES.about.team.david} 
+                alt="David Thorne - CEO" 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-secondary to-transparent"></div>
+              <div className="absolute bottom-6 left-6">
+                <p className="text-white font-black text-xl">David Thorne</p>
+                <p className="text-brand-primary text-xs font-bold uppercase tracking-widest">Founder & CEO</p>
+              </div>
+            </div>
+            <div className="md:w-2/3 p-10 lg:p-16 flex flex-col justify-center">
+              <h3 className="text-2xl font-bold text-brand-secondary mb-6">A Message from Our Founder</h3>
+              <p className="text-brand-textGrey italic mb-8 leading-relaxed">
+                "I started OptiScale because I was tired of seeing brilliant British companies get left behind because they didn't have the technical bandwidth to scale. We're here to change that by providing the same level of engineering and AI strategy that the Fortune 500 uses, but tailored for the UK's most ambitious firms."
+              </p>
+              <div className="flex gap-4">
+                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-brand-secondary hover:text-brand-primary transition-colors">
+                  LinkedIn Profile <ArrowRight size={14} className="inline ml-1" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. CTA Section */}
+      <section className="py-24 bg-brand-primary relative overflow-hidden">
+        <div className="container relative z-10 text-center">
+          <h2 className="text-h2 text-white mb-8">Ready to Scale Your Success?</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+            Our discovery calls aren't sales pitches. They are deep-dives into your current systems to find hidden revenue.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/booking">
+              <Button variant="secondary" className="px-12 py-5 text-lg">Book Discovery Call</Button>
+            </Link>
+            <Link to="/services">
+              <Button variant="outline" className="px-12 py-5 text-lg border-white text-white hover:bg-white hover:text-brand-primary">Explore Solutions</Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>
   );
 };
 
-const TeamCard: React.FC<{name: string, role: string}> = ({ name, role }) => (
-  <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
-    <div className="w-24 h-24 bg-brand-blue/10 rounded-full mx-auto mb-6 flex items-center justify-center text-brand-blue font-bold text-h3">{name.charAt(0)}</div>
-    <h3 className="text-h4 mb-1">{name}</h3>
-    <p className="text-brand-blue font-bold text-small uppercase tracking-widest">{role}</p>
+// Internal Sub-components
+const ValueCard = ({ icon, title, desc }: any) => (
+  <div className="p-8 bg-brand-lightGrey rounded-3xl border border-brand-borderGrey hover:border-brand-primary transition-all group">
+    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-brand-primary mb-6 shadow-sm group-hover:bg-brand-primary group-hover:text-white transition-all">
+      {React.cloneElement(icon, { size: 24 })}
+    </div>
+    <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
+    <p className="text-sm text-brand-textGrey leading-relaxed">{desc}</p>
   </div>
+);
+
+const ProcessCard = ({ num, title, desc, icon }: any) => (
+  <div className="relative text-center p-6 group">
+    <div className="text-6xl font-black text-brand-secondary/5 absolute -top-4 left-1/2 -translate-x-1/2 group-hover:text-brand-primary/10 transition-colors">{num}</div>
+    <div className="w-16 h-16 bg-white rounded-2xl mx-auto mb-6 flex items-center justify-center text-brand-primary shadow-sm relative z-10 border border-brand-borderGrey">
+      {React.cloneElement(icon, { size: 28 })}
+    </div>
+    <h4 className="text-xl font-bold mb-2 relative z-10 text-brand-secondary">{title}</h4>
+    <p className="text-sm text-brand-textGrey leading-relaxed relative z-10">{desc}</p>
+  </div>
+);
+
+const ProcessStep = ProcessCard;
+
+const FileText = ({ size = 24 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
 );

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
-import { MessageSquare, Settings, BarChart, Database, Users, Workflow, Cpu, ShieldCheck } from 'lucide-react';
+import { 
+  Bot, MessageSquare, Workflow, Cpu, Database, 
+  ShieldCheck, Zap, ArrowRight, CheckCircle2, 
+  BarChart, Users, Clock 
+} from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 
@@ -9,165 +13,139 @@ export const ServiceAI: React.FC = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="AI Automation Services UK | Chatbots & Workflow Efficiency"
-        description="Reduce operational costs with custom AI automation. We build intelligent chatbots, CRM integrations, and predictive analytics models for UK SMEs."
-        keywords="AI Automation UK, Chatbots London, Workflow Automation, CRM Integration, Predictive Analytics, Business Efficiency"
+        title="AI Automation UK | Intelligent Business Workflows"
+        description="Reduce operational overheads with custom AI agents and intelligent business automation."
       />
 
-      {/* SECTION 1: Hero */}
-      <section className="relative py-24 lg:py-32 bg-brand-navy overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={IMAGES.services.aiHero} 
-            alt="AI Background" 
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/90 via-brand-navy/80 to-brand-light/5 dark:to-brand-dark/5"></div>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white">
-              AI Automation & <span className="text-brand-cyan">Operational Efficiency</span>
-            </h1>
-            <p className="text-xl text-gray-200 mb-8 max-w-2xl">
-              Harness the power of Artificial Intelligence to streamline your operations, reduce overheads, and boost ROI. We build intelligent systems that work while you sleep.
-            </p>
+      {/* 1. Hero with Service Promise */}
+      <section className="relative py-24 lg:py-40 bg-brand-secondary text-white overflow-hidden">
+        <div className="container relative z-10 text-center">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-xs font-bold uppercase tracking-widest mb-8">
+            The Digital Workforce
+          </div>
+          <h1 className="text-h1 mb-6">
+            Work Less. <span className="text-brand-accent">Earn More.</span>
+          </h1>
+          <p className="text-xl text-brand-textGrey mb-12 max-w-2xl mx-auto">
+            We deploy "Digital Employees" that handle your repetitive tasks 24/7 with 100% precision and zero burnout.
+          </p>
+          <div className="flex justify-center">
             <Link to="/contact">
-              <Button>Book a Free Demo</Button>
+              <Button variant="primary" className="px-12 py-5 text-lg bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none">Request Live Demo</Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: Intelligent Solutions Grid */}
-      <section className="py-20 bg-white dark:bg-brand-dark transition-colors duration-300">
-        <div className="container mx-auto px-6">
+      {/* 2. Problem → Solution Narrative */}
+      <section className="py-section bg-white">
+        <div className="container max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-20 items-center">
+            <div>
+              <span className="text-rose-500 font-bold uppercase tracking-widest text-xs">The Problem</span>
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">Manual Labor is Stifling Your Growth.</h2>
+              <p className="text-brand-textGrey mb-6 leading-relaxed">
+                Your best team members are losing 40% of their day to data entry, lead follow-ups, and repetitive support queries. This "operational drag" costs UK businesses billions annually.
+              </p>
+            </div>
+            <div className="bg-brand-lightGrey p-12 rounded-[2.5rem] border border-brand-accent/20 shadow-xl">
+              <span className="text-brand-accent font-bold uppercase tracking-widest text-xs">The Intelligent Solution</span>
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">Custom Intelligent Workflows.</h2>
+              <p className="text-brand-textGrey mb-8 leading-relaxed">
+                We implement AI agents that integrate directly with your CRM, Slack, and Email to automate lead nurture, documentation, and reporting.
+              </p>
+              <div className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
+                <div className="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent">
+                   <Clock size={24} />
+                </div>
+                <div>
+                   <p className="font-bold text-brand-secondary">Reclaim 20+ Hours</p>
+                   <p className="text-xs text-brand-textGrey uppercase font-bold">Per Team Member Weekly</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Deliverables List */}
+      <section className="py-section bg-brand-lightGrey">
+        <div className="container">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-4">Intelligent Automation Suite</h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              From managing customer relationships to predicting market trends, our AI solutions cover every aspect of modern business.
-            </p>
+            <h2 className="text-h2 text-brand-secondary">The AI Suite</h2>
+            <p className="text-brand-textGrey mt-4">Enterprise-grade tools for SME scalability.</p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceDetailCard 
-              icon={<Users className="text-brand-cyan" size={32} />}
-              title="CRM Automation"
-              description="Seamlessly integrate HubSpot, Salesforce, or Zoho. Automate lead entry, follow-ups, and pipeline management."
-            />
-            <ServiceDetailCard 
-              icon={<MessageSquare className="text-brand-cyan" size={32} />}
-              title="Intelligent Chatbots"
-              description="Deploy 24/7 AI agents trained on your data to handle customer support inquiries instantly."
-            />
-            <ServiceDetailCard 
-              icon={<Workflow className="text-brand-cyan" size={32} />}
-              title="Workflow Automation"
-              description="Connect your apps (Slack, Gmail, Asana) using Make or Zapier to eliminate manual data entry tasks."
-            />
-            <ServiceDetailCard 
-              icon={<BarChart className="text-brand-cyan" size={32} />}
-              title="Predictive Analytics"
-              description="Use machine learning to forecast sales trends, inventory needs, and customer behavior patterns."
-            />
-            <ServiceDetailCard 
-              icon={<Cpu className="text-brand-cyan" size={32} />}
-              title="Custom AI Agents"
-              description="Bespoke AI models designed for specific internal tasks, from document processing to code generation."
-            />
-            <ServiceDetailCard 
-              icon={<Database className="text-brand-cyan" size={32} />}
-              title="Data Extraction"
-              description="Automate the scraping and processing of web data or PDF documents into structured formats."
-            />
+          <div className="grid md:grid-cols-3 gap-8">
+            <Deliverable icon={<MessageSquare />} title="Smart Lead Agents" desc="AI-powered chatbots that qualify leads and book calls on your calendar 24/7." />
+            <Deliverable icon={<Workflow />} title="Zero-Touch Syncing" desc="Seamless data flow between HubSpot, Salesforce, and internal spreadsheets." />
+            <Deliverable icon={<Database />} title="Document Intel" desc="Agents that read, categorize, and extract data from invoices and contracts." />
+            <Deliverable icon={<BarChart />} title="Auto-Reporting" desc="Real-time dashboard generation fueled by automated data harvesting." />
+            <Deliverable icon={<Users />} title="HR Automation" desc="Automated onboarding and internal query handling for growing teams." />
+            <Deliverable icon={<ShieldCheck />} title="Privacy-First AI" desc="On-premise or secure cloud models that never share your trade secrets." />
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: The Impact Stats */}
-      <section className="py-20 bg-brand-light dark:bg-slate-900 transition-colors duration-300">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-             <div>
-               <h2 className="text-3xl lg:text-4xl font-bold text-brand-navy dark:text-white mb-6">Why Automate?</h2>
-               <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-                 Manual processes are the bottleneck of growth. By implementing AI automation, our UK clients typically see:
-               </p>
-               <ul className="space-y-4">
-                 <ImpactItem label="Reduction in manual data entry time" value="80%" />
-                 <ImpactItem label="Increase in lead response speed" value="10x" />
-                 <ImpactItem label="Savings on operational costs" value="40%" />
-               </ul>
-             </div>
-             <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700">
-               <h3 className="text-xl font-bold text-brand-navy dark:text-white mb-4">Real World Example</h3>
-               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                 <span className="font-semibold text-brand-blue">Client:</span> UK Recruitment Agency
-               </p>
-               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                 <span className="font-semibold text-brand-blue">Challenge:</span> Recruiters spending 4 hours/day manually screening CVs.
-               </p>
-               <p className="text-gray-600 dark:text-gray-300">
-                 <span className="font-semibold text-brand-blue">Solution:</span> We built an AI parser that scores CVs against job descriptions and auto-schedules interviews with top candidates.
-               </p>
-             </div>
+      {/* 4. Process Steps */}
+      <section className="py-section bg-brand-secondary text-white">
+        <div className="container text-center">
+          <h2 className="text-h2 mb-16">The Road to 100% Efficiency</h2>
+          <div className="grid md:grid-cols-4 gap-12">
+            <Step n="1" t="Audit" d="Mapping every manual step in your sales and ops cycles." />
+            <Step n="2" t="Architect" d="Designing the logic and API integration pathways." />
+            <Step n="3" t="Train" d="Feeding the AI your specific business logic and data." />
+            <Step n="4" t="Deploy" d="Full rollout with 14 days of live technical hyper-care." />
           </div>
         </div>
       </section>
 
-      {/* SECTION 4: Integration Ecosystem */}
-      <section className="py-20 bg-white dark:bg-brand-dark border-t border-gray-100 dark:border-gray-800 transition-colors duration-300">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold text-brand-navy dark:text-white mb-12">We Connect Your Favorite Tools</h2>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            {/* Using text representations for logos for simplicity, in a real app these would be SVGs */}
-            <span className="text-2xl font-bold text-gray-400">HubSpot</span>
-            <span className="text-2xl font-bold text-gray-400">Salesforce</span>
-            <span className="text-2xl font-bold text-gray-400">OpenAI</span>
-            <span className="text-2xl font-bold text-gray-400">Zapier</span>
-            <span className="text-2xl font-bold text-gray-400">Shopify</span>
-            <span className="text-2xl font-bold text-gray-400">Slack</span>
+      {/* 5. Benefits */}
+      <section className="py-section bg-white">
+        <div className="container">
+          <div className="grid lg:grid-cols-3 gap-12">
+            <Benefit icon={<Zap />} title="Hyper-Scalability" desc="Increase your capacity 10x without increasing headcount costs." />
+            <Benefit icon={<ShieldCheck />} title="Zero Error Rate" desc="AI doesn't get tired. It processes data perfectly, every single time." />
+            <Benefit icon={<Clock />} title="90-Second Response" desc="Close leads while they're hot, not 12 hours later." />
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: CTA */}
-      <section className="py-24 bg-brand-navy text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-brand-blue/5"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-3xl mx-auto">
-            <ShieldCheck className="text-brand-cyan mx-auto mb-6" size={64} />
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">Future-Proof Your Business Today</h2>
-            <p className="text-gray-300 mb-8 text-lg">
-              Don't get left behind. Schedule a discovery call to identify high-impact automation opportunities in your business.
-            </p>
-            <Link to="/contact">
-              <Button variant="primary" className="bg-brand-cyan hover:bg-cyan-600 text-brand-navy font-bold">
-                Automate Your Success
-              </Button>
-            </Link>
-          </div>
+      {/* 6. CTA */}
+      <section className="py-24 bg-brand-accent text-brand-secondary text-center">
+        <div className="container">
+          <h2 className="text-h2 mb-8">Ready to Automate Your ROI?</h2>
+          <p className="text-xl text-brand-secondary/80 mb-12 max-w-xl mx-auto">Schedule a strategy session to see how AI fits your specific business model.</p>
+          <Link to="/contact">
+            <Button variant="secondary" className="px-12 py-5 text-lg">Book Strategy Session</Button>
+          </Link>
         </div>
       </section>
     </div>
   );
 };
 
-const ServiceDetailCard: React.FC<{icon: React.ReactNode, title: string, description: string}> = ({ icon, title, description }) => (
-  <div className="p-8 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white dark:bg-slate-800 hover:-translate-y-1 transform duration-300">
-    <div className="mb-4 bg-brand-light dark:bg-slate-700 w-14 h-14 rounded-lg flex items-center justify-center">
-      {icon}
-    </div>
-    <h3 className="text-xl font-bold mb-3 text-brand-navy dark:text-white">{title}</h3>
-    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">{description}</p>
+const Deliverable = ({ icon, title, desc }: any) => (
+  <div className="p-10 bg-white rounded-3xl border border-brand-borderGrey hover:border-brand-accent transition-all shadow-sm hover:shadow-xl group">
+    <div className="text-brand-accent mb-6 transition-transform group-hover:scale-110">{React.cloneElement(icon, { size: 36 })}</div>
+    <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
+    <p className="text-brand-textGrey text-sm leading-relaxed">{desc}</p>
   </div>
 );
 
-const ImpactItem: React.FC<{label: string, value: string}> = ({ label, value }) => (
-  <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
-    <span className="text-gray-700 dark:text-gray-300 font-medium">{label}</span>
-    <span className="text-2xl font-bold text-brand-cyan">{value}</span>
+const Step = ({ n, t, d }: any) => (
+  <div className="text-center">
+    <div className="text-5xl font-black text-white/10 mb-6">{n}</div>
+    <h4 className="text-xl font-bold mb-3">{t}</h4>
+    <p className="text-sm text-gray-400 leading-relaxed">{d}</p>
+  </div>
+);
+
+const Benefit = ({ icon, title, desc }: any) => (
+  <div className="text-center p-8 bg-brand-lightGrey rounded-3xl border border-brand-borderGrey">
+    <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-8 text-brand-accent shadow-md">
+      {React.cloneElement(icon, { size: 36 })}
+    </div>
+    <h4 className="text-2xl font-bold mb-3 text-brand-secondary">{title}</h4>
+    <p className="text-brand-textGrey leading-relaxed">{desc}</p>
   </div>
 );
