@@ -22,10 +22,10 @@ export const ServiceWebDesign: React.FC = () => {
           <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
             The Digital Flagship Store
           </div>
-          <h1 className="text-h1 mb-6">
+          <h1 className="text-h1 mb-6 max-w-3xl mx-auto">
             Websites That <span className="text-brand-primary">Convert.</span>
           </h1>
-          <p className="text-xl text-brand-textGrey mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
             We build high-performance digital infrastructure designed to capture leads and outshine competitors in the crowded UK market.
           </p>
           <div className="flex justify-center">
@@ -41,27 +41,27 @@ export const ServiceWebDesign: React.FC = () => {
         <div className="container max-w-5xl">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="text-rose-500 font-bold uppercase tracking-widest text-xs">The Friction</span>
-              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">Your Website is Leaking Revenue.</h2>
-              <p className="text-brand-textGrey mb-6 leading-relaxed">
+              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Friction</span>
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6 max-w-md">Your Website is Leaking Revenue.</h2>
+              <p className="text-brand-textGrey mb-6 leading-relaxed max-w-[65ch]">
                 Most business sites are slow, cluttered, and fail to guide visitors toward a conversion. In the UK market, a 1-second delay in page load equals a 7% drop in conversions.
               </p>
               <ul className="space-y-4">
-                <li className="flex items-center gap-2 text-rose-500 font-medium">
-                   <ArrowRight size={16} /> High Bounce Rates
+                <li className="flex items-center gap-2 text-brand-secondary font-medium">
+                   <ArrowRight size={16} className="text-brand-primary" /> High Bounce Rates
                 </li>
-                <li className="flex items-center gap-2 text-rose-500 font-medium">
-                   <ArrowRight size={16} /> Poor Mobile Experience
+                <li className="flex items-center gap-2 text-brand-secondary font-medium">
+                   <ArrowRight size={16} className="text-brand-primary" /> Poor Mobile Experience
                 </li>
-                <li className="flex items-center gap-2 text-rose-500 font-medium">
-                   <ArrowRight size={16} /> Zero Lead Generation
+                <li className="flex items-center gap-2 text-brand-secondary font-medium">
+                   <ArrowRight size={16} className="text-brand-primary" /> Zero Lead Generation
                 </li>
               </ul>
             </div>
             <div className="bg-brand-lightGrey p-12 rounded-[2.5rem] border border-brand-primary/20 shadow-xl">
               <span className="text-brand-accent font-bold uppercase tracking-widest text-xs">The Growth Engine</span>
-              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">OptiScale Performance Architecture.</h2>
-              <p className="text-brand-textGrey mb-8 leading-relaxed">
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6 max-w-md">OptiScale Performance Architecture.</h2>
+              <p className="text-brand-textGrey mb-8 leading-relaxed max-w-[65ch]">
                 We rebuild your presence using performance-first React technology and psychology-driven layouts to guide users toward your primary goals.
               </p>
               <div className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-brand-borderGrey">
@@ -81,9 +81,9 @@ export const ServiceWebDesign: React.FC = () => {
       {/* 3. Deliverables List */}
       <section className="py-section bg-brand-lightGrey">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-24">
             <h2 className="text-h2 text-brand-secondary">What You Get</h2>
-            <p className="text-brand-textGrey mt-4">Complete end-to-end digital deliverables.</p>
+            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">Complete end-to-end digital deliverables.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <Deliverable icon={<Monitor />} title="Custom React Frontends" desc="Blazing fast navigation with no page refreshes for superior UX." />
@@ -93,14 +93,21 @@ export const ServiceWebDesign: React.FC = () => {
             <Deliverable icon={<RefreshCw />} title="Continuous Care" desc="24/7 security updates and performance optimization to stay competitive." />
             <Deliverable icon={<PenTool />} title="Brand Visuals" desc="High-end, bespoke design that builds instant trust and authority." />
           </div>
+          <div className="mt-20 text-center">
+            <Link to="/booking">
+              <Button variant="primary" className="px-10 py-5">
+                Audit My Current Site
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* 4. Process Steps */}
       <section className="py-section bg-brand-secondary text-white">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-h2">Building Your Digital Asset</h2>
+          <div className="text-center mb-24">
+            <h2 className="text-h2 max-w-3xl mx-auto">Building Your Digital Asset</h2>
           </div>
           <div className="grid md:grid-cols-4 gap-12">
             <Step n="1" t="Audit" d="Mapping competitors and current SEO performance." />
@@ -125,8 +132,8 @@ export const ServiceWebDesign: React.FC = () => {
       {/* 6. CTA */}
       <section className="py-24 bg-brand-primary text-center">
         <div className="container">
-          <h2 className="text-h2 text-white mb-8">Stop Settling for "Just a Website".</h2>
-          <p className="text-xl text-white/80 mb-12 max-w-xl mx-auto">Build a performance engine that works for you 24/7.</p>
+          <h2 className="text-h2 text-white mb-8 max-w-2xl mx-auto">Stop Settling for "Just a Website".</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-[65ch] mx-auto">Build a performance engine that works for you 24/7.</p>
           <Link to="/contact">
             <Button variant="secondary" className="px-12 py-5 text-lg">Start Your Rebuild</Button>
           </Link>
@@ -140,7 +147,7 @@ const Deliverable = ({ icon, title, desc }: any) => (
   <div className="p-10 bg-white rounded-3xl border border-brand-borderGrey hover:border-brand-primary transition-all shadow-sm hover:shadow-xl group">
     <div className="text-brand-primary mb-6 transition-transform group-hover:scale-110">{React.cloneElement(icon, { size: 36 })}</div>
     <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-brand-textGrey text-sm leading-relaxed">{desc}</p>
+    <p className="text-brand-textGrey text-sm leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );
 
@@ -158,6 +165,6 @@ const Benefit = ({ icon, title, desc }: any) => (
       {React.cloneElement(icon, { size: 36 })}
     </div>
     <h4 className="text-2xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-brand-textGrey leading-relaxed">{desc}</p>
+    <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );

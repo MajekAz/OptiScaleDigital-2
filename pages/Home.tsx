@@ -33,11 +33,11 @@ export const Home: React.FC = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
               <Star size={14} className="fill-brand-primary" /> UK's Data-Driven Growth Agency
             </div>
-            <h1 className="text-h1 mb-8">
+            <h1 className="text-h1 mb-8 max-w-4xl mx-auto">
               Scale Faster. <br />
               <span className="gradient-text">Automate Smarter.</span>
             </h1>
-            <p className="text-xl text-brand-textGrey mb-12 max-w-2xl mx-auto">
+            <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
               Engineering high-performance digital infrastructure for British companies ready to dominate their market through design and intelligence.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -59,9 +59,9 @@ export const Home: React.FC = () => {
       {/* 2. Services Overview */}
       <section className="py-section bg-white">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-24">
             <h2 className="text-h2 text-brand-secondary mb-6">Our Core Services</h2>
-            <p className="text-lg text-brand-textGrey max-w-2xl mx-auto">
+            <p className="text-lg text-brand-textGrey max-w-[65ch] mx-auto">
               Integrated technical solutions built to scale operations and maximize revenue.
             </p>
           </div>
@@ -106,7 +106,7 @@ export const Home: React.FC = () => {
             </div>
             <div>
               <h2 className="text-h2 mb-8 text-brand-secondary">Trust and Differentiation</h2>
-              <div className="space-y-10">
+              <div className="space-y-12">
                 <WhyItem 
                   icon={<ShieldCheck className="text-brand-primary" />}
                   title="Compliance as Standard"
@@ -123,6 +123,13 @@ export const Home: React.FC = () => {
                   description="We don't focus on vanity metrics. Every project is measured by its impact on your bottom line."
                 />
               </div>
+              <div className="mt-16">
+                <Link to="/booking">
+                  <Button variant="primary" className="px-8 py-4">
+                    Book Your Audit
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -131,9 +138,9 @@ export const Home: React.FC = () => {
       {/* 4. Process Overview */}
       <section className="py-section bg-brand-secondary text-white">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-h2">The OptiScale Growth Framework</h2>
-            <p className="text-brand-textGrey mt-4">A proven 4-step roadmap to digital maturity.</p>
+          <div className="text-center mb-24">
+            <h2 className="text-h2 max-w-3xl mx-auto">The OptiScale Growth Framework</h2>
+            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">A proven 4-step roadmap to digital maturity.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ProcessStep num="01" title="Discover" desc="Deep audit of your current digital infrastructure and bottlenecks." icon={<Search />} />
@@ -148,15 +155,15 @@ export const Home: React.FC = () => {
       <section className="py-section bg-white">
         <div className="container">
           <div className="bg-brand-secondary rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl">
-            <div className="lg:w-1/2 p-10 lg:p-20 flex flex-col justify-center">
-              <div className="text-brand-accent font-bold text-xs uppercase tracking-widest mb-6">Results-Focused Success</div>
+            <div className="lg:w-1/2 p-10 lg:p-24 flex flex-col justify-center">
+              <div className="text-brand-primary font-bold text-xs uppercase tracking-widest mb-6">Results-Focused Success</div>
               <h2 className="text-h3 text-white mb-6">NexTech: 40% Efficiency Gain</h2>
-              <p className="text-lg text-gray-400 mb-10">
+              <p className="text-lg text-gray-400 mb-12 max-w-[65ch]">
                 By implementing a custom AI agent for lead qualification, we helped NexTech increase their sales capacity by 3.5x without hiring a single new employee.
               </p>
               <div className="flex gap-12 mb-12">
-                <div><p className="text-3xl font-black text-brand-accent">3.5x</p><p className="text-xs text-gray-500 uppercase font-bold">ROI</p></div>
-                <div><p className="text-3xl font-black text-brand-accent">20hrs</p><p className="text-xs text-gray-500 uppercase font-bold">Weekly Reclaimed</p></div>
+                <div><p className="text-3xl font-black text-white">3.5x</p><p className="text-xs text-gray-500 uppercase font-bold">ROI</p></div>
+                <div><p className="text-3xl font-black text-white">20hrs</p><p className="text-xs text-gray-500 uppercase font-bold">Weekly Reclaimed</p></div>
               </div>
               <Link to="/contact">
                 <Button variant="outline" className="border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-secondary">Read Full Story</Button>
@@ -172,8 +179,8 @@ export const Home: React.FC = () => {
       {/* 6. CTA Section */}
       <section className="py-24 bg-brand-primary relative overflow-hidden">
         <div className="container relative z-10 text-center">
-          <h2 className="text-h2 text-white mb-8">Ready to Scale Your Business?</h2>
-          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+          <h2 className="text-h2 text-white mb-8 max-w-2xl mx-auto">Ready to Scale Your Business?</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-[65ch] mx-auto">
             Book your free digital growth audit today and let's discuss how we can transform your operations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -197,7 +204,7 @@ const ServiceCard: React.FC<{icon: any, title: string, description: string, link
       {icon}
     </div>
     <h3 className="text-2xl font-bold mb-4 text-brand-secondary">{title}</h3>
-    <p className="text-brand-textGrey mb-8 leading-relaxed">{description}</p>
+    <p className="text-brand-textGrey mb-8 leading-relaxed max-w-[65ch]">{description}</p>
     <div className="flex items-center gap-2 text-brand-primary font-bold text-sm tracking-widest uppercase">
       Learn More <ArrowRight size={16} />
     </div>
@@ -211,7 +218,7 @@ const WhyItem: React.FC<{icon: any, title: string, description: string}> = ({ ic
     </div>
     <div>
       <h4 className="text-xl font-bold mb-2 text-brand-secondary">{title}</h4>
-      <p className="text-brand-textGrey leading-relaxed">{description}</p>
+      <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">{description}</p>
     </div>
   </div>
 );

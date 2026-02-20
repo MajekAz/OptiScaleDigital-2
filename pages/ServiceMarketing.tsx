@@ -22,10 +22,10 @@ export const ServiceMarketing: React.FC = () => {
           <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
             The Performance Growth Engine
           </div>
-          <h1 className="text-h1 mb-6">
+          <h1 className="text-h1 mb-6 max-w-3xl mx-auto">
             Marketing That <br /><span className="text-brand-primary">Pays For Itself.</span>
           </h1>
-          <p className="text-xl text-brand-textGrey mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
             We don't focus on "likes" or impressions. We focus on leads and sales. Data-driven growth for businesses ready to lead.
           </p>
           <div className="flex justify-center">
@@ -41,16 +41,16 @@ export const ServiceMarketing: React.FC = () => {
         <div className="container max-w-5xl">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="text-rose-500 font-bold uppercase tracking-widest text-xs">The Problem</span>
-              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">Invisible to Your Ideal Customers.</h2>
-              <p className="text-brand-textGrey mb-6 leading-relaxed">
+              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Problem</span>
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6 max-w-md">Invisible to Your Ideal Customers.</h2>
+              <p className="text-brand-textGrey mb-6 leading-relaxed max-w-[65ch]">
                 Your brand is high-quality, but your digital footprint is silent. You're spending money on ads that generate "clicks" but zero measurable revenue. In the UK market, being second is being last.
               </p>
             </div>
             <div className="bg-brand-lightGrey p-12 rounded-[2.5rem] border border-brand-primary/20 shadow-xl">
               <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Scalable Solution</span>
-              <h2 className="text-h3 text-brand-secondary mt-2 mb-6">Data-Backed Growth Frameworks.</h2>
-              <p className="text-brand-textGrey mb-8 leading-relaxed">
+              <h2 className="text-h3 text-brand-secondary mt-2 mb-6 max-w-md">Data-Backed Growth Frameworks.</h2>
+              <p className="text-brand-textGrey mb-8 leading-relaxed max-w-[65ch]">
                 We combine technical SEO precision with aggressive PPC targeting to place your brand in front of customers exactly when they are ready to purchase.
               </p>
               <div className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-brand-borderGrey">
@@ -70,9 +70,9 @@ export const ServiceMarketing: React.FC = () => {
       {/* 3. Deliverables List */}
       <section className="py-section bg-brand-lightGrey">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-24">
             <h2 className="text-h2 text-brand-secondary">Growth Deliverables</h2>
-            <p className="text-brand-textGrey mt-4">Full-funnel marketing architecture for high-growth firms.</p>
+            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">Full-funnel marketing architecture for high-growth firms.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <Deliverable icon={<Search />} title="Technical SEO" desc="Climb to Page 1 with rigorous on-page, off-page, and technical audits." />
@@ -82,13 +82,20 @@ export const ServiceMarketing: React.FC = () => {
             <Deliverable icon={<BarChart />} title="Live ROI Dashboards" desc="Transparent, real-time reporting showing exactly where your budget goes." />
             <Deliverable icon={<MousePointer2 />} title="CPA Optimization" desc="Continuous A/B testing to lower your cost-per-acquisition month over month." />
           </div>
+          <div className="mt-20 text-center">
+            <Link to="/booking">
+              <Button variant="primary" className="px-10 py-5">
+                Request Growth Audit
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* 4. Process Steps */}
       <section className="py-section bg-brand-secondary text-white">
         <div className="container text-center">
-          <h2 className="text-h2 mb-16">The Road to Market Dominance</h2>
+          <h2 className="text-h2 mb-24 max-w-3xl mx-auto">The Road to Market Dominance</h2>
           <div className="grid md:grid-cols-4 gap-12">
             <Step n="1" t="Audit" d="Mapping competitors and current conversion leaks." />
             <Step n="2" t="Blueprint" d="Building a bespoke growth roadmap focused on your KPIs." />
@@ -112,8 +119,8 @@ export const ServiceMarketing: React.FC = () => {
       {/* 6. CTA */}
       <section className="py-24 bg-brand-primary text-center">
         <div className="container">
-          <h2 className="text-h2 text-white mb-8">Ready to Own Your Market?</h2>
-          <p className="text-xl text-white/80 mb-12 max-w-xl mx-auto">Get a free digital footprint analysis today and see where you're losing to competitors.</p>
+          <h2 className="text-h2 text-white mb-8 max-w-2xl mx-auto">Ready to Own Your Market?</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-[65ch] mx-auto">Get a free digital footprint analysis today and see where you're losing to competitors.</p>
           <Link to="/contact">
             <Button variant="secondary" className="px-12 py-5 text-lg">Claim Free Strategy</Button>
           </Link>
@@ -127,7 +134,7 @@ const Deliverable = ({ icon, title, desc }: any) => (
   <div className="p-10 bg-white rounded-3xl border border-brand-borderGrey hover:border-brand-primary transition-all shadow-sm hover:shadow-xl group">
     <div className="text-brand-primary mb-6 transition-transform group-hover:scale-110">{React.cloneElement(icon, { size: 36 })}</div>
     <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-brand-textGrey text-sm leading-relaxed">{desc}</p>
+    <p className="text-brand-textGrey text-sm leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );
 
@@ -145,6 +152,6 @@ const Benefit = ({ icon, title, desc }: any) => (
       {React.cloneElement(icon, { size: 36 })}
     </div>
     <h4 className="text-2xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-brand-textGrey leading-relaxed">{desc}</p>
+    <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );

@@ -75,10 +75,10 @@ export const Contact: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/90 via-brand-navy/80 to-brand-light/10 dark:to-brand-dark/10"></div>
         </div>
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
+          <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 tracking-tight max-w-4xl mx-auto">
             Get in <span className="text-brand-cyan">Touch</span>
           </h1>
-          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-200 max-w-[65ch] mx-auto leading-relaxed">
             Ready to start your project? Let's discuss how we can help your business grow.
           </p>
         </div>

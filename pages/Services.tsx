@@ -32,10 +32,10 @@ export const Services: React.FC = () => {
           <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
             Growth Infrastructure for UK Firms
           </div>
-          <h1 className="text-h1 mb-6">
+          <h1 className="text-h1 mb-6 max-w-4xl mx-auto">
             Strategic Solutions. <br /><span className="text-brand-primary">Measurable Growth.</span>
           </h1>
-          <p className="text-xl text-brand-textGrey mb-12 max-w-2xl mx-auto">
+          <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
             We engineer high-performance digital assets that solve operational bottlenecks and maximize revenue. Our services are built to work in synergy.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -82,9 +82,9 @@ export const Services: React.FC = () => {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="text-rose-500 font-bold uppercase tracking-widest text-xs">The Friction</span>
-              <h2 className="text-h2 text-brand-secondary mt-2 mb-6">Your Website is Leaking Revenue.</h2>
-              <p className="text-lg text-brand-textGrey mb-8">
+              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Friction</span>
+              <h2 className="text-h2 text-brand-secondary mt-2 mb-6 max-w-md">Your Website is Leaking Revenue.</h2>
+              <p className="text-lg text-brand-textGrey mb-8 max-w-[65ch]">
                 Most business sites are slow, cluttered, and fail to guide visitors toward a conversion. In the UK market, a 1-second delay in page load equals a 7% drop in conversions.
               </p>
               <div className="space-y-4 mb-10">
@@ -129,8 +129,8 @@ export const Services: React.FC = () => {
             </div>
             <div className="order-1 lg:order-2">
               <span className="text-brand-accent font-bold uppercase tracking-widest text-xs">The Intelligent Solution</span>
-              <h2 className="text-h2 text-brand-secondary mt-2 mb-6">Operational Drag is Optional.</h2>
-              <p className="text-lg text-brand-textGrey mb-8">
+              <h2 className="text-h2 text-brand-secondary mt-2 mb-6 max-w-md">Operational Drag is Optional.</h2>
+              <p className="text-lg text-brand-textGrey mb-8 max-w-[65ch]">
                 Your team is likely losing 40% of their day to manual data entry and repetitive support queries. We implement "Digital Employees" that handle the drudgery with perfect precision.
               </p>
               <div className="grid grid-cols-2 gap-8 mb-10">
@@ -154,10 +154,10 @@ export const Services: React.FC = () => {
       {/* 5. Digital Marketing Section */}
       <section id="digital-marketing" className="py-section bg-brand-lightGrey">
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-24">
             <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">Growth Positioning</span>
             <h2 className="text-h2 text-brand-secondary mt-2 mb-6">Marketing That Pays for Itself.</h2>
-            <p className="text-lg text-brand-textGrey">
+            <p className="text-lg text-brand-textGrey max-w-[65ch] mx-auto">
               We don't focus on "likes" or impressions. We build a predictable funnel that converts high-intent traffic into qualified sales opportunities.
             </p>
           </div>
@@ -191,8 +191,8 @@ export const Services: React.FC = () => {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-h2 mb-6">The OptiScale Growth Loop</h2>
-              <p className="text-lg text-brand-textGrey mb-10">
+              <h2 className="text-h2 mb-6 max-w-xl">The OptiScale Growth Loop</h2>
+              <p className="text-lg text-brand-textGrey mb-10 max-w-[65ch]">
                 True scale happens when your services work in synergy. Our "system-based" growth model ensures your infrastructure supports your marketing, and your AI handles the volume.
               </p>
               <div className="space-y-6">
@@ -230,8 +230,8 @@ export const Services: React.FC = () => {
       {/* 7. Final CTA Section */}
       <section className="py-24 bg-brand-primary relative overflow-hidden">
         <div className="container relative z-10 text-center">
-          <h2 className="text-h2 text-white mb-8">Stop Leaving Revenue on the Table.</h2>
-          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+          <h2 className="text-h2 text-white mb-8 max-w-2xl mx-auto">Stop Leaving Revenue on the Table.</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-[65ch] mx-auto">
             Our discovery calls aren't sales pitches—they're technical audits. Let's find the bottlenecks in your business today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -258,7 +258,7 @@ const ServiceOverviewCard: React.FC<{icon: any, title: string, description: stri
       {icon}
     </div>
     <h3 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h3>
-    <p className="text-brand-textGrey text-sm mb-6 leading-relaxed">{description}</p>
+    <p className="text-brand-textGrey text-sm mb-6 leading-relaxed max-w-[65ch]">{description}</p>
     <div className="flex items-center gap-2 text-brand-primary font-bold text-xs tracking-widest uppercase">
       Learn More <ArrowRight size={14} />
     </div>
@@ -282,7 +282,7 @@ const DeliverableCard: React.FC<{icon: any, title: string, desc: string}> = ({ i
 const OpportunityCard: React.FC<{title: string, desc: string}> = ({ title, desc }) => (
   <div className="p-8 bg-brand-lightGrey rounded-3xl border border-brand-borderGrey">
     <h4 className="text-lg font-bold text-brand-secondary mb-3">{title}</h4>
-    <p className="text-brand-textGrey text-sm leading-relaxed">{desc}</p>
+    <p className="text-brand-textGrey text-sm leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );
 
@@ -292,7 +292,7 @@ const MarketingFunnelStep: React.FC<{icon: any, step: string, desc: string}> = (
       {React.cloneElement(icon, { size: 28 })}
     </div>
     <h4 className="text-xl font-bold mb-2 text-brand-secondary">{step}</h4>
-    <p className="text-brand-textGrey text-sm leading-relaxed px-4">{desc}</p>
+    <p className="text-brand-textGrey text-sm leading-relaxed px-4 max-w-[65ch] mx-auto">{desc}</p>
   </div>
 );
 
@@ -303,7 +303,7 @@ const SynergyBox: React.FC<{title: string, desc: string}> = ({ title, desc }) =>
     </div>
     <div>
       <h4 className="font-bold mb-1">{title}</h4>
-      <p className="text-sm text-brand-textGrey leading-relaxed">{desc}</p>
+      <p className="text-sm text-brand-textGrey leading-relaxed max-w-[65ch]">{desc}</p>
     </div>
   </div>
 );

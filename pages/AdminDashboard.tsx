@@ -252,7 +252,10 @@ export const AdminDashboard: React.FC = () => {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-white">Post Management</h1>
-                <Button onClick={() => setActiveView('create')} className="flex items-center gap-2"><Plus size={18} /> New Article</Button>
+                <Button onClick={() => {
+                  setCurrentPost({ title: '', excerpt: '', content: '', author: 'OptiScale Team', category: 'Web Design', image: '', status: 'published', scheduled_at: '', date: new Date().toISOString().split('T')[0] });
+                  setActiveView('create');
+                }} className="flex items-center gap-2"><Plus size={18} /> New Article</Button>
               </div>
               <div className="bg-brand-navy rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
                 <table className="w-full text-left">
@@ -278,6 +281,179 @@ export const AdminDashboard: React.FC = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+          )}
+
+          {activeView === 'create' && (
+            <div className="space-y-8 animate-fade-in">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-black text-white">{currentPost.id ? 'Edit Article' : 'Craft New Article'}</h1>
+                  <p className="text-slate-500 mt-2">Publish high-performance insights to your audience.</p>
+                </div>
+                <div className="flex gap-4">
+                  <button 
+                    onClick={() => setActiveView('all-posts')}
+                    className="px-6 py-3 rounded-xl border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition-all font-bold text-sm"
+                  >
+                    Discard
+                  </button>
+                  <Button onClick={(e) => handleSave(e)} className="flex items-center gap-2">
+                    {isLoading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                    {currentPost.id ? 'Update Post' : 'Publish Now'}
+                  </Button>
+                </div>
+              </div>
+
+              <form onSubmit={handleSave} className="grid lg:grid-cols-3 gap-8">
+                {/* Main Content Area */}
+                <div className="lg:col-span-2 space-y-6">
+                  <div className="bg-brand-navy p-8 rounded-3xl border border-slate-800 shadow-xl space-y-6">
+                    <div>
+                      <label className="block text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Article Headline</label>
+                      <input 
+                        type="text"
+                        placeholder="Enter a compelling title..."
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-6 py-4 text-xl font-bold text-white focus:border-brand-blue outline-none transition-all"
+                        value={currentPost.title}
+                        onChange={e => setCurrentPost({...currentPost, title: e.target.value})}
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Short Excerpt</label>
+                      <textarea 
+                        placeholder="A brief summary for the blog listing page..."
+                        rows={3}
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-6 py-4 text-slate-300 focus:border-brand-blue outline-none transition-all resize-none"
+                        value={currentPost.excerpt}
+                        onChange={e => setCurrentPost({...currentPost, excerpt: e.target.value})}
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3">Article Content (Markdown Supported)</label>
+                      <textarea 
+                        placeholder="Write your masterpiece here..."
+                        rows={15}
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-6 py-4 text-slate-300 focus:border-brand-blue outline-none transition-all font-mono text-sm leading-relaxed"
+                        value={currentPost.content}
+                        onChange={e => setCurrentPost({...currentPost, content: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sidebar Settings */}
+                <div className="space-y-6">
+                  <div className="bg-brand-navy p-8 rounded-3xl border border-slate-800 shadow-xl space-y-6">
+                    <h3 className="text-white font-bold flex items-center gap-2 border-b border-slate-800 pb-4 mb-2">
+                      <Info size={18} className="text-brand-blue" /> Post Settings
+                    </h3>
+                    
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Category</label>
+                      <select 
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 text-sm text-white focus:border-brand-blue outline-none"
+                        value={currentPost.category}
+                        onChange={e => setCurrentPost({...currentPost, category: e.target.value})}
+                      >
+                        <option>Web Design</option>
+                        <option>AI Automation</option>
+                        <option>Digital Marketing</option>
+                        <option>Case Study</option>
+                        <option>Company News</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Author Name</label>
+                      <input 
+                        type="text"
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 text-sm text-white focus:border-brand-blue outline-none"
+                        value={currentPost.author}
+                        onChange={e => setCurrentPost({...currentPost, author: e.target.value})}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Publication Date</label>
+                      <input 
+                        type="date"
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 text-sm text-white focus:border-brand-blue outline-none"
+                        value={currentPost.date}
+                        onChange={e => setCurrentPost({...currentPost, date: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-brand-navy p-8 rounded-3xl border border-slate-800 shadow-xl space-y-6">
+                    <h3 className="text-white font-bold flex items-center gap-2 border-b border-slate-800 pb-4 mb-2">
+                      <ImageIcon size={18} className="text-brand-cyan" /> Featured Image
+                    </h3>
+                    
+                    <div className="space-y-4">
+                      <div className="aspect-video w-full bg-slate-900 rounded-xl border-2 border-dashed border-slate-800 flex flex-col items-center justify-center overflow-hidden group relative">
+                        {currentPost.image ? (
+                          <>
+                            <img src={currentPost.image} alt="Preview" className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                              <button onClick={() => setCurrentPost({...currentPost, image: ''})} className="text-white bg-rose-500 p-2 rounded-full"><X size={20}/></button>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-center p-6">
+                            <ImagePlus size={32} className="text-slate-700 mx-auto mb-2" />
+                            <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">No Image Selected</p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div>
+                        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Image URL</label>
+                        <div className="flex gap-2">
+                          <input 
+                            type="text"
+                            placeholder="https://..."
+                            className="flex-1 bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 text-xs text-white focus:border-brand-blue outline-none"
+                            value={currentPost.image}
+                            onChange={e => setCurrentPost({...currentPost, image: e.target.value})}
+                          />
+                        </div>
+                        <p className="text-[10px] text-slate-600 mt-2">Use Unsplash or Picsum for high-quality placeholders.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-brand-navy p-8 rounded-3xl border border-slate-800 shadow-xl">
+                    <div className="flex items-center justify-between mb-6">
+                      <span className="text-xs font-bold text-white uppercase tracking-widest">Visibility</span>
+                      <div className={`px-2 py-1 rounded text-[10px] font-black uppercase ${currentPost.status === 'published' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-slate-500/10 text-slate-500'}`}>
+                        {currentPost.status}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button 
+                        type="button"
+                        onClick={() => setCurrentPost({...currentPost, status: 'draft'})}
+                        className={`py-2 rounded-lg text-xs font-bold border transition-all ${currentPost.status === 'draft' ? 'bg-slate-700 border-slate-600 text-white' : 'border-slate-800 text-slate-500 hover:border-slate-700'}`}
+                      >
+                        Draft
+                      </button>
+                      <button 
+                        type="button"
+                        onClick={() => setCurrentPost({...currentPost, status: 'published'})}
+                        className={`py-2 rounded-lg text-xs font-bold border transition-all ${currentPost.status === 'published' ? 'bg-brand-blue border-brand-blue text-white' : 'border-slate-800 text-slate-500 hover:border-brand-blue'}`}
+                      >
+                        Publish
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           )}
         </div>

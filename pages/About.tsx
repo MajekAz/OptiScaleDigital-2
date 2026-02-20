@@ -34,10 +34,10 @@ export const About: React.FC = () => {
             <span className="inline-block px-4 py-1 rounded-full bg-brand-primary/20 border border-brand-primary/30 text-brand-primary text-xs font-bold uppercase tracking-widest mb-6">
               Our Identity
             </span>
-            <h1 className="text-h1 mb-6">
+            <h1 className="text-h1 mb-6 max-w-2xl">
               Engineering the <br /><span className="text-brand-primary">Growth Engines</span> of Tomorrow.
             </h1>
-            <p className="text-xl text-brand-textGrey mb-10 leading-relaxed">
+            <p className="text-xl text-brand-textGrey mb-10 leading-relaxed max-w-[65ch]">
               OptiScale Digital helps ambitious UK businesses bridge the gap between manual operations and automated, high-performance scale. We don't just build websites; we build digital assets that yield measurable returns.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -69,14 +69,14 @@ export const About: React.FC = () => {
             <div>
               <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Origin</span>
               <h2 className="text-h2 text-brand-secondary mt-2 mb-6">Born from a Need for Precision.</h2>
-              <div className="space-y-6 text-brand-textGrey text-lg leading-relaxed">
+              <div className="space-y-6 text-brand-textGrey text-lg leading-relaxed max-w-[65ch]">
                 <p>
                   OptiScale Digital was founded in London with a single conviction: most digital agencies focus on aesthetics while ignoring the underlying systems that actually drive business growth.
                 </p>
                 <p>
                   We saw too many UK businesses struggling with manual processes, outdated lead-capture systems, and "silent" digital footprints. We were created to fix that—combining high-end design with deep AI integration to reclaim thousands of hours for our clients.
                 </p>
-                <p className="font-semibold text-brand-secondary italic">
+                <p className="font-semibold text-brand-secondary italic max-w-[65ch]">
                   "Our mission isn't just to be another vendor. We aim to be the technical foundation upon which your next decade of growth is built."
                 </p>
               </div>
@@ -94,7 +94,7 @@ export const About: React.FC = () => {
                 <Target size={32} />
               </div>
               <h3 className="text-h3 text-brand-secondary mb-4">Our Mission</h3>
-              <p className="text-brand-textGrey leading-relaxed">
+              <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">
                 To empower 500+ UK businesses by 2030 with autonomous systems and conversion-focused design, effectively doubling their operational capacity without increasing overhead.
               </p>
             </div>
@@ -103,10 +103,17 @@ export const About: React.FC = () => {
                 <Globe size={32} />
               </div>
               <h3 className="text-h3 text-brand-secondary mb-4">Our Vision</h3>
-              <p className="text-brand-textGrey leading-relaxed">
+              <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">
                 To become the premier UK partner for digital transformation—where "OptiScale" becomes synonymous with precision engineering and ethical AI business scaling.
               </p>
             </div>
+          </div>
+          <div className="mt-16 text-center">
+            <Link to="/booking">
+              <Button variant="primary" className="px-10 py-5">
+                Start Your Transformation
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -116,7 +123,7 @@ export const About: React.FC = () => {
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-h2 text-brand-secondary mb-4">The Values We Live By</h2>
-            <p className="text-brand-textGrey max-w-xl mx-auto">These four pillars guide every decision, every line of code, and every client interaction.</p>
+            <p className="text-brand-textGrey max-w-[65ch] mx-auto">These four pillars guide every decision, every line of code, and every client interaction.</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ValueCard 
@@ -149,8 +156,8 @@ export const About: React.FC = () => {
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-h2 mb-8">The Strategic Advantage.</h2>
-              <p className="text-lg text-brand-textGrey mb-10">
+              <h2 className="text-h2 mb-8 max-w-xl">The Strategic Advantage.</h2>
+              <p className="text-lg text-brand-textGrey mb-10 max-w-[65ch]">
                 Most agencies stop at the frontend. We go deep into your operations. By integrating **Systems Thinking** with **AI Intelligence**, we create a compounding effect of growth.
               </p>
               <ul className="space-y-6">
@@ -178,7 +185,7 @@ export const About: React.FC = () => {
                <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
                  <HeartHandshake className="text-brand-primary" /> Our Commitment to You
                </h3>
-               <p className="text-brand-textGrey mb-8 leading-relaxed">
+               <p className="text-brand-textGrey mb-8 leading-relaxed max-w-[65ch]">
                  When you partner with us, you aren't just hiring a service provider. You are investing in a technical partner committed to your long-term success. We treat your data with bank-grade security and your growth as our own.
                </p>
                <div className="flex items-center gap-4 py-4 border-t border-white/10">
@@ -195,15 +202,22 @@ export const About: React.FC = () => {
       {/* 6. Process Overview */}
       <section className="py-section bg-brand-lightGrey">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-24">
             <h2 className="text-h2 text-brand-secondary mb-4">Structured & Repeatable Success</h2>
-            <p className="text-brand-textGrey">Our 4-step framework for taking you from static to scalable.</p>
+            <p className="text-brand-textGrey max-w-[65ch] mx-auto">Our 4-step framework for taking you from static to scalable.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ProcessCard num="01" title="Discovery" desc="Identifying bottlenecks and growth levers through a 360° digital audit." icon={<Search />} />
             <ProcessCard num="02" title="Strategy" desc="Architecting a bespoke roadmap focused on your unique KPIs." icon={<FileText />} />
             <ProcessStep num="03" title="Execution" desc="Rapid, clean development and integration of AI agents." icon={<Rocket />} />
             <ProcessStep num="04" title="Optimisation" desc="Data-driven refinement to maximize ROI month-over-month." icon={<BarChart3 />} />
+          </div>
+          <div className="mt-20 text-center">
+            <Link to="/contact">
+              <Button variant="outline" className="px-10 py-5 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white">
+                Discuss Your Roadmap
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -226,7 +240,7 @@ export const About: React.FC = () => {
             </div>
             <div className="md:w-2/3 p-10 lg:p-16 flex flex-col justify-center">
               <h3 className="text-2xl font-bold text-brand-secondary mb-6">A Message from Our Founder</h3>
-              <p className="text-brand-textGrey italic mb-8 leading-relaxed">
+              <p className="text-brand-textGrey italic mb-8 leading-relaxed max-w-[65ch]">
                 "I started OptiScale because I was tired of seeing brilliant British companies get left behind because they didn't have the technical bandwidth to scale. We're here to change that by providing the same level of engineering and AI strategy that the Fortune 500 uses, but tailored for the UK's most ambitious firms."
               </p>
               <div className="flex gap-4">
@@ -242,8 +256,8 @@ export const About: React.FC = () => {
       {/* 8. CTA Section */}
       <section className="py-24 bg-brand-primary relative overflow-hidden">
         <div className="container relative z-10 text-center">
-          <h2 className="text-h2 text-white mb-8">Ready to Scale Your Success?</h2>
-          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+          <h2 className="text-h2 text-white mb-8 max-w-2xl mx-auto">Ready to Scale Your Success?</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-[65ch] mx-auto">
             Our discovery calls aren't sales pitches. They are deep-dives into your current systems to find hidden revenue.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -267,7 +281,7 @@ const ValueCard = ({ icon, title, desc }: any) => (
       {React.cloneElement(icon, { size: 24 })}
     </div>
     <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-sm text-brand-textGrey leading-relaxed">{desc}</p>
+    <p className="text-sm text-brand-textGrey leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );
 
@@ -278,7 +292,7 @@ const ProcessCard = ({ num, title, desc, icon }: any) => (
       {React.cloneElement(icon, { size: 28 })}
     </div>
     <h4 className="text-xl font-bold mb-2 relative z-10 text-brand-secondary">{title}</h4>
-    <p className="text-sm text-brand-textGrey leading-relaxed relative z-10">{desc}</p>
+    <p className="text-sm text-brand-textGrey leading-relaxed relative z-10 max-w-[65ch]">{desc}</p>
   </div>
 );
 
