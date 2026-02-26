@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { 
   Users, ShieldCheck, Zap, Target, Lightbulb, 
   TrendingUp, Search, Rocket, BarChart3, CheckCircle2, 
-  ArrowRight, Award, Globe, HeartHandshake
+  ArrowRight, Award, Globe, HeartHandshake, Bot
 } from 'lucide-react';
 import { Button } from '../components/Button';
 import { IMAGES } from '../assets';
@@ -30,17 +30,17 @@ export const About: React.FC = () => {
         </div>
         
         <div className="container relative z-10">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-1 rounded-full bg-brand-primary/20 border border-brand-primary/30 text-brand-primary text-xs font-bold uppercase tracking-widest mb-6">
               Our Identity
             </span>
-            <h1 className="text-h1 mb-6 max-w-2xl">
+            <h1 className="text-h1 mb-6 max-w-2xl mx-auto">
               Engineering the <br /><span className="text-brand-primary">Growth Engines</span> of Tomorrow.
             </h1>
-            <p className="text-xl text-brand-textGrey mb-10 leading-relaxed max-w-[65ch]">
+            <p className="text-xl text-brand-textGrey mb-10 leading-relaxed max-w-[65ch] mx-auto">
               OptiScale Digital helps ambitious UK businesses bridge the gap between manual operations and automated, high-performance scale. We don't just build websites; we build digital assets that yield measurable returns.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/booking">
                 <Button variant="primary" className="px-10 py-5">Book a Strategy Call</Button>
               </Link>
@@ -222,32 +222,58 @@ export const About: React.FC = () => {
         </div>
       </section>
 
-      {/* 7. Leadership Section */}
+      {/* 7. Why Choose OptiScale Section */}
       <section className="py-section bg-white">
         <div className="container">
-          <div className="max-w-4xl mx-auto bg-brand-lightGrey rounded-[3rem] overflow-hidden border border-brand-borderGrey flex flex-col md:flex-row shadow-xl">
-            <div className="md:w-1/3 bg-brand-secondary relative min-h-[350px]">
-              <img 
-                src={IMAGES.about.team.david} 
-                alt="David Thorne - CEO" 
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-secondary to-transparent"></div>
-              <div className="absolute bottom-6 left-6">
-                <p className="text-white font-black text-xl">David Thorne</p>
-                <p className="text-brand-primary text-xs font-bold uppercase tracking-widest">Founder & CEO</p>
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary mb-4">Why Choose OptiScale?</h2>
+            <p className="text-brand-textGrey max-w-[65ch] mx-auto">We deliver high-performance digital infrastructure that outpaces the competition.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-10 bg-brand-lightGrey rounded-[2.5rem] border border-brand-borderGrey hover:border-brand-primary transition-all group shadow-sm hover:shadow-xl">
+              <div className="w-14 h-14 bg-brand-primary/10 rounded-2xl flex items-center justify-center text-brand-primary mb-8 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                <Zap size={32} />
               </div>
+              <h3 className="text-2xl font-bold text-brand-secondary mb-4">Speed & Performance</h3>
+              <p className="text-brand-textGrey leading-relaxed mb-6">Our React-based architectures ensure your site loads in milliseconds, providing a superior user experience and boosting SEO rankings.</p>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2 text-sm font-medium text-brand-secondary">
+                  <CheckCircle2 size={18} className="text-brand-accent" /> Blazing Fast Load Times
+                </li>
+                <li className="flex items-center gap-2 text-sm font-medium text-brand-secondary">
+                  <CheckCircle2 size={18} className="text-brand-accent" /> Optimized for Core Web Vitals
+                </li>
+              </ul>
             </div>
-            <div className="md:w-2/3 p-10 lg:p-16 flex flex-col justify-center">
-              <h3 className="text-2xl font-bold text-brand-secondary mb-6">A Message from Our Founder</h3>
-              <p className="text-brand-textGrey italic mb-8 leading-relaxed max-w-[65ch]">
-                "I started OptiScale because I was tired of seeing brilliant British companies get left behind because they didn't have the technical bandwidth to scale. We're here to change that by providing the same level of engineering and AI strategy that the Fortune 500 uses, but tailored for the UK's most ambitious firms."
-              </p>
-              <div className="flex gap-4">
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-brand-secondary hover:text-brand-primary transition-colors">
-                  LinkedIn Profile <ArrowRight size={14} className="inline ml-1" />
-                </a>
+            <div className="p-10 bg-brand-lightGrey rounded-[2.5rem] border border-brand-borderGrey hover:border-brand-primary transition-all group shadow-sm hover:shadow-xl">
+              <div className="w-14 h-14 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent mb-8 group-hover:bg-brand-accent group-hover:text-white transition-all">
+                <Bot size={32} />
               </div>
+              <h3 className="text-2xl font-bold text-brand-secondary mb-4">AI-First Strategy</h3>
+              <p className="text-brand-textGrey leading-relaxed mb-6">We don't just add AI; we build it into your core operations to automate lead capture, qualification, and customer engagement.</p>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2 text-sm font-medium text-brand-secondary">
+                  <CheckCircle2 size={18} className="text-brand-accent" /> Custom AI Agents
+                </li>
+                <li className="flex items-center gap-2 text-sm font-medium text-brand-secondary">
+                  <CheckCircle2 size={18} className="text-brand-accent" /> Automated Workflows
+                </li>
+              </ul>
+            </div>
+            <div className="p-10 bg-brand-lightGrey rounded-[2.5rem] border border-brand-borderGrey hover:border-brand-primary transition-all group shadow-sm hover:shadow-xl">
+              <div className="w-14 h-14 bg-brand-primary/10 rounded-2xl flex items-center justify-center text-brand-primary mb-8 group-hover:bg-brand-primary group-hover:text-white transition-all">
+                <TrendingUp size={32} />
+              </div>
+              <h3 className="text-2xl font-bold text-brand-secondary mb-4">ROI-Driven Results</h3>
+              <p className="text-brand-textGrey leading-relaxed mb-6">Every project is measured by its impact on your bottom line. We focus on conversion rates and revenue growth, not vanity metrics.</p>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2 text-sm font-medium text-brand-secondary">
+                  <CheckCircle2 size={18} className="text-brand-accent" /> Conversion Optimization
+                </li>
+                <li className="flex items-center gap-2 text-sm font-medium text-brand-secondary">
+                  <CheckCircle2 size={18} className="text-brand-accent" /> Measurable Growth
+                </li>
+              </ul>
             </div>
           </div>
         </div>
