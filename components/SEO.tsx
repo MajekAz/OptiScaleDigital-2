@@ -60,7 +60,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateMeta('og:title', title);
     updateMeta('og:description', description);
     updateMeta('og:url', canonicalUrl);
-    updateMeta('og:image', "https://storage.googleapis.com/static-content-prod/file-80696956-6565-4d76-8025-10313f8c8715");
+    updateMeta('og:image', "https://www.optiscaledigital.co.uk/social-share.jpg");
     updateMeta('og:type', 'website');
     updateMeta('og:locale', 'en_GB');
 
@@ -78,7 +78,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateTwitter('twitter:card', 'summary_large_image');
     updateTwitter('twitter:title', title);
     updateTwitter('twitter:description', description);
-    updateTwitter('twitter:image', "https://storage.googleapis.com/static-content-prod/file-80696956-6565-4d76-8025-10313f8c8715");
+    updateTwitter('twitter:image', "https://www.optiscaledigital.co.uk/social-share.jpg");
 
   }, [title, description, keywords, canonicalUrl]);
 
