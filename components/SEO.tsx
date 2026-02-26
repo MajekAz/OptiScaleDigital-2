@@ -61,6 +61,10 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateMeta('og:description', description);
     updateMeta('og:url', canonicalUrl);
     updateMeta('og:image', "https://www.optiscaledigital.co.uk/social-share.jpg");
+    updateMeta('og:image:secure_url', "https://www.optiscaledigital.co.uk/social-share.jpg");
+    updateMeta('og:image:type', "image/jpeg");
+    updateMeta('og:image:width', "1200");
+    updateMeta('og:image:height', "630");
     updateMeta('og:type', 'website');
     updateMeta('og:locale', 'en_GB');
 
