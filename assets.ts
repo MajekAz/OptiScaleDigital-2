@@ -4,8 +4,8 @@
 
 export const IMAGES = {
   // Brand Identity
-  logo: "./images/logo/company-logo.svg",
-  logoWhite: "./images/logo/company-logo-white.svg",
+  logo: "/images/logo/company-logo.svg",
+  logoWhite: "/images/logo/company-logo-white.svg",
 
   // Page Specific Images
   home: {

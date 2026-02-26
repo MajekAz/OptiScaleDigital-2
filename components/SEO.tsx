@@ -9,7 +9,7 @@ interface SEOProps {
 
 export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
   const location = useLocation();
-  const baseUrl = "https://www.optiscaledigital.co.uk"; 
+  const baseUrl = "https://optiscaledigital.co.uk"; 
   // Ensure no trailing slash for consistency
   const canonicalUrl = `${baseUrl}${location.pathname === '/' ? '' : location.pathname.replace(/\/$/, '')}`;
 
@@ -25,6 +25,15 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
       document.head.appendChild(metaDescription);
     }
     metaDescription.setAttribute('content', description);
+
+    // 2b. Update Meta Title (for consistency with prompt)
+    let metaTitle = document.querySelector('meta[name="title"]');
+    if (!metaTitle) {
+      metaTitle = document.createElement('meta');
+      metaTitle.setAttribute('name', 'title');
+      document.head.appendChild(metaTitle);
+    }
+    metaTitle.setAttribute('content', title);
 
     // 3. Update Keywords
     if (keywords) {
@@ -60,8 +69,8 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateMeta('og:title', title);
     updateMeta('og:description', description);
     updateMeta('og:url', canonicalUrl);
-    updateMeta('og:image', "https://www.optiscaledigital.co.uk/social-share.jpg");
-    updateMeta('og:image:secure_url', "https://www.optiscaledigital.co.uk/social-share.jpg");
+    updateMeta('og:image', "https://optiscaledigital.co.uk/og-image.jpg");
+    updateMeta('og:image:secure_url', "https://optiscaledigital.co.uk/og-image.jpg");
     updateMeta('og:image:type', "image/jpeg");
     updateMeta('og:image:width', "1200");
     updateMeta('og:image:height', "630");
@@ -82,7 +91,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateTwitter('twitter:card', 'summary_large_image');
     updateTwitter('twitter:title', title);
     updateTwitter('twitter:description', description);
-    updateTwitter('twitter:image', "https://www.optiscaledigital.co.uk/social-share.jpg");
+    updateTwitter('twitter:image', "https://optiscaledigital.co.uk/og-image.jpg");
 
   }, [title, description, keywords, canonicalUrl]);
 
