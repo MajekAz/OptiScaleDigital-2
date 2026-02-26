@@ -3,7 +3,7 @@ import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { SchemaMarkup } from './SchemaMarkup';
-import { CookieConsent } from './CookieConsent';
+import { GDPRBanner } from './GDPRBanner';
 import { WhatsAppButton } from './WhatsAppButton';
 import { useLocation } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </main>
       <Footer />
       <WhatsAppButton />
-      <CookieConsent />
+      <GDPRBanner />
     </div>
   );
 };
