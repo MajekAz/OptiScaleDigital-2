@@ -6,53 +6,78 @@ export const CookieConsent: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user has already made a choice
-    const consent = localStorage.getItem('optiscale_cookie_consent');
-    if (!consent) {
-      // Small delay to make the entrance smoother
-      const timer = setTimeout(() => setIsVisible(true), 500);
-      return () => clearTimeout(timer);
-    }
+    // Small delay to ensure the component is fully mounted
+    const timer = setTimeout(() => {
+      try {
+        const consent = localStorage.getItem('optiscale_cookie_consent');
+        const reset = window.location.href.includes('reset_consent=true');
+        
+        if (reset) {
+          localStorage.removeItem('optiscale_cookie_consent');
+          setIsVisible(true);
+        } else if (!consent) {
+          setIsVisible(true);
+        }
+      } catch (e) {
+        // Fallback for restricted storage
+        setIsVisible(true);
+      }
+    }, 800);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('optiscale_cookie_consent', 'accepted');
+    try {
+      localStorage.setItem('optiscale_cookie_consent', 'accepted');
+    } catch (e) {}
     setIsVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem('optiscale_cookie_consent', 'declined');
+    try {
+      localStorage.setItem('optiscale_cookie_consent', 'declined');
+    } catch (e) {}
     setIsVisible(false);
   };
 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-6 bg-brand-navy/95 backdrop-blur-md border-t border-white/10 shadow-2xl animate-fade-in-up">
-      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex-1">
-          <h3 className="text-white font-bold mb-2 flex items-center gap-2">
-            🍪 We value your privacy
-          </h3>
-          <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
-            We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies. 
-            For more information, please visit our <Link to="/privacy-policy" className="text-brand-cyan hover:text-white transition-colors underline decoration-brand-cyan/30 underline-offset-4">Privacy Policy</Link> and <Link to="/cookie-policy" className="text-brand-cyan hover:text-white transition-colors underline decoration-brand-cyan/30 underline-offset-4">Cookie Policy</Link>.
+    <div className="fixed bottom-0 left-0 right-0 md:bottom-8 md:right-8 md:left-auto md:max-w-md z-[9999] p-4 md:p-0 animate-fade-in-up">
+      <div className="bg-[#0F172A] border border-white/10 rounded-[24px] shadow-2xl p-6 md:p-8 relative overflow-hidden">
+        {/* Subtle accent glow */}
+        <div className="absolute -top-12 -right-12 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl"></div>
+        
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg>
+            </div>
+            <h3 className="text-white font-bold text-lg tracking-tight">
+              Privacy & Cookies
+            </h3>
+          </div>
+          
+          <p className="text-slate-400 text-sm leading-relaxed mb-8">
+            We use cookies to engineer a better experience and analyze our growth. By clicking "Accept All", you consent to our high-performance data strategy. 
+            Read our <Link to="/privacy-policy" className="text-blue-400 hover:text-white transition-colors font-semibold">Privacy Policy</Link>.
           </p>
-        </div>
-        <div className="flex gap-4 shrink-0 w-full md:w-auto">
-          <button 
-            onClick={handleDecline}
-            className="flex-1 md:flex-none px-6 py-2.5 text-sm font-semibold text-gray-300 hover:text-white transition-colors border border-gray-600 rounded-lg hover:border-gray-400 hover:bg-white/5"
-          >
-            Decline
-          </button>
-          <Button 
-            variant="primary" 
-            onClick={handleAccept}
-            className="flex-1 md:flex-none px-8 py-2.5 text-sm font-bold shadow-lg shadow-brand-blue/20"
-          >
-            Accept All
-          </Button>
+          
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button 
+              variant="primary" 
+              onClick={handleAccept}
+              className="flex-1 py-3 text-sm font-bold shadow-lg shadow-blue-600/20"
+            >
+              Accept All
+            </Button>
+            <button 
+              onClick={handleDecline}
+              className="flex-1 px-6 py-3 text-sm font-semibold text-slate-400 hover:text-white transition-colors border border-white/10 rounded-xl hover:bg-white/5"
+            >
+              Decline
+            </button>
+          </div>
         </div>
       </div>
     </div>
