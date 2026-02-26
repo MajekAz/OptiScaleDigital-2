@@ -46,12 +46,12 @@ export const Home: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/booking">
                 <Button variant="primary" className="px-10 py-5 text-lg gap-2">
-                  Get a Free Growth Audit <ArrowRight size={20} />
+                  Book a Free Consultation <ArrowRight size={20} />
                 </Button>
               </Link>
               <Link to="/services">
-                <Button variant="outline" className="px-10 py-5 text-lg border-white/20 text-white hover:bg-white/10 hover:border-white">
-                  View Our Work
+                <Button variant="ghost" className="px-10 py-5 text-lg text-white hover:text-brand-accent">
+                  Learn More
                 </Button>
               </Link>
             </div>
@@ -154,35 +154,58 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Case Study Preview */}
+      {/* 5. Features & Benefits Section */}
       <section className="py-section bg-white">
         <div className="container">
-          <div className="bg-brand-secondary rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl">
-            <div className="lg:w-1/2 p-10 lg:p-24 flex flex-col justify-center">
-              <div className="text-brand-primary font-bold text-xs uppercase tracking-widest mb-6">Results-Focused Success</div>
-              <h2 className="text-h3 text-white mb-6">NexTech: 40% Efficiency Gain</h2>
-              <p className="text-lg text-gray-400 mb-12 max-w-[65ch]">
-                By implementing a custom AI agent for lead qualification, we helped NexTech increase their sales capacity by 3.5x without hiring a single new employee.
-              </p>
-              <div className="flex gap-12 mb-12">
-                <div><p className="text-3xl font-black text-white">3.5x</p><p className="text-xs text-gray-500 uppercase font-bold">ROI</p></div>
-                <div><p className="text-3xl font-black text-white">20hrs</p><p className="text-xs text-gray-500 uppercase font-bold">Weekly Reclaimed</p></div>
-              </div>
-              <Link to="/contact">
-                <Button variant="outline" className="border-brand-accent text-brand-accent hover:bg-brand-accent hover:text-brand-secondary">Read Full Story</Button>
-              </Link>
-            </div>
-            <div className="lg:w-1/2 min-h-[400px]">
-              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Case Study Visualization" className="w-full h-full object-cover opacity-60" />
-            </div>
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary mb-6">Why Choose OptiScale?</h2>
+            <p className="text-lg text-brand-textGrey max-w-[65ch] mx-auto">
+              We combine cutting-edge technology with strategic insight to deliver measurable business growth.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <FeatureCard 
+              title="AI-Driven Efficiency"
+              subtitle="Automate the Mundane"
+              description="Reclaim your team's time by automating repetitive tasks with custom AI solutions tailored to your business needs."
+              benefits={[
+                "24/7 Lead Qualification",
+                "Automated Data Entry",
+                "Smart Customer Support"
+              ]}
+            />
+            <FeatureCard 
+              title="High-Performance Design"
+              subtitle="Built for Conversion"
+              description="We don't just build websites; we engineer digital storefronts that load instantly and turn visitors into loyal customers."
+              benefits={[
+                "React-Powered Speed",
+                "SEO-Optimized Structure",
+                "Mobile-First Architecture"
+              ]}
+            />
+            <FeatureCard 
+              title="Strategic Growth"
+              subtitle="Data-Backed Results"
+              description="Leverage our expertise in digital marketing to scale your reach and maximize your return on investment through precision targeting."
+              benefits={[
+                "Advanced SEO Strategies",
+                "PPC Performance Tracking",
+                "Conversion Rate Optimization"
+              ]}
+            />
           </div>
         </div>
       </section>
 
-      {/* 6. Newsletter Section */}
+      {/* 6. AI Powered Consultation Section */}
       <section className="py-section bg-brand-lightGrey">
         <div className="container">
-          <NewsletterForm />
+          <NewsletterForm 
+            title="AI Powered Consultation" 
+            description="Enter your details below to receive an AI-generated growth roadmap for your UK business."
+          />
         </div>
       </section>
 
@@ -198,7 +221,7 @@ export const Home: React.FC = () => {
               <Button variant="secondary" className="px-12 py-5 text-lg">Book Free Audit</Button>
             </Link>
             <Link to="/contact">
-              <Button variant="outline" className="px-12 py-5 text-lg border-white text-white hover:bg-white hover:text-brand-primary">Contact Sales</Button>
+              <Button variant="ghost" className="px-12 py-5 text-lg text-white hover:text-brand-navy">Contact Sales</Button>
             </Link>
           </div>
         </div>
@@ -209,16 +232,34 @@ export const Home: React.FC = () => {
 
 // Sub-components
 const ServiceCard: React.FC<{icon: any, title: string, description: string, link: string}> = ({ icon, title, description, link }) => (
-  <Link to={link} className="group p-10 bg-brand-lightGrey rounded-3xl border border-brand-borderGrey hover:border-brand-primary transition-all duration-300">
+  <Link to={link} className="group p-8 bg-white rounded-2xl border border-brand-borderGrey hover:border-brand-primary hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
     <div className="w-16 h-16 rounded-2xl bg-brand-primary/10 text-brand-primary flex items-center justify-center mb-8 transition-transform group-hover:scale-110">
       {icon}
     </div>
     <h3 className="text-2xl font-bold mb-4 text-brand-secondary">{title}</h3>
-    <p className="text-brand-textGrey mb-8 leading-relaxed max-w-[65ch]">{description}</p>
-    <div className="flex items-center gap-2 text-brand-primary font-bold text-sm tracking-widest uppercase">
+    <p className="text-brand-textGrey mb-8 leading-relaxed">{description}</p>
+    <div className="flex items-center gap-2 text-brand-primary font-bold text-sm tracking-widest uppercase group-hover:underline underline-offset-4">
       Learn More <ArrowRight size={16} />
     </div>
   </Link>
+);
+
+const FeatureCard: React.FC<{title: string, subtitle: string, description: string, benefits: string[]}> = ({ title, subtitle, description, benefits }) => (
+  <div className="p-8 bg-brand-lightGrey rounded-2xl border border-brand-borderGrey hover:border-brand-primary hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+    <div className="mb-6">
+      <h3 className="text-2xl font-bold text-brand-secondary mb-1">{title}</h3>
+      <p className="text-brand-primary font-semibold text-sm uppercase tracking-wider">{subtitle}</p>
+    </div>
+    <p className="text-brand-textGrey mb-6 leading-relaxed text-sm">{description}</p>
+    <ul className="space-y-3">
+      {benefits.map((benefit, idx) => (
+        <li key={idx} className="flex items-start gap-3 text-sm text-brand-secondary">
+          <CheckCircle2 size={18} className="text-brand-accent shrink-0 mt-0.5" />
+          <span>{benefit}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
 );
 
 const WhyItem: React.FC<{icon: any, title: string, description: string}> = ({ icon, title, description }) => (

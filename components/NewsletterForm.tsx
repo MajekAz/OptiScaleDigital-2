@@ -78,10 +78,10 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
   }
 
   return (
-    <div className={`bg-brand-navy p-10 lg:p-16 rounded-[2.5rem] border border-white/5 shadow-2xl relative overflow-hidden ${className}`}>
+    <div className={`bg-brand-navy/80 backdrop-blur-xl p-10 lg:p-16 rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden ${className}`}>
       {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl -ml-32 -mb-32"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
         <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">{title}</h2>
@@ -99,7 +99,7 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
                 placeholder="Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+                className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/50 transition-all"
               />
             </div>
             <div className="flex-1 relative">
@@ -109,7 +109,7 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
                 placeholder="Work Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+                className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/50 transition-all"
               />
             </div>
           </div>
@@ -117,7 +117,7 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
             type="submit" 
             variant="primary" 
             disabled={isSubmitting}
-            className="w-full sm:w-auto px-8 py-4 whitespace-nowrap group self-center"
+            className="w-full sm:w-auto px-12 py-5 whitespace-nowrap group self-center text-lg shadow-xl shadow-brand-primary/20"
           >
             {isSubmitting ? (
               <Loader2 className="animate-spin" size={20} />
