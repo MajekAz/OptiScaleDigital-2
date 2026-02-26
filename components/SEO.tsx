@@ -60,8 +60,25 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateMeta('og:title', title);
     updateMeta('og:description', description);
     updateMeta('og:url', canonicalUrl);
+    updateMeta('og:image', "https://storage.googleapis.com/static-content-prod/file-80696956-6565-4d76-8025-10313f8c8715");
     updateMeta('og:type', 'website');
     updateMeta('og:locale', 'en_GB');
+
+    // 6. Update Twitter Tags
+    const updateTwitter = (name: string, content: string) => {
+       let el = document.querySelector(`meta[name="${name}"]`);
+       if (!el) {
+         el = document.createElement('meta');
+         el.setAttribute('name', name);
+         document.head.appendChild(el);
+       }
+       el.setAttribute('content', content);
+    };
+
+    updateTwitter('twitter:card', 'summary_large_image');
+    updateTwitter('twitter:title', title);
+    updateTwitter('twitter:description', description);
+    updateTwitter('twitter:image', "https://storage.googleapis.com/static-content-prod/file-80696956-6565-4d76-8025-10313f8c8715");
 
   }, [title, description, keywords, canonicalUrl]);
 
