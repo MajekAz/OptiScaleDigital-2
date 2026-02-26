@@ -6,6 +6,7 @@ import {
   Target 
 } from 'lucide-react';
 import { Button } from '../components/Button';
+import { NewsletterForm } from '../components/NewsletterForm';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 
@@ -23,9 +24,11 @@ export const Home: React.FC = () => {
           <img 
             src={IMAGES.home.heroBg} 
             alt="Growth background" 
-            className="w-full h-full object-cover opacity-10"
+            className="w-full h-full object-cover scale-105 animate-slow-zoom"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-secondary via-brand-secondary/90 to-brand-secondary"></div>
+          <div className="absolute inset-0 bg-brand-secondary/70"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-transparent"></div>
         </div>
 
         <div className="container relative z-10">
@@ -34,21 +37,21 @@ export const Home: React.FC = () => {
               <Star size={14} className="fill-brand-primary" /> UK's Data-Driven Growth Agency
             </div>
             <h1 className="text-h1 mb-8 max-w-4xl mx-auto">
-              Scale Faster. <br />
-              <span className="gradient-text">Automate Smarter.</span>
+              Scale Smarter. <br />
+              <span className="gradient-text">Outpace the Competition.</span>
             </h1>
             <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
-              Engineering high-performance digital infrastructure for British companies ready to dominate their market through design and intelligence.
+              We blend high-performance Web Design, AI Automation, and Digital Marketing to turn your digital presence into a 24/7 growth engine.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/booking">
                 <Button variant="primary" className="px-10 py-5 text-lg gap-2">
-                  Start Your Project <ArrowRight size={20} />
+                  Get a Free Growth Audit <ArrowRight size={20} />
                 </Button>
               </Link>
               <Link to="/services">
                 <Button variant="outline" className="px-10 py-5 text-lg border-white/20 text-white hover:bg-white/10 hover:border-white">
-                  View Our Services
+                  View Our Work
                 </Button>
               </Link>
             </div>
@@ -176,7 +179,14 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. CTA Section */}
+      {/* 6. Newsletter Section */}
+      <section className="py-section bg-brand-lightGrey">
+        <div className="container">
+          <NewsletterForm />
+        </div>
+      </section>
+
+      {/* 7. CTA Section */}
       <section className="py-24 bg-brand-primary relative overflow-hidden">
         <div className="container relative z-10 text-center">
           <h2 className="text-h2 text-white mb-8 max-w-2xl mx-auto">Ready to Scale Your Business?</h2>

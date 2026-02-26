@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, User, Loader2, Share2, Clock, CheckCircle } from '
 import { SEO } from '../components/SEO';
 import { BlogPost } from '../types';
 import { Button } from '../components/Button';
+import { NewsletterForm } from '../components/NewsletterForm';
 import { IMAGES } from '../assets';
 
 export const BlogPostPage: React.FC = () => {
@@ -12,11 +13,6 @@ export const BlogPostPage: React.FC = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
-  // Newsletter state
-  const [email, setEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -53,29 +49,6 @@ export const BlogPostPage: React.FC = () => {
     };
     if (id) { fetchPost(); }
   }, [id]);
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setIsSubscribing(true);
-    try {
-      const res = await fetch('./api/subscribe.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      if (res.ok) {
-        setIsSubscribed(true);
-      } else {
-        throw new Error();
-      }
-    } catch (e) {
-      // Demo fallback
-      setIsSubscribed(true);
-    } finally {
-      setIsSubscribing(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -135,32 +108,11 @@ export const BlogPostPage: React.FC = () => {
              <div dangerouslySetInnerHTML={{ __html: post.content || post.excerpt }} />
           </article>
 
-          <div className="mt-20 p-10 bg-brand-navy rounded-3xl text-white text-center">
-            {isSubscribed ? (
-              <div className="animate-fade-in py-6">
-                <CheckCircle size={64} className="text-brand-cyan mx-auto mb-4" />
-                <h2 className="text-h3 mb-2">You're on the list!</h2>
-                <p className="text-gray-400">Welcome to the inner circle of UK digital growth.</p>
-              </div>
-            ) : (
-              <>
-                <h2 className="text-h3 mb-4">Want more insights like this?</h2>
-                <p className="text-lead text-gray-300 mb-8 max-w-xl mx-auto">Subscribe to our newsletter for the latest UK tech trends and automation strategies.</p>
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <input 
-                    type="email" 
-                    required
-                    placeholder="Enter your email" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="px-6 py-3 rounded-xl bg-white/10 border border-white/20 outline-none focus:border-brand-cyan transition-colors" 
-                  />
-                  <Button variant="primary" type="submit" disabled={isSubscribing} className="bg-brand-cyan text-brand-navy min-w-[140px]">
-                    {isSubscribing ? <Loader2 className="animate-spin mx-auto" size={20} /> : "Subscribe"}
-                  </Button>
-                </form>
-              </>
-            )}
+          <div className="mt-20">
+            <NewsletterForm 
+              title="Enjoyed this insight?"
+              description="Subscribe to our newsletter for the latest UK tech trends and automation strategies delivered directly to your inbox."
+            />
           </div>
         </div>
       </section>

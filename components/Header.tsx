@@ -151,7 +151,7 @@ export const Header: React.FC = () => {
                       <Link
                         key={sub.path}
                         to={sub.path}
-                        className={`text-xl md:text-2xl font-semibold py-1 transition-colors ${
+                        className={`text-xl md:text-2xl font-semibold py-3 transition-colors ${
                           location.pathname === sub.path ? 'text-brand-cyan' : 'text-white/60 hover:text-white'
                         }`}
                         onClick={() => setIsOpen(false)}

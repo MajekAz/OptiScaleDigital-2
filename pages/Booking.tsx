@@ -4,6 +4,7 @@ import { Calendar as CalendarIcon, Clock, ChevronLeft, ChevronRight, CheckCircle
 import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 import { IMAGES } from '../assets';
+import { CRM_ENDPOINT } from '../constants';
 
 // Helper to generate time slots
 const generateTimeSlots = () => {
@@ -88,29 +89,25 @@ export const Booking: React.FC = () => {
     };
 
     try {
-      const response = await fetch('./api/booking.php', {
+      // Using text/plain to avoid CORS preflight issues with no-cors mode
+      await fetch(CRM_ENDPOINT, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify({
+          ...bookingData,
+          formType: 'booking',
+          source: 'Booking Form',
+          timestamp: new Date().toISOString()
+        }),
       });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Something went wrong');
-      }
 
       navigate('/thank-you');
     } catch (err) {
-      console.error(err);
-      if (process.env.NODE_ENV === 'development') {
-        alert("Dev Mode: Backend not found. Redirecting anyway.");
-        navigate('/thank-you');
-      } else {
-        setError("Failed to book appointment. Please try again.");
-      }
+      console.error('Booking error:', err);
+      setError("Failed to book appointment. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -228,6 +225,7 @@ export const Booking: React.FC = () => {
             <h2 className="text-2xl font-bold text-brand-navy dark:text-white mb-6">Your Details</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input type="hidden" name="formType" value="booking" />
               {error && (
                 <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center gap-2">
                   <AlertCircle size={16} /> {error}

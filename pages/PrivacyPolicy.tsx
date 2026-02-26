@@ -76,7 +76,7 @@ export const PrivacyPolicy: React.FC = () => {
             <p className="mb-4">
               Our full details are:
             </p>
-            <address className="not-italic mb-4 bg-gray-50 p-4 rounded-lg border-l-4 border-brand-blue">
+            <address className="not-italic mb-4 bg-gray-50 p-6 rounded-lg border-l-4 border-brand-blue">
               <strong>Full name of legal entity:</strong> {COMPANY_NAME}<br />
               <strong>Email address:</strong> {COMPANY_EMAIL}<br />
               <strong>Postal address:</strong> {COMPANY_ADDRESS}

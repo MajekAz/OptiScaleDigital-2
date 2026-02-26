@@ -12,12 +12,12 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseStyles = "px-8 py-4 rounded-xl font-bold text-base transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-center inline-flex items-center justify-center";
+  const baseStyles = "rounded-[12px] font-semibold text-base transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-center inline-flex items-center justify-center";
   
   const variants = {
-    primary: "bg-[#2563EB] hover:bg-[#1D4ED8] active:bg-[#1E40AF] text-white shadow-xl shadow-brand-primary/20 focus:ring-[#2563EB]",
-    secondary: "bg-[#0F172A] hover:bg-slate-800 active:bg-black text-white shadow-lg focus:ring-[#0F172A]",
-    outline: "border-2 border-[#2563EB] text-[#2563EB] hover:bg-[#2563EB] hover:text-white focus:ring-[#2563EB]"
+    primary: "bg-brand-accent hover:bg-emerald-600 text-white py-[14px] px-[28px] hover:-translate-y-[3px] shadow-lg shadow-brand-accent/20 focus:ring-brand-accent",
+    secondary: "bg-brand-navy hover:bg-slate-800 active:bg-black text-white px-8 py-4 shadow-lg focus:ring-brand-navy",
+    outline: "border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white px-8 py-4 focus:ring-brand-primary"
   };
 
   const widthClass = fullWidth ? 'w-full' : '';

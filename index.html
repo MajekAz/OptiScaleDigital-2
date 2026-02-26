@@ -117,6 +117,14 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
+      @keyframes slow-zoom {
+        0% { transform: scale(1.05); }
+        100% { transform: scale(1.15); }
+      }
+      .animate-slow-zoom {
+        animation: slow-zoom 20s ease-in-out infinite alternate;
+      }
     </style>
   <script type="importmap">
 {

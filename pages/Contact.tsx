@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Mail, Phone, MapPin, AlertCircle, Loader2 } from 'lucide-react';
-import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_ADDRESS } from '../constants';
+import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_ADDRESS, CRM_ENDPOINT } from '../constants';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 
@@ -25,32 +25,27 @@ export const Contact: React.FC = () => {
     setError(null);
 
     try {
-      // Send data to PHP backend
-      const response = await fetch('./api/contact.php', {
+      // Send data to Google CRM
+      // Using text/plain to avoid CORS preflight issues with no-cors mode
+      await fetch(CRM_ENDPOINT, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          formType: 'contact',
+          source: 'Contact Form',
+          timestamp: new Date().toISOString()
+        }),
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Something went wrong');
-      }
-
-      // Success
+      // Redirect to thank you page
       navigate('/thank-you');
     } catch (err) {
-      console.error(err);
-      // Fallback for demo purposes if backend isn't set up yet
-      if (process.env.NODE_ENV === 'development') {
-        alert("Dev Mode: Backend not found. Redirecting anyway.");
-        navigate('/thank-you');
-      } else {
-        setError("Failed to send message. Please try again or email us directly.");
-      }
+      console.error('Submission error:', err);
+      setError("Failed to send message. Please try again or email us directly.");
     } finally {
       setIsSubmitting(false);
     }
@@ -131,6 +126,7 @@ export const Contact: React.FC = () => {
                 )}
                 
                 <div>
+                  <input type="hidden" name="formType" value="contact" />
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                   <input 
                     type="text" 

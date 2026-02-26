@@ -292,7 +292,7 @@ const MarketingFunnelStep: React.FC<{icon: any, step: string, desc: string}> = (
       {React.cloneElement(icon, { size: 28 })}
     </div>
     <h4 className="text-xl font-bold mb-2 text-brand-secondary">{step}</h4>
-    <p className="text-brand-textGrey text-sm leading-relaxed px-4 max-w-[65ch] mx-auto">{desc}</p>
+    <p className="text-brand-textGrey text-sm leading-relaxed px-6 max-w-[65ch] mx-auto">{desc}</p>
   </div>
 );
 
