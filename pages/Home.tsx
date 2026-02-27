@@ -44,17 +44,22 @@ export const Home: React.FC = () => {
             <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto leading-relaxed">
               UK SMEs are losing thousands to outdated websites, wasted ad spend, and manual workflows. We eliminate the friction by combining high-performance Web Design, AI Automation, and Strategic Marketing into one unified growth engine.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/booking" onClick={() => trackLeadGeneration('Book a Free Consultation', 'Hero Section')}>
-                <Button variant="primary" className="px-10 py-5 text-lg gap-2">
-                  Book a Free Consultation <ArrowRight size={20} />
-                </Button>
-              </Link>
-              <Link to="/services">
-                <Button variant="ghost" className="px-10 py-5 text-lg text-white hover:text-brand-accent">
-                  Learn More
-                </Button>
-              </Link>
+            <div className="flex flex-col items-center gap-6">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
+                <Link to="/booking" onClick={() => trackLeadGeneration('Claim Your Free Strategy Call', 'Hero Section')} className="w-full sm:w-auto">
+                  <Button variant="primary" className="px-10 py-5 text-lg gap-2 w-full">
+                    Claim Your Free Strategy Call <ArrowRight size={20} />
+                  </Button>
+                </Link>
+                <Link to="/services" className="w-full sm:w-auto">
+                  <Button variant="ghost" className="px-10 py-5 text-lg text-white hover:text-brand-accent w-full">
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
+              <p className="text-sm text-brand-textGrey/60 font-medium animate-fade-in">
+                No pitch, just a 15-minute discovery chat
+              </p>
             </div>
           </div>
         </div>
@@ -64,7 +69,7 @@ export const Home: React.FC = () => {
       <section className="py-section bg-white">
         <div className="container">
           <div className="text-center mb-24">
-            <h2 className="text-h2 text-brand-secondary mb-6">Our Core Services</h2>
+            <h2 className="text-h2 text-brand-secondary mb-6">Our Core Scaling Pillars</h2>
             <p className="text-lg text-brand-textGrey max-w-[65ch] mx-auto">
               Integrated technical solutions built to scale operations and maximize revenue.
             </p>
@@ -73,20 +78,20 @@ export const Home: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <ServiceCard 
               icon={<Code size={32} />}
-              title="Web Design"
-              description="High-performance, bespoke React and WordPress architectures designed for speed and conversion."
+              title="Turn Traffic into Buyers"
+              description="We engineer high-speed digital storefronts that load in milliseconds and guide visitors directly to checkout or consultation."
               link="/services/web-design"
             />
             <ServiceCard 
               icon={<Bot size={32} />}
-              title="AI Automation"
-              description="Custom AI agents and workflows that reclaim 20+ hours of team time every single week."
+              title="Cut Manual Work by 65%"
+              description="Deploy custom AI agents that handle lead qualification, data entry, and customer support 24/7 without human intervention."
               link="/services/ai-automation"
             />
             <ServiceCard 
               icon={<TrendingUp size={32} />}
-              title="Digital Marketing"
-              description="Data-led SEO and PPC campaigns built to deliver measurable ROI, not just traffic."
+              title="Dominate UK Search Results"
+              description="Data-led SEO and PPC campaigns built to capture high-intent traffic and deliver measurable revenue growth, not just clicks."
               link="/services/digital-marketing"
             />
           </div>

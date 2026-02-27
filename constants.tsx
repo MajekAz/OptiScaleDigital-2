@@ -25,25 +25,57 @@ export const NAV_LINKS: NavLink[] = [
 
 export const SCHEMA_ORG_JSON = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": COMPANY_NAME,
-  "image": IMAGES.logo,
-  "description": "OptiScale Digital LTD is a UK-based agency specializing in Website Design, AI Automation, and Digital Marketing. We help businesses scale with tech-forward solutions.",
-  "@id": "https://www.optiscaledigital.co.uk",
-  "url": "https://www.optiscaledigital.co.uk",
-  "telephone": COMPANY_PHONE,
-  "email": COMPANY_EMAIL,
+  "@type": "ProfessionalService",
+  "name": "OptiScale Digital",
+  "url": "https://optiscaledigital.co.uk/",
+  "logo": "https://optiscaledigital.co.uk/og-image.jpg",
+  "image": "https://optiscaledigital.co.uk/og-image.jpg",
+  "description": "UK's leading agency for modern web design, strategic digital marketing, and AI automation for startups and SMEs.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "71-75 Shelton Street",
-    "addressLocality": "Covent Garden, London",
+    "streetAddress": "71-75 Shelton Street, Covent Garden",
+    "addressLocality": "London",
     "postalCode": "WC2H 9JQ",
-    "addressCountry": "GB"
+    "addressCountry": "UK"
   },
   "geo": {
     "@type": "GeoCoordinates",
     "latitude": 51.5148,
     "longitude": -0.1235
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Digital Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Web Design"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Search Engine Optimisation (SEO)"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI Automation"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Paid Advertising (PPC)"
+        }
+      }
+    ]
   },
   "openingHoursSpecification": [
     {
@@ -65,21 +97,5 @@ export const SCHEMA_ORG_JSON = {
     "https://www.facebook.com/optiscale"
   ],
   "priceRange": "££",
-  "areaServed": [
-    {
-      "@type": "City",
-      "name": "London"
-    },
-    {
-      "@type": "Country",
-      "name": "United Kingdom"
-    }
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": COMPANY_PHONE,
-    "contactType": "customer service",
-    "areaServed": "GB",
-    "availableLanguage": "English"
-  }
+  "telephone": "+44 20 7946 0000"
 };
