@@ -8,6 +8,7 @@ import {
 import { Button } from '../components/Button';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
+import { trackLeadGeneration } from '../utils/analytics';
 
 export const About: React.FC = () => {
   return (
@@ -41,7 +42,7 @@ export const About: React.FC = () => {
               OptiScale Digital helps ambitious UK businesses bridge the gap between manual operations and automated, high-performance scale. We don't just build websites; we build digital assets that yield measurable returns.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/booking">
+              <Link to="/booking" onClick={() => trackLeadGeneration('Book a Strategy Call', 'About Hero')}>
                 <Button variant="primary" className="px-10 py-5">Book a Strategy Call</Button>
               </Link>
               <Link to="/services">
@@ -109,7 +110,7 @@ export const About: React.FC = () => {
             </div>
           </div>
           <div className="mt-16 text-center">
-            <Link to="/booking">
+            <Link to="/booking" onClick={() => trackLeadGeneration('Start Your Transformation', 'About Mission Section')}>
               <Button variant="primary" className="px-10 py-5">
                 Start Your Transformation
               </Button>
@@ -287,7 +288,7 @@ export const About: React.FC = () => {
             Our discovery calls aren't sales pitches. They are deep-dives into your current systems to find hidden revenue.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/booking">
+            <Link to="/booking" onClick={() => trackLeadGeneration('Book Discovery Call', 'About Final CTA')}>
               <Button variant="secondary" className="px-12 py-5 text-lg">Book Discovery Call</Button>
             </Link>
             <Link to="/services">

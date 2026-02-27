@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 import { Logo } from './Logo';
+import { trackLeadGeneration } from '../utils/analytics';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +97,7 @@ export const Header: React.FC = () => {
               </div>
             ))}
             
-            <Link to="/booking">
+            <Link to="/booking" onClick={() => trackLeadGeneration('Book Consultation', 'Desktop Header')}>
               <button className="px-5 py-2 text-sm font-semibold bg-brand-blue text-white rounded-md hover:bg-blue-600 transition-colors shadow-lg shadow-brand-blue/20">
                 Book Consultation
               </button>
@@ -170,7 +171,10 @@ export const Header: React.FC = () => {
               isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
           >
-            <Link to="/booking" onClick={() => setIsOpen(false)}>
+            <Link to="/booking" onClick={() => {
+              setIsOpen(false);
+              trackLeadGeneration('Get Started', 'Mobile Menu');
+            }}>
               <button className="w-full py-6 text-2xl font-black bg-brand-cyan text-brand-navy rounded-2xl shadow-2xl shadow-brand-cyan/20 hover:bg-white active:scale-95 transition-all uppercase tracking-widest">
                 Get Started
               </button>

@@ -9,6 +9,7 @@ import {
 import { Button } from '../components/Button';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
+import { trackLeadGeneration } from '../utils/analytics';
 
 export const Services: React.FC = () => {
   return (
@@ -39,10 +40,10 @@ export const Services: React.FC = () => {
             We engineer high-performance digital assets that solve operational bottlenecks and maximize revenue. Our services are built to work in synergy.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
+            <Link to="/contact" onClick={() => trackLeadGeneration('Get a Proposal', 'Services Hero')}>
               <Button variant="primary" className="px-10 py-5 text-lg">Get a Proposal</Button>
             </Link>
-            <Link to="/booking">
+            <Link to="/booking" onClick={() => trackLeadGeneration('Book a Discovery Call', 'Services Hero')}>
               <Button variant="outline" className="px-10 py-5 text-lg border-white/20 text-white hover:bg-white/10 hover:border-white">
                 Book a Discovery Call
               </Button>
@@ -235,10 +236,10 @@ export const Services: React.FC = () => {
             Our discovery calls aren't sales pitches—they're technical audits. Let's find the bottlenecks in your business today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
+            <Link to="/contact" onClick={() => trackLeadGeneration('Claim Your Free Audit', 'Services Final CTA')}>
               <Button variant="secondary" className="px-12 py-5 text-lg">Claim Your Free Audit</Button>
             </Link>
-            <Link to="/booking">
+            <Link to="/booking" onClick={() => trackLeadGeneration('Schedule Call', 'Services Final CTA')}>
               <Button variant="outline" className="px-12 py-5 text-lg border-white text-white hover:bg-white hover:text-brand-primary">Schedule Call</Button>
             </Link>
           </div>

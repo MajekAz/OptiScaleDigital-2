@@ -9,6 +9,7 @@ import { Button } from '../components/Button';
 import { NewsletterForm } from '../components/NewsletterForm';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
+import { trackLeadGeneration } from '../utils/analytics';
 
 export const Home: React.FC = () => {
   return (
@@ -36,15 +37,15 @@ export const Home: React.FC = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
               <Star size={14} className="fill-brand-primary" /> UK's Data-Driven Growth Agency
             </div>
-            <h1 className="text-h1 mb-8 max-w-4xl mx-auto">
-              Scale Smarter. <br />
-              <span className="gradient-text">Outpace the Competition.</span>
+            <h1 className="text-h1 mb-8 max-w-4xl mx-auto leading-tight">
+              The Unified Web, AI, and Marketing <br />
+              <span className="gradient-text">Infrastructure Built to Drive Revenue.</span>
             </h1>
-            <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
-              We blend high-performance Web Design, AI Automation, and Digital Marketing to turn your digital presence into a 24/7 growth engine.
+            <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto leading-relaxed">
+              UK SMEs are losing thousands to outdated websites, wasted ad spend, and manual workflows. We eliminate the friction by combining high-performance Web Design, AI Automation, and Strategic Marketing into one unified growth engine.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/booking">
+              <Link to="/booking" onClick={() => trackLeadGeneration('Book a Free Consultation', 'Hero Section')}>
                 <Button variant="primary" className="px-10 py-5 text-lg gap-2">
                   Book a Free Consultation <ArrowRight size={20} />
                 </Button>
@@ -127,7 +128,7 @@ export const Home: React.FC = () => {
                 />
               </div>
               <div className="mt-16">
-                <Link to="/booking">
+                <Link to="/booking" onClick={() => trackLeadGeneration('Book Your Audit', 'Why OptiScale Section')}>
                   <Button variant="primary" className="px-8 py-4">
                     Book Your Audit
                   </Button>
@@ -217,7 +218,7 @@ export const Home: React.FC = () => {
             Book your free digital growth audit today and let's discuss how we can transform your operations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/booking">
+            <Link to="/booking" onClick={() => trackLeadGeneration('Book Free Audit', 'CTA Section')}>
               <Button variant="secondary" className="px-12 py-5 text-lg">Book Free Audit</Button>
             </Link>
             <Link to="/contact">

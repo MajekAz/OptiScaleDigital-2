@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, AlertCircle, Loader2 } from 'lucide-react';
 import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_ADDRESS, CRM_ENDPOINT } from '../constants';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
+import { trackLeadGeneration } from '../utils/analytics';
 
 export const Contact: React.FC = () => {
   const navigate = useNavigate();
@@ -40,6 +41,9 @@ export const Contact: React.FC = () => {
           timestamp: new Date().toISOString()
         }),
       });
+
+      // Track conversion in GA4
+      trackLeadGeneration('Send Message', 'Contact Form');
 
       // Redirect to thank you page
       navigate('/thank-you');

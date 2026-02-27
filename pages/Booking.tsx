@@ -5,6 +5,7 @@ import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 import { IMAGES } from '../assets';
 import { CRM_ENDPOINT } from '../constants';
+import { trackLeadGeneration } from '../utils/analytics';
 
 // Helper to generate time slots
 const generateTimeSlots = () => {
@@ -103,6 +104,9 @@ export const Booking: React.FC = () => {
           timestamp: new Date().toISOString()
         }),
       });
+
+      // Track conversion in GA4
+      trackLeadGeneration('Confirm Booking', 'Booking Page');
 
       navigate('/thank-you');
     } catch (err) {
