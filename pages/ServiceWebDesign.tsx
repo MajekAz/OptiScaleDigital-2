@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { 
   Monitor, Smartphone, Zap, Search, Layers, RefreshCw, 
-  PenTool, ShoppingCart, ArrowRight, ShieldCheck, CheckCircle2 
+  PenTool, ShoppingCart, ArrowRight, ShieldCheck, CheckCircle2,
+  Code, Globe, ChevronDown
 } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
+import { trackLeadGeneration } from '../utils/analytics';
 
 export const ServiceWebDesign: React.FC = () => {
   return (
@@ -93,12 +95,140 @@ export const ServiceWebDesign: React.FC = () => {
             <Deliverable icon={<RefreshCw />} title="Continuous Care" desc="24/7 security updates and performance optimization to stay competitive." />
             <Deliverable icon={<PenTool />} title="Brand Visuals" desc="High-end, bespoke design that builds instant trust and authority." />
           </div>
-          <div className="mt-20 text-center">
-            <Link to="/booking">
-              <Button variant="primary" className="px-10 py-5">
-                Audit My Current Site
-              </Button>
-            </Link>
+        </div>
+      </section>
+
+      {/* New: Comparison Section */}
+      <section className="py-section bg-white">
+        <div className="container">
+          <div className="text-center mb-20">
+            <h2 className="text-h2 text-brand-secondary mb-6">Choose Your Growth Engine</h2>
+            <p className="text-lg text-brand-textGrey max-w-[65ch] mx-auto">
+              Whether you need a high-converting marketing site or a complex digital product, we have the technical stack to deliver.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* WordPress Card */}
+            <div className="p-10 bg-brand-lightGrey rounded-[2.5rem] border border-brand-borderGrey hover:border-brand-primary hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col">
+              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-primary shadow-sm mb-8">
+                <Globe size={32} />
+              </div>
+              <h3 className="text-3xl font-bold text-brand-secondary mb-4">High-Performance WordPress</h3>
+              <p className="text-brand-textGrey mb-8 leading-relaxed">
+                Perfect for marketing sites and SMEs who need a powerful, scalable presence with a familiar interface.
+              </p>
+              <ul className="space-y-4 mb-10 flex-grow">
+                <li className="flex items-center gap-3 text-brand-secondary font-medium">
+                  <CheckCircle2 size={20} className="text-brand-accent" /> Easy Content Management
+                </li>
+                <li className="flex items-center gap-3 text-brand-secondary font-medium">
+                  <CheckCircle2 size={20} className="text-brand-accent" /> SEO-Optimized Architecture
+                </li>
+                <li className="flex items-center gap-3 text-brand-secondary font-medium">
+                  <CheckCircle2 size={20} className="text-brand-accent" /> Custom-Coded (No Bloated Themes)
+                </li>
+                <li className="flex items-center gap-3 text-brand-secondary font-medium">
+                  <CheckCircle2 size={20} className="text-brand-accent" /> Rapid Launch Timelines
+                </li>
+              </ul>
+              <Link to="/booking" onClick={() => trackLeadGeneration('Discuss Your Project', 'WordPress Card')}>
+                <Button variant="primary" fullWidth className="py-4">Discuss Your Project</Button>
+              </Link>
+            </div>
+
+            {/* React Card */}
+            <div className="p-10 bg-brand-secondary text-white rounded-[2.5rem] border border-white/5 hover:border-brand-primary hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col">
+              <div className="w-16 h-16 bg-brand-primary/20 rounded-2xl flex items-center justify-center text-brand-primary shadow-sm mb-8">
+                <Code size={32} />
+              </div>
+              <h3 className="text-3xl font-bold mb-4">Custom Web Apps (React)</h3>
+              <p className="text-brand-textGrey mb-8 leading-relaxed">
+                For businesses requiring bespoke functionality, extreme performance, and a unique competitive edge.
+              </p>
+              <ul className="space-y-4 mb-10 flex-grow">
+                <li className="flex items-center gap-3 text-white/90 font-medium">
+                  <CheckCircle2 size={20} className="text-brand-primary" /> Blazing Fast Speed (Next.js)
+                </li>
+                <li className="flex items-center gap-3 text-white/90 font-medium">
+                  <CheckCircle2 size={20} className="text-brand-primary" /> Complex Custom Functionality
+                </li>
+                <li className="flex items-center gap-3 text-white/90 font-medium">
+                  <CheckCircle2 size={20} className="text-brand-primary" /> Infinite Scalability
+                </li>
+                <li className="flex items-center gap-3 text-white/90 font-medium">
+                  <CheckCircle2 size={20} className="text-brand-primary" /> Bespoke UI/UX Components
+                </li>
+              </ul>
+              <Link to="/booking" onClick={() => trackLeadGeneration('Discuss Your Project', 'React Card')}>
+                <Button variant="primary" fullWidth className="py-4">Discuss Your Project</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* New: WordPress Standard Section */}
+      <section className="py-section bg-brand-primary/5 border-y border-brand-primary/10">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">Technical Excellence</span>
+              <h2 className="text-h2 text-brand-secondary mt-2 mb-6">The OptiScale WordPress Standard</h2>
+              <p className="text-lg text-brand-textGrey">
+                We don't build "typical" WordPress sites. We engineer high-performance digital assets that overcome the common limitations of the platform.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="flex gap-6 p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-brand-borderGrey hover:border-brand-primary transition-colors group">
+                <div className="shrink-0 w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
+                  <Zap size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-brand-secondary dark:text-white mb-2">Lightning Fast</h4>
+                  <p className="text-sm text-brand-textGrey leading-relaxed">
+                    We eliminate "WordPress bloat" by avoiding heavy page builders and unnecessary plugins. Our sites are engineered for perfect Core Web Vitals scores and sub-second load times.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-6 p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-brand-borderGrey hover:border-brand-primary transition-colors group">
+                <div className="shrink-0 w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
+                  <ShieldCheck size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-brand-secondary dark:text-white mb-2">Bank-Grade Security</h4>
+                  <p className="text-sm text-brand-textGrey leading-relaxed">
+                    We deploy a multi-layered security stack, including server-side hardening, custom login paths, and automated threat detection to keep your business data safe.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-6 p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-brand-borderGrey hover:border-brand-primary transition-colors group">
+                <div className="shrink-0 w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
+                  <Search size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-brand-secondary dark:text-white mb-2">SEO Ready</h4>
+                  <p className="text-sm text-brand-textGrey leading-relaxed">
+                    Built from the ground up to rank. Every site includes semantic HTML5 markup and JSON-LD schema to ensure Google understands your content from day one.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-6 p-8 bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-brand-borderGrey hover:border-brand-primary transition-colors group">
+                <div className="shrink-0 w-12 h-12 bg-brand-primary/10 rounded-xl flex items-center justify-center text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
+                  <Layers size={24} />
+                </div>
+                <div>
+                  <h4 className="text-xl font-bold text-brand-secondary dark:text-white mb-2">Bespoke Scalability</h4>
+                  <p className="text-sm text-brand-textGrey leading-relaxed">
+                    Our WordPress builds are modular. As your business grows, your site can evolve with custom post types and API integrations without needing a total rebuild.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -125,6 +255,31 @@ export const ServiceWebDesign: React.FC = () => {
             <Benefit icon={<Zap />} title="Blazing Speed" desc="Pages load in under 1 second for higher search ranking." />
             <Benefit icon={<ShieldCheck />} title="Enterprise Security" desc="Bank-grade protection and SSL certificates for peace of mind." />
             <Benefit icon={<CheckCircle2 />} title="Built to Sell" desc="Every pixel and paragraph is optimized for business growth." />
+          </div>
+        </div>
+      </section>
+
+      {/* New: FAQ Section */}
+      <section className="py-section bg-brand-lightGrey">
+        <div className="container max-w-3xl">
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary mb-4">Frequently Asked Questions</h2>
+            <p className="text-brand-textGrey">Everything you need to know about our web design process.</p>
+          </div>
+          
+          <div className="space-y-4">
+            <FAQItem 
+              question="How long does a website project take?" 
+              answer="A typical high-performance website project takes between 4 to 8 weeks from discovery to launch. This timeline depends on the complexity of the functionality and the speed of feedback during the design phase."
+            />
+            <FAQItem 
+              question="Will I be able to edit the website myself after launch?" 
+              answer="Yes, we provide full training on the WordPress dashboard. We build our sites using a modular 'block' system that makes it incredibly easy for your team to update text, images, and blog posts without touching a single line of code."
+            />
+            <FAQItem 
+              question="Do you also provide website hosting and maintenance?" 
+              answer="Absolutely. We offer premium, managed hosting on UK-based servers optimized for speed. Our maintenance packages include 24/7 security monitoring, daily backups, and monthly performance reports to keep your site running at peak efficiency."
+            />
           </div>
         </div>
       </section>
@@ -168,3 +323,29 @@ const Benefit = ({ icon, title, desc }: any) => (
     <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">{desc}</p>
   </div>
 );
+
+const FAQItem = ({ question, answer }: { question: string; answer: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="bg-white rounded-2xl border border-brand-borderGrey overflow-hidden transition-all duration-300">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-brand-lightGrey/50 transition-colors"
+      >
+        <span className="text-lg font-bold text-brand-secondary">{question}</span>
+        <ChevronDown 
+          className={`text-brand-primary transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+          size={24} 
+        />
+      </button>
+      <div 
+        className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+      >
+        <div className="px-8 pb-6 text-brand-textGrey leading-relaxed">
+          {answer}
+        </div>
+      </div>
+    </div>
+  );
+};
