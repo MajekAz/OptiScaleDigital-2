@@ -4,6 +4,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import cors from "cors";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +19,17 @@ async function startServer() {
     fs.mkdirSync(uploadDir, { recursive: true });
   }
 
-  // Configure Multer for file uploads
+  // Middleware
+  app.use(cors());
+  app.use(express.json());
+  
+  // Request logging
+  app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+  });
+
+  // Configure Multer
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, uploadDir);
@@ -31,73 +42,104 @@ async function startServer() {
 
   const upload = multer({ 
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
     fileFilter: (req, file, cb) => {
       const allowedTypes = /jpeg|jpg|png|gif|webp/;
-      const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-      const mimetype = allowedTypes.test(file.mimetype);
-      if (extname && mimetype) {
+      const ext = path.extname(file.originalname).toLowerCase();
+      const isAllowed = allowedTypes.test(ext) || allowedTypes.test(file.mimetype);
+      if (isAllowed) {
         return cb(null, true);
       }
       cb(new Error("Only images are allowed (jpeg, jpg, png, gif, webp)"));
     }
   });
 
-  app.use(express.json());
-
   // Serve uploads directory statically
   app.use("/uploads", express.static(uploadDir));
 
-  // API Routes
-  app.post("/api/upload", (req, res, next) => {
+  // API Router
+  const apiRouter = express.Router();
+
+  apiRouter.get("/health", (req, res) => {
+    res.json({ status: "ok", time: new Date().toISOString(), env: process.env.NODE_ENV });
+  });
+
+  apiRouter.post("/upload", (req, res) => {
+    console.log("Processing upload request...");
     upload.single("image")(req, res, (err) => {
-      if (err instanceof multer.MulterError) {
-        return res.status(400).json({ error: `Multer error: ${err.message}` });
-      } else if (err) {
-        return res.status(400).json({ error: err.message });
+      if (err) {
+        console.error("Multer/Upload Error:", err);
+        return res.status(400).json({ 
+          error: err.message || "Upload failed",
+          details: err instanceof multer.MulterError ? "Multer specific error" : "General error"
+        });
       }
       
       if (!req.file) {
+        console.error("No file received in request");
         return res.status(400).json({ error: "No file uploaded" });
       }
       
-      const fileUrl = `/uploads/${req.file.filename}`;
-      res.json({ url: fileUrl });
+      console.log("Upload successful:", req.file.filename);
+      res.json({ 
+        success: true,
+        url: `/uploads/${req.file.filename}`,
+        filename: req.file.filename
+      });
     });
   });
 
-  // Health check
-  app.get("/api/health", (req, res) => {
-    res.json({ status: "ok" });
+  app.use("/api", apiRouter);
+
+  // Fallback for missing API routes to prevent HTML response
+  app.use("/api/*", (req, res) => {
+    res.status(404).json({ error: `API endpoint not found: ${req.method} ${req.originalUrl}` });
   });
 
-  // Vite middleware for development
+  // Vite / Static Serving
   if (process.env.NODE_ENV !== "production") {
+    console.log("Starting in DEVELOPMENT mode with Vite middleware");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
     app.use(vite.middlewares);
   } else {
-    // Serve static files in production
-    app.use(express.static(path.join(__dirname, "dist")));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "dist", "index.html"));
-    });
+    console.log("Starting in PRODUCTION mode");
+    const distPath = path.join(__dirname, "dist");
+    if (fs.existsSync(distPath)) {
+      app.use(express.static(distPath));
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(distPath, "index.html"));
+      });
+    } else {
+      console.warn("Dist directory not found! Falling back to root serving.");
+      app.use(express.static(__dirname));
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "index.html"));
+      });
+    }
   }
 
-  // Global error handler to ensure JSON responses for API routes
+  // Global Error Handler
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.error(err);
+    console.error("Global Server Error:", err);
     if (req.path.startsWith('/api/')) {
-      return res.status(500).json({ error: err.message || "Internal Server Error" });
+      return res.status(500).json({ 
+        error: "Internal Server Error", 
+        message: err.message 
+      });
     }
-    next(err);
+    res.status(500).send("Internal Server Error");
   });
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`>>> Server running on http://0.0.0.0:${PORT}`);
+    console.log(`>>> Uploads directory: ${uploadDir}`);
   });
 }
 
-startServer();
+startServer().catch(err => {
+  console.error("Failed to start server:", err);
+});
+

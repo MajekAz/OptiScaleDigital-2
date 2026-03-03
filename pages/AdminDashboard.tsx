@@ -159,26 +159,48 @@ export const AdminDashboard: React.FC = () => {
     formData.append('image', file);
 
     try {
-      const res = await fetch('/api/upload', {
+      // First attempt: Node.js API
+      let res = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
+      
+      let contentType = res.headers.get("content-type");
+      
+      // If Node API fails or returns HTML, try PHP fallback
+      if (!res.ok || (contentType && contentType.includes("text/html"))) {
+        console.warn("Node API failed or returned HTML, trying PHP fallback...");
+        res = await fetch('./api/upload.php', {
+          method: 'POST',
+          body: formData,
+        });
+        contentType = res.headers.get("content-type");
+      }
+
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await res.text();
+        console.error("Non-JSON response received:", text.substring(0, 500));
+        throw new Error(`Server returned non-JSON response (${res.status}). This often happens if the API route is not found or the server crashed. Check console for details.`);
+      }
+
       const data = await res.json();
-      if (data.url) {
+      if (data.url || data.success) {
+        const finalUrl = data.url;
         const newMedia = {
-          url: data.url,
+          url: finalUrl,
           name: file.name,
           date: new Date().toLocaleDateString()
         };
         setMediaFiles(prev => [newMedia, ...prev]);
         // If we're in the create view, automatically set the image
         if (activeView === 'create') {
-          setCurrentPost(prev => ({ ...prev, image: data.url }));
+          setCurrentPost(prev => ({ ...prev, image: finalUrl }));
         }
       } else {
         throw new Error(data.error || 'Upload failed');
       }
     } catch (err) {
+      console.error("Upload Error Details:", err);
       alert('Upload failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
     } finally {
       setIsUploading(false);
