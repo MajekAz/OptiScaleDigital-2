@@ -152,7 +152,8 @@ export const AdminDashboard: React.FC = () => {
 
   const testAPI = async () => {
     try {
-      const res = await fetch('/api/health');
+      console.log("Testing API Connection...");
+      const res = await fetch('/api-v1/health');
       const contentType = res.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         const data = await res.json();
@@ -160,12 +161,12 @@ export const AdminDashboard: React.FC = () => {
         alert(`API is working! Status: ${data.status}, Env: ${data.env}`);
       } else {
         const text = await res.text();
-        console.error("API Health Check failed (Non-JSON):", text.substring(0, 200));
-        alert("API Health Check failed: Server returned HTML instead of JSON. This usually means the API routes are not being hit.");
+        console.error("API Health Check failed (Non-JSON):", text.substring(0, 500));
+        alert(`API Health Check failed: Server returned HTML instead of JSON. Status: ${res.status}. This usually means the API routes are being intercepted by the frontend catch-all.`);
       }
     } catch (err) {
       console.error("API Health Check Error:", err);
-      alert("API Health Check failed: Could not connect to server.");
+      alert("API Health Check failed: Could not connect to server. Check if the server is running.");
     }
   };
 
@@ -179,7 +180,7 @@ export const AdminDashboard: React.FC = () => {
 
     try {
       // Use absolute paths for both attempts
-      const apiEndpoints = ['/api/upload', '/api/upload.php'];
+      const apiEndpoints = ['/api-v1/upload', '/api/upload.php'];
       let res: Response | null = null;
       let success = false;
       let lastError = '';
