@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { BlogPost } from '../types';
 import { Button } from '../components/Button';
 import { 
@@ -7,9 +7,15 @@ import {
   CheckCircle2, Clock, MoreVertical, Search, MessageSquare, 
   Calendar as CalendarIcon, TrendingUp, Users, Upload, ImagePlus,
   Send, CalendarDays, AlertTriangle, Database, Info, Mail,
-  RefreshCw
+  RefreshCw, BarChart, PieChart as PieChartIcon, Activity,
+  ArrowUpRight, ArrowDownRight, ChevronRight
 } from 'lucide-react';
 import { SEO } from '../components/SEO';
+import { 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, 
+  ResponsiveContainer, AreaChart, Area, BarChart as ReBarChart, 
+  Bar, Cell, PieChart, Pie 
+} from 'recharts';
 
 type AdminView = 'dashboard' | 'all-posts' | 'create' | 'leads';
 
@@ -37,6 +43,23 @@ export const AdminDashboard: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDemoMode, setIsDemoMode] = useState(false);
+
+  // Mock Analytics Data
+  const analyticsData = useMemo(() => [
+    { name: 'Mon', leads: 4, traffic: 240, conversion: 2.4 },
+    { name: 'Tue', leads: 7, traffic: 300, conversion: 2.8 },
+    { name: 'Wed', leads: 5, traffic: 280, conversion: 2.1 },
+    { name: 'Thu', leads: 12, traffic: 450, conversion: 3.5 },
+    { name: 'Fri', leads: 9, traffic: 390, conversion: 3.0 },
+    { name: 'Sat', leads: 3, traffic: 150, conversion: 1.8 },
+    { name: 'Sun', leads: 6, traffic: 210, conversion: 2.2 },
+  ], []);
+
+  const serviceDistribution = useMemo(() => [
+    { name: 'Web Design', value: 45, color: '#3b82f6' },
+    { name: 'Marketing', value: 30, color: '#a855f7' },
+    { name: 'AI Automation', value: 25, color: '#10b981' },
+  ], []);
   
   // Edit/Create State
   const [currentPost, setCurrentPost] = useState<BlogPost>({
@@ -182,32 +205,198 @@ export const AdminDashboard: React.FC = () => {
 
         <div className="p-8 max-w-6xl mx-auto">
           {activeView === 'dashboard' && (
-            <div className="space-y-8">
+            <div className="space-y-8 animate-fade-in">
+              {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard icon={<MessageSquare className="text-brand-cyan" />} label="Contacts" value={leads.filter(l => l.type === 'contact').length} />
-                <StatCard icon={<CalendarIcon className="text-purple-400" />} label="Bookings" value={leads.filter(l => l.type === 'booking').length} />
-                <StatCard icon={<Mail className="text-emerald-400" />} label="Subscribers" value={leads.filter(l => l.type === 'subscriber').length} />
-                <StatCard icon={<FileText className="text-blue-400" />} label="Total Posts" value={posts.length} />
+                <StatCard 
+                  icon={<MessageSquare className="text-brand-cyan" />} 
+                  label="Contacts" 
+                  value={leads.filter(l => l.type === 'contact').length} 
+                  trend="+12%" 
+                  trendUp={true}
+                />
+                <StatCard 
+                  icon={<CalendarIcon className="text-purple-400" />} 
+                  label="Bookings" 
+                  value={leads.filter(l => l.type === 'booking').length} 
+                  trend="+5%" 
+                  trendUp={true}
+                />
+                <StatCard 
+                  icon={<Mail className="text-emerald-400" />} 
+                  label="Subscribers" 
+                  value={leads.filter(l => l.type === 'subscriber').length} 
+                  trend="-2%" 
+                  trendUp={false}
+                />
+                <StatCard 
+                  icon={<FileText className="text-blue-400" />} 
+                  label="Total Posts" 
+                  value={posts.length} 
+                  trend="+1" 
+                  trendUp={true}
+                />
               </div>
               
-              <div className="bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl">
-                  <h3 className="text-white font-bold mb-6">Recent Activity</h3>
-                  <div className="space-y-4">
-                    {leads.slice(0, 5).map(lead => (
-                      <div key={`${lead.type}-${lead.id}`} className="flex items-center justify-between py-3 border-b border-slate-800 last:border-0">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${lead.type === 'booking' ? 'bg-purple-500/20 text-purple-400' : lead.type === 'subscriber' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-brand-cyan/20 text-brand-cyan'}`}>
-                            {lead.type.charAt(0).toUpperCase()}
-                          </div>
-                          <div>
-                            <p className="text-sm font-bold text-white">{lead.name || lead.email}</p>
-                            <p className="text-xs text-slate-500">{lead.type}</p>
-                          </div>
+              {/* Charts Row */}
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* Main Growth Chart */}
+                <div className="lg:col-span-2 bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl">
+                  <div className="flex items-center justify-between mb-8">
+                    <div>
+                      <h3 className="text-white font-bold">Growth Performance</h3>
+                      <p className="text-xs text-slate-500 mt-1">Lead generation vs Website traffic (Weekly)</p>
+                    </div>
+                    <select className="bg-slate-900 border border-slate-800 text-xs text-slate-400 rounded-lg px-3 py-1.5 outline-none focus:border-brand-blue">
+                      <option>Last 7 Days</option>
+                      <option>Last 30 Days</option>
+                    </select>
+                  </div>
+                  <div className="h-[300px] w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={analyticsData}>
+                        <defs>
+                          <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                        <XAxis 
+                          dataKey="name" 
+                          stroke="#64748b" 
+                          fontSize={12} 
+                          tickLine={false} 
+                          axisLine={false} 
+                          dy={10}
+                        />
+                        <YAxis 
+                          stroke="#64748b" 
+                          fontSize={12} 
+                          tickLine={false} 
+                          axisLine={false} 
+                          tickFormatter={(value) => `${value}`}
+                        />
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px' }}
+                          itemStyle={{ color: '#f8fafc' }}
+                        />
+                        <Area 
+                          type="monotone" 
+                          dataKey="leads" 
+                          stroke="#3b82f6" 
+                          strokeWidth={3}
+                          fillOpacity={1} 
+                          fill="url(#colorLeads)" 
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* Service Distribution */}
+                <div className="bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl">
+                  <h3 className="text-white font-bold mb-8">Service Interest</h3>
+                  <div className="h-[220px] w-full relative">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={serviceDistribution}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {serviceDistribution.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '12px' }}
+                        />
+                      </PieChart>
+                    </ResponsiveContainer>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                      <span className="text-2xl font-black text-white">100%</span>
+                      <span className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Inbound</span>
+                    </div>
+                  </div>
+                  <div className="mt-6 space-y-3">
+                    {serviceDistribution.map((item) => (
+                      <div key={item.name} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }}></div>
+                          <span className="text-xs text-slate-400">{item.name}</span>
                         </div>
-                        <span className="text-xs text-slate-500">{new Date(lead.created_at).toLocaleDateString()}</span>
+                        <span className="text-xs font-bold text-white">{item.value}%</span>
                       </div>
                     ))}
                   </div>
+                </div>
+              </div>
+              
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* Recent Activity */}
+                <div className="lg:col-span-2 bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-white font-bold">Recent Activity</h3>
+                    <button onClick={() => setActiveView('leads')} className="text-xs text-brand-blue hover:underline font-bold">View All</button>
+                  </div>
+                  <div className="space-y-4">
+                    {leads.slice(0, 5).map(lead => (
+                      <div key={`${lead.type}-${lead.id}`} className="flex items-center justify-between py-3 border-b border-slate-800 last:border-0 group">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold transition-transform group-hover:scale-110 ${lead.type === 'booking' ? 'bg-purple-500/10 text-purple-400' : lead.type === 'subscriber' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-brand-cyan/10 text-brand-cyan'}`}>
+                            {lead.type === 'booking' ? <CalendarIcon size={18} /> : lead.type === 'subscriber' ? <Mail size={18} /> : <MessageSquare size={18} />}
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-white">{lead.name || lead.email}</p>
+                            <p className="text-xs text-slate-500 flex items-center gap-2">
+                              <span className="capitalize">{lead.type}</span>
+                              <span className="w-1 h-1 rounded-full bg-slate-700"></span>
+                              <span>{lead.service || 'General Enquiry'}</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs text-slate-400 font-medium">{new Date(lead.created_at).toLocaleDateString()}</p>
+                          <p className="text-[10px] text-slate-600 uppercase font-bold tracking-tighter">Processed</p>
+                        </div>
+                      </div>
+                    ))}
+                    {leads.length === 0 && (
+                      <div className="py-12 text-center">
+                        <Activity size={40} className="text-slate-800 mx-auto mb-4" />
+                        <p className="text-slate-500 text-sm">No recent activity found.</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="space-y-4">
+                  <div className="bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl">
+                    <h3 className="text-white font-bold mb-6">Quick Actions</h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      <QuickActionBtn onClick={() => setActiveView('create')} icon={<Plus size={18} />} label="New Blog Post" color="bg-brand-blue" />
+                      <QuickActionBtn onClick={() => setActiveView('leads')} icon={<Users size={18} />} label="Review Leads" color="bg-brand-cyan" />
+                      <QuickActionBtn onClick={() => window.open('/', '_blank')} icon={<ExternalLink size={18} />} label="View Live Site" color="bg-slate-700" />
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-brand-blue to-brand-cyan p-6 rounded-2xl shadow-xl text-white relative overflow-hidden group">
+                    <div className="relative z-10">
+                      <h4 className="font-black text-lg mb-2">Need Support?</h4>
+                      <p className="text-white/80 text-xs leading-relaxed mb-4">Our engineering team is available 24/7 for technical assistance.</p>
+                      <button className="bg-white text-brand-navy px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest hover:bg-brand-navy hover:text-white transition-all">
+                        Contact Devs
+                      </button>
+                    </div>
+                    <Database size={120} className="absolute -bottom-10 -right-10 text-white/10 group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -462,18 +651,39 @@ export const AdminDashboard: React.FC = () => {
   );
 };
 
-const SidebarLink: React.FC<{active: boolean, onClick: () => void, icon: any, label: string}> = ({ active, onClick, icon, label }) => (
-  <button onClick={onClick} className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all font-medium ${active ? 'bg-brand-blue text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
-    {icon} <span>{label}</span>
-  </button>
-);
-
-const StatCard: React.FC<{icon: any, label: string, value: number}> = ({ icon, label, value }) => (
-  <div className="bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl">
+const StatCard: React.FC<{icon: any, label: string, value: number, trend?: string, trendUp?: boolean}> = ({ icon, label, value, trend, trendUp }) => (
+  <div className="bg-brand-navy p-6 rounded-2xl border border-slate-800 shadow-xl hover:border-slate-700 transition-colors group">
     <div className="flex items-center justify-between mb-4">
-      <div className="p-2 bg-slate-800/50 rounded-lg">{icon}</div>
+      <div className="p-2 bg-slate-800/50 rounded-lg group-hover:scale-110 transition-transform">{icon}</div>
+      {trend && (
+        <div className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full ${trendUp ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}`}>
+          {trendUp ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
+          {trend}
+        </div>
+      )}
     </div>
     <h4 className="text-slate-400 text-xs font-bold uppercase tracking-widest">{label}</h4>
     <p className="text-3xl font-black text-white mt-1">{value}</p>
   </div>
+);
+
+const QuickActionBtn: React.FC<{onClick: () => void, icon: any, label: string, color: string}> = ({ onClick, icon, label, color }) => (
+  <button 
+    onClick={onClick}
+    className="flex items-center justify-between p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-slate-700 transition-all group w-full"
+  >
+    <div className="flex items-center gap-3">
+      <div className={`w-8 h-8 rounded-lg ${color} flex items-center justify-center text-white`}>
+        {icon}
+      </div>
+      <span className="text-sm font-bold text-slate-300 group-hover:text-white">{label}</span>
+    </div>
+    <ChevronRight size={16} className="text-slate-600 group-hover:text-white transition-transform group-hover:translate-x-1" />
+  </button>
+);
+
+const SidebarLink: React.FC<{active: boolean, onClick: () => void, icon: any, label: string}> = ({ active, onClick, icon, label }) => (
+  <button onClick={onClick} className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all font-medium ${active ? 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
+    {icon} <span>{label}</span>
+  </button>
 );

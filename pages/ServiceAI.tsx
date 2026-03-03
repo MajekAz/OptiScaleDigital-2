@@ -18,20 +18,36 @@ export const ServiceAI: React.FC = () => {
       />
 
       {/* 1. Hero with Service Promise */}
-      <section className="relative py-24 lg:py-40 bg-brand-secondary text-white overflow-hidden">
+      <section className="relative py-24 lg:py-48 bg-brand-secondary text-white overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={IMAGES.services.aiHero} 
+            alt="AI Automation Background" 
+            className="w-full h-full object-cover opacity-20"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-secondary/90 via-brand-secondary/70 to-brand-secondary"></div>
+        </div>
+
         <div className="container relative z-10 text-center">
           <div className="inline-block px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-xs font-bold uppercase tracking-widest mb-8">
             The Digital Workforce
           </div>
-          <h1 className="text-h1 mb-6 max-w-3xl mx-auto">
-            Work Less. <span className="text-brand-accent">Earn More.</span>
+          <h1 className="text-h1 mb-6 max-w-4xl mx-auto leading-tight">
+            Scale Without <span className="text-brand-accent">Headcount.</span>
           </h1>
-          <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
-            We deploy "Digital Employees" that handle your repetitive tasks 24/7 with 100% precision and zero burnout.
+          <p className="text-2xl font-medium text-white/90 mb-6 max-w-3xl mx-auto">
+            Work Less. Earn More. Intelligent Business Automation.
+          </p>
+          <p className="text-lg text-brand-textGrey mb-12 max-w-[65ch] mx-auto leading-relaxed">
+            We deploy custom AI agents that reclaim 20+ hours of team time every single week. We engineer intelligent workflows that handle the drudgery with perfect precision and zero burnout.
           </p>
           <div className="flex justify-center">
             <Link to="/contact">
-              <Button variant="primary" className="px-12 py-5 text-lg bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none">Request Live Demo</Button>
+              <Button variant="primary" className="px-12 py-5 text-lg bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none shadow-2xl shadow-brand-accent/20 hover:shadow-brand-accent/40 transition-all">
+                Request a Live Demo
+              </Button>
             </Link>
           </div>
         </div>

@@ -28,8 +28,8 @@ export const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-6 text-brand-cyan">Services</h3>
             <ul className="space-y-3 text-sm text-gray-400">
               <li><Link to="/services/web-design" className="hover:text-white transition-colors">Website Design</Link></li>
-              <li><Link to="/services/ai-automation" className="hover:text-white transition-colors">AI Automation</Link></li>
               <li><Link to="/services/digital-marketing" className="hover:text-white transition-colors">Digital Marketing</Link></li>
+              <li><Link to="/services/ai-automation" className="hover:text-white transition-colors">AI Automation</Link></li>
               <li><Link to="/services" className="hover:text-white transition-colors">All Services</Link></li>
             </ul>
           </div>

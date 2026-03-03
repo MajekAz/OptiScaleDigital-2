@@ -63,16 +63,16 @@ export const Services: React.FC = () => {
               link="#web-design"
             />
             <ServiceOverviewCard 
-              icon={<Bot size={32} />}
-              title="AI Automation"
-              description="Custom agents and workflows that reclaim 20+ hours of team time every single week."
-              link="#ai-automation"
-            />
-            <ServiceOverviewCard 
               icon={<TrendingUp size={32} />}
               title="Digital Marketing"
               description="Data-led SEO and PPC campaigns that prioritise revenue over vanity metrics."
               link="#digital-marketing"
+            />
+            <ServiceOverviewCard 
+              icon={<Bot size={32} />}
+              title="AI Automation"
+              description="Custom agents and workflows that reclaim 20+ hours of team time every single week."
+              link="#ai-automation"
             />
           </div>
         </div>
