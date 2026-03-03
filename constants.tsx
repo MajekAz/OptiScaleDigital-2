@@ -5,7 +5,7 @@ export const COMPANY_NAME = "OptiScale Digital LTD";
 export const COMPANY_ADDRESS = "71-75 Shelton Street, Covent Garden, London, WC2H 9JQ, United Kingdom";
 export const COMPANY_EMAIL = "info@optiscaledigital.co.uk";
 export const COMPANY_PHONE = "+44 20 7946 0000";
-export const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbxFJKZGOxVf7DqTO3tLUXoDhZ2MCGGpkv2UraSgMs05OqjiabIbQbZWc_jHUUULjhGAzw/exec";
+export const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbx4TWt0eQ6myK6sC7cjU0e067qUSNFNT-a2HBQqgZ6oXT2zL2yCQgg4mGGGlP-xV-Hw/exec";
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'Home', path: '/' },

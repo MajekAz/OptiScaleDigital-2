@@ -40,7 +40,8 @@ async function startServer() {
       status: "ok", 
       time: new Date().toISOString(), 
       env: process.env.NODE_ENV,
-      cwd: process.cwd()
+      cwd: process.cwd(),
+      nodeVersion: process.version
     });
   });
 
@@ -67,14 +68,18 @@ async function startServer() {
     }
   });
 
-  apiRouter.post("/upload", (req, res) => {
-    console.log("API: Handling upload request...");
+  // Handle both /upload and /upload/
+  apiRouter.post(["/upload", "/upload/"], (req, res) => {
+    console.log(`API: Handling upload request to ${req.url}...`);
     upload.single("image")(req, res, (err) => {
       if (err) {
         console.error("API: Upload Error:", err);
         return res.status(400).json({ error: err.message });
       }
-      if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+      if (!req.file) {
+        console.error("API: No file in request");
+        return res.status(400).json({ error: "No file uploaded" });
+      }
       
       console.log("API: Upload successful:", req.file.filename);
       res.json({ 
@@ -85,8 +90,18 @@ async function startServer() {
     });
   });
 
-  // Mount API router with a very specific prefix
+  // Mount API router
   app.use("/api-v1", apiRouter);
+
+  // Catch-all for api-v1 to prevent falling through to Vite/Static
+  app.use("/api-v1/*", (req, res) => {
+    console.warn(`API: Unhandled request to ${req.originalUrl}`);
+    res.status(404).json({ 
+      error: "API route not found", 
+      path: req.originalUrl,
+      method: req.method 
+    });
+  });
 
   // 3. Body Parsers (After API routes that handle streams)
   app.use(express.json());
@@ -108,8 +123,11 @@ async function startServer() {
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       // Ensure we don't serve HTML for missing API calls
-      if (req.url.startsWith('/api')) {
-        return res.status(404).json({ error: "API route not found" });
+      if (req.path.startsWith('/api')) {
+        return res.status(404).json({ 
+          error: "API route not found",
+          path: req.path
+        });
       }
       res.sendFile(path.join(distPath, "index.html"));
     });

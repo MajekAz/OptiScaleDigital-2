@@ -183,7 +183,7 @@ export const AdminDashboard: React.FC = () => {
       const apiEndpoints = ['/api-v1/upload', '/api/upload.php'];
       let res: Response | null = null;
       let success = false;
-      let lastError = '';
+      let errors: string[] = [];
 
       for (const endpoint of apiEndpoints) {
         try {
@@ -200,17 +200,19 @@ export const AdminDashboard: React.FC = () => {
             break;
           } else {
             const text = await attempt.text();
-            console.warn(`Upload to ${endpoint} failed. Status: ${attempt.status}, Content-Type: ${contentType}. Response start: ${text.substring(0, 100)}`);
-            lastError = `Endpoint ${endpoint} returned ${attempt.status} ${contentType}`;
+            const errorMsg = `${endpoint} failed. Status: ${attempt.status}, Type: ${contentType}. Start: ${text.substring(0, 50)}`;
+            console.warn(errorMsg);
+            errors.push(errorMsg);
           }
         } catch (err) {
-          console.warn(`Error connecting to ${endpoint}:`, err);
-          lastError = `Connection error to ${endpoint}`;
+          const errorMsg = `${endpoint} connection error: ${err instanceof Error ? err.message : 'Unknown'}`;
+          console.warn(errorMsg);
+          errors.push(errorMsg);
         }
       }
 
       if (!success || !res) {
-        throw new Error(`All upload endpoints failed. Last error: ${lastError}. Check console for full details.`);
+        throw new Error(`Upload failed on all endpoints:\n- ${errors.join('\n- ')}`);
       }
 
       const data = await res.json();
@@ -231,7 +233,7 @@ export const AdminDashboard: React.FC = () => {
       }
     } catch (err) {
       console.error("Upload Error Details:", err);
-      alert('Upload failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
+      alert(err instanceof Error ? err.message : 'Unknown upload error');
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
