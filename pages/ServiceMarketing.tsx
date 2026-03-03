@@ -18,20 +18,36 @@ export const ServiceMarketing: React.FC = () => {
       />
 
       {/* 1. Hero with Service Promise */}
-      <section className="relative py-24 lg:py-40 bg-brand-secondary text-white overflow-hidden">
+      <section className="relative py-24 lg:py-48 bg-brand-secondary text-white overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={IMAGES.services.digitalMarketing} 
+            alt="Digital Marketing Background" 
+            className="w-full h-full object-cover opacity-20"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-secondary/90 via-brand-secondary/70 to-brand-secondary"></div>
+        </div>
+
         <div className="container relative z-10 text-center">
           <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
             The Performance Growth Engine
           </div>
-          <h1 className="text-h1 mb-6 max-w-3xl mx-auto">
-            Marketing That <br /><span className="text-brand-primary">Pays For Itself.</span>
+          <h1 className="text-h1 mb-6 max-w-4xl mx-auto leading-tight">
+            Dominate Your <span className="text-brand-primary">Digital Market.</span>
           </h1>
-          <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
-            We don't focus on "likes" or impressions. We focus on leads and sales. Data-driven growth for businesses ready to lead.
+          <p className="text-2xl font-medium text-white/90 mb-6 max-w-3xl mx-auto">
+            Data-Driven Strategies. Measurable Revenue Growth.
+          </p>
+          <p className="text-lg text-brand-textGrey mb-12 max-w-[65ch] mx-auto leading-relaxed">
+            We don't just generate "clicks"—we engineer high-intent marketing architectures that capture attention, build authority, and turn your digital presence into a consistent revenue engine.
           </p>
           <div className="flex justify-center">
             <Link to="/booking">
-              <Button variant="primary" className="px-12 py-5 text-lg">Get My Growth Strategy</Button>
+              <Button variant="primary" className="px-12 py-5 text-lg shadow-2xl shadow-brand-primary/20 hover:shadow-brand-primary/40 transition-all">
+                Claim Your Growth Audit
+              </Button>
             </Link>
           </div>
         </div>

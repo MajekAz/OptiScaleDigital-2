@@ -19,20 +19,36 @@ export const ServiceWebDesign: React.FC = () => {
       />
 
       {/* 1. Hero with Service Promise */}
-      <section className="relative py-24 lg:py-40 bg-brand-secondary text-white overflow-hidden">
+      <section className="relative py-24 lg:py-48 bg-brand-secondary text-white overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={IMAGES.services.webDesign} 
+            alt="Web Design Background" 
+            className="w-full h-full object-cover opacity-20"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-secondary/90 via-brand-secondary/70 to-brand-secondary"></div>
+        </div>
+
         <div className="container relative z-10 text-center">
           <div className="inline-block px-4 py-1.5 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-xs font-bold uppercase tracking-widest mb-8">
             The Digital Flagship Store
           </div>
-          <h1 className="text-h1 mb-6 max-w-3xl mx-auto">
-            Websites That <span className="text-brand-primary">Convert.</span>
+          <h1 className="text-h1 mb-6 max-w-4xl mx-auto leading-tight">
+            Engineering <span className="text-brand-primary">Digital Dominance.</span>
           </h1>
-          <p className="text-xl text-brand-textGrey mb-12 max-w-[65ch] mx-auto">
-            We build high-performance digital infrastructure designed to capture leads and outshine competitors in the crowded UK market.
+          <p className="text-2xl font-medium text-white/90 mb-6 max-w-3xl mx-auto">
+            High-Performance Websites for High-Growth Brands.
+          </p>
+          <p className="text-lg text-brand-textGrey mb-12 max-w-[65ch] mx-auto leading-relaxed">
+            We don't just build websites; we engineer scalable digital assets that capture market share, secure your data, and turn browsers into lifelong clients.
           </p>
           <div className="flex justify-center">
             <Link to="/booking">
-              <Button variant="primary" className="px-12 py-5 text-lg">Claim Your Free Design Audit</Button>
+              <Button variant="primary" className="px-12 py-5 text-lg shadow-2xl shadow-brand-primary/20 hover:shadow-brand-primary/40 transition-all">
+                Start Your Digital Evolution
+              </Button>
             </Link>
           </div>
         </div>
