@@ -150,6 +150,25 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
+  const testAPI = async () => {
+    try {
+      const res = await fetch('/api/health');
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        console.log("API Health Check Success:", data);
+        alert(`API is working! Status: ${data.status}, Env: ${data.env}`);
+      } else {
+        const text = await res.text();
+        console.error("API Health Check failed (Non-JSON):", text.substring(0, 200));
+        alert("API Health Check failed: Server returned HTML instead of JSON. This usually means the API routes are not being hit.");
+      }
+    } catch (err) {
+      console.error("API Health Check Error:", err);
+      alert("API Health Check failed: Could not connect to server.");
+    }
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -159,28 +178,38 @@ export const AdminDashboard: React.FC = () => {
     formData.append('image', file);
 
     try {
-      // First attempt: Node.js API
-      let res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      
-      let contentType = res.headers.get("content-type");
-      
-      // If Node API fails or returns HTML, try PHP fallback
-      if (!res.ok || (contentType && contentType.includes("text/html"))) {
-        console.warn("Node API failed or returned HTML, trying PHP fallback...");
-        res = await fetch('./api/upload.php', {
-          method: 'POST',
-          body: formData,
-        });
-        contentType = res.headers.get("content-type");
+      // Use absolute paths for both attempts
+      const apiEndpoints = ['/api/upload', '/api/upload.php'];
+      let res: Response | null = null;
+      let success = false;
+      let lastError = '';
+
+      for (const endpoint of apiEndpoints) {
+        try {
+          console.log(`Attempting upload to: ${endpoint}`);
+          const attempt = await fetch(endpoint, {
+            method: 'POST',
+            body: formData,
+          });
+          
+          const contentType = attempt.headers.get("content-type");
+          if (attempt.ok && contentType && contentType.includes("application/json")) {
+            res = attempt;
+            success = true;
+            break;
+          } else {
+            const text = await attempt.text();
+            console.warn(`Upload to ${endpoint} failed. Status: ${attempt.status}, Content-Type: ${contentType}. Response start: ${text.substring(0, 100)}`);
+            lastError = `Endpoint ${endpoint} returned ${attempt.status} ${contentType}`;
+          }
+        } catch (err) {
+          console.warn(`Error connecting to ${endpoint}:`, err);
+          lastError = `Connection error to ${endpoint}`;
+        }
       }
 
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await res.text();
-        console.error("Non-JSON response received:", text.substring(0, 500));
-        throw new Error(`Server returned non-JSON response (${res.status}). This often happens if the API route is not found or the server crashed. Check console for details.`);
+      if (!success || !res) {
+        throw new Error(`All upload endpoints failed. Last error: ${lastError}. Check console for full details.`);
       }
 
       const data = await res.json();
@@ -476,6 +505,10 @@ export const AdminDashboard: React.FC = () => {
                   <p className="text-slate-500 mt-2">Upload and manage your brand assets.</p>
                 </div>
                 <div className="flex gap-4">
+                  <Button onClick={testAPI} variant="outline" className="flex items-center gap-2 border-slate-700 text-slate-400 hover:text-white">
+                    <Activity size={18} />
+                    Test API
+                  </Button>
                   <input 
                     type="file" 
                     ref={fileInputRef} 

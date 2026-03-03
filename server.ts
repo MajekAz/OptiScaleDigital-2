@@ -60,8 +60,24 @@ async function startServer() {
   // API Router
   const apiRouter = express.Router();
 
+  // Explicitly log all API requests
+  apiRouter.use((req, res, next) => {
+    console.log(`[API REQUEST] ${req.method} ${req.url}`);
+    next();
+  });
+
+  apiRouter.get("/ping", (req, res) => {
+    res.json({ pong: true, timestamp: new Date().toISOString() });
+  });
+
   apiRouter.get("/health", (req, res) => {
-    res.json({ status: "ok", time: new Date().toISOString(), env: process.env.NODE_ENV });
+    res.json({ 
+      status: "ok", 
+      time: new Date().toISOString(), 
+      env: process.env.NODE_ENV,
+      cwd: process.cwd(),
+      distExists: fs.existsSync(path.join(__dirname, "dist"))
+    });
   });
 
   apiRouter.post("/upload", (req, res) => {
