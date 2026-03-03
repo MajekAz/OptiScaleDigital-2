@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 import { 
   Monitor, Smartphone, Zap, Search, Layers, RefreshCw, 
   PenTool, ShoppingCart, ArrowRight, ShieldCheck, CheckCircle2,
-  Code, Globe, ChevronDown
+  Code, Globe, ChevronDown, Database, Sparkles
 } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
@@ -84,16 +84,42 @@ export const ServiceWebDesign: React.FC = () => {
       <section className="py-section bg-brand-lightGrey">
         <div className="container">
           <div className="text-center mb-24">
-            <h2 className="text-h2 text-brand-secondary">What You Get</h2>
-            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">Complete end-to-end digital deliverables.</p>
+            <h2 className="text-h2 text-brand-secondary">Scale & Security: Our Core Standards</h2>
+            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">
+              We engineer high-performance digital infrastructure designed for enterprise-grade reliability and rapid business scaling.
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <Deliverable icon={<Monitor />} title="Custom React Frontends" desc="Blazing fast navigation with no page refreshes for superior UX." />
-            <Deliverable icon={<Smartphone />} title="Mobile-First UI" desc="Seamless experiences for the 60%+ of UK mobile-based traffic." />
-            <Deliverable icon={<Search />} title="SEO Core Setup" desc="Semantic markup and technical SEO built-in from the first line of code." />
-            <Deliverable icon={<Layers />} title="UX Prototyping" desc="Interactive blueprints focused on heatmaps and user flow analysis." />
-            <Deliverable icon={<RefreshCw />} title="Continuous Care" desc="24/7 security updates and performance optimization to stay competitive." />
-            <Deliverable icon={<PenTool />} title="Brand Visuals" desc="High-end, bespoke design that builds instant trust and authority." />
+            <Deliverable 
+              icon={<Layers />} 
+              title="WordPress Design & Development" 
+              desc="Custom-built, block-based themes without heavy page builders. A beautiful, easy-to-edit site that remains stable through every update." 
+            />
+            <Deliverable 
+              icon={<Code />} 
+              title="Enterprise Web Development" 
+              desc="Custom React/Next.js applications for complex business logic. Infinite scalability and lightning-fast speeds that outpace your competition." 
+            />
+            <Deliverable 
+              icon={<ShieldCheck />} 
+              title="Proactive Website Management" 
+              desc="24/7 uptime monitoring, daily backups, and security patching. Total peace of mind knowing your digital storefront is safe while you sleep." 
+            />
+            <Deliverable 
+              icon={<Database />} 
+              title="Headless CMS Deployment" 
+              desc="Decoupled architecture using Sanity or Contentful. Unmatched security and the ability to push content to apps, web, and IoT from one central hub." 
+            />
+            <Deliverable 
+              icon={<Sparkles />} 
+              title="AI-Driven User Personalization" 
+              desc="Dynamic content blocks that adapt to visitor behavior. Show the right offer to the right person, increasing conversion rates by up to 40%." 
+            />
+            <Deliverable 
+              icon={<Zap />} 
+              title="Core Web Vitals & Speed Optimization" 
+              desc="Advanced edge-caching and next-gen compression. Google-friendly 'Green' scores that improve your SEO rankings and user retention." 
+            />
           </div>
         </div>
       </section>
