@@ -17,7 +17,13 @@ import {
   Bar, Cell, PieChart, Pie 
 } from 'recharts';
 
-type AdminView = 'dashboard' | 'all-posts' | 'create' | 'leads';
+type AdminView = 'dashboard' | 'all-posts' | 'create' | 'leads' | 'media';
+
+interface MediaFile {
+  url: string;
+  name: string;
+  date: string;
+}
 
 interface Lead {
   id: string | number;
@@ -43,6 +49,8 @@ export const AdminDashboard: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   // Mock Analytics Data
   const analyticsData = useMemo(() => [
@@ -142,6 +150,42 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.url) {
+        const newMedia = {
+          url: data.url,
+          name: file.name,
+          date: new Date().toLocaleDateString()
+        };
+        setMediaFiles(prev => [newMedia, ...prev]);
+        // If we're in the create view, automatically set the image
+        if (activeView === 'create') {
+          setCurrentPost(prev => ({ ...prev, image: data.url }));
+        }
+      } else {
+        throw new Error(data.error || 'Upload failed');
+      }
+    } catch (err) {
+      alert('Upload failed: ' + (err instanceof Error ? err.message : 'Unknown error'));
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
   const handleDelete = (type: 'post' | 'lead', id: any) => {
     if (!window.confirm("Confirm deletion?")) return;
     if (type === 'post') {
@@ -185,6 +229,7 @@ export const AdminDashboard: React.FC = () => {
         <nav className="flex-1 p-4 space-y-2">
           <SidebarLink active={activeView === 'dashboard'} onClick={() => setActiveView('dashboard')} icon={<LayoutDashboard size={20} />} label="Overview" />
           <SidebarLink active={activeView === 'leads'} onClick={() => setActiveView('leads')} icon={<Users size={20} />} label="Enquiries" />
+          <SidebarLink active={activeView === 'media'} onClick={() => setActiveView('media')} icon={<ImageIcon size={20} />} label="Media Library" />
           <SidebarLink active={activeView === 'all-posts'} onClick={() => setActiveView('all-posts')} icon={<FileText size={20} />} label="Blog Posts" />
           <SidebarLink active={activeView === 'create'} onClick={() => { setActiveView('create'); setCurrentPost({ title: '', excerpt: '', content: '', author: 'OptiScale Team', category: 'Web Design', image: '', status: 'published', scheduled_at: '', date: new Date().toISOString().split('T')[0] }); }} icon={<Plus size={20} />} label="New Post" />
         </nav>
@@ -401,9 +446,69 @@ export const AdminDashboard: React.FC = () => {
             </div>
           )}
 
+          {activeView === 'media' && (
+            <div className="space-y-8 animate-fade-in">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-black text-white">Media Library</h1>
+                  <p className="text-slate-500 mt-2">Upload and manage your brand assets.</p>
+                </div>
+                <div className="flex gap-4">
+                  <input 
+                    type="file" 
+                    ref={fileInputRef} 
+                    className="hidden" 
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                  />
+                  <Button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2">
+                    {isUploading ? <Loader2 className="animate-spin" size={18} /> : <Upload size={18} />}
+                    Upload Image
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                {mediaFiles.map((file, idx) => (
+                  <div key={idx} className="bg-brand-navy rounded-2xl border border-slate-800 overflow-hidden group relative shadow-xl">
+                    <div className="aspect-square w-full bg-slate-900 flex items-center justify-center overflow-hidden">
+                      <img src={file.url} alt={file.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    </div>
+                    <div className="p-4">
+                      <p className="text-xs font-bold text-white truncate">{file.name}</p>
+                      <p className="text-[10px] text-slate-500 mt-1">{file.date}</p>
+                    </div>
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3">
+                      <button 
+                        onClick={() => {
+                          navigator.clipboard.writeText(window.location.origin + file.url);
+                          alert('URL copied to clipboard!');
+                        }}
+                        className="bg-white text-brand-navy px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-brand-blue hover:text-white transition-all"
+                      >
+                        Copy URL
+                      </button>
+                      <button 
+                        onClick={() => setMediaFiles(mediaFiles.filter((_, i) => i !== idx))}
+                        className="text-rose-500 text-[10px] font-bold uppercase hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                {mediaFiles.length === 0 && (
+                  <div className="col-span-full py-24 text-center border-2 border-dashed border-slate-800 rounded-3xl">
+                    <ImageIcon size={48} className="text-slate-800 mx-auto mb-4" />
+                    <p className="text-slate-500">Your media library is empty.</p>
+                    <button onClick={() => fileInputRef.current?.click()} className="text-brand-blue font-bold mt-2 hover:underline">Upload your first asset</button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
           {activeView === 'leads' && (
             <div className="space-y-6">
-              <h1 className="text-2xl font-bold text-white">All Enquiries</h1>
               <div className="bg-brand-navy rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
                 <table className="w-full text-left">
                   <thead className="bg-slate-900/50 text-slate-400 text-xs font-bold uppercase tracking-widest border-b border-slate-800">
@@ -601,19 +706,37 @@ export const AdminDashboard: React.FC = () => {
                         )}
                       </div>
                       
-                      <div>
-                        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Image URL</label>
-                        <div className="flex gap-2">
+                      <div className="grid grid-cols-1 gap-3">
+                        <input 
+                          type="file" 
+                          ref={fileInputRef} 
+                          className="hidden" 
+                          accept="image/*"
+                          onChange={handleFileUpload}
+                        />
+                        <button 
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="w-full py-3 rounded-xl border border-slate-800 bg-slate-900/50 text-slate-300 text-xs font-bold flex items-center justify-center gap-2 hover:border-brand-blue hover:text-white transition-all"
+                        >
+                          {isUploading ? <Loader2 className="animate-spin" size={14} /> : <Upload size={14} />}
+                          Upload from Computer
+                        </button>
+                        
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <ExternalLink size={12} className="text-slate-600" />
+                          </div>
                           <input 
                             type="text"
-                            placeholder="https://..."
-                            className="flex-1 bg-slate-900/50 border border-slate-800 rounded-lg px-4 py-2 text-xs text-white focus:border-brand-blue outline-none"
+                            placeholder="Or paste external URL..."
+                            className="w-full bg-slate-900/50 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-xs text-white focus:border-brand-blue outline-none transition-all"
                             value={currentPost.image}
                             onChange={e => setCurrentPost({...currentPost, image: e.target.value})}
                           />
                         </div>
-                        <p className="text-[10px] text-slate-600 mt-2">Use Unsplash or Picsum for high-quality placeholders.</p>
                       </div>
+                      <p className="text-[10px] text-slate-600">Images are saved to /public/uploads/ on the server.</p>
                     </div>
                   </div>
 
