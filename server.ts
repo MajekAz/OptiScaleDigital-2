@@ -45,13 +45,25 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Serve uploads directory statically
+  app.use("/uploads", express.static(uploadDir));
+
   // API Routes
-  app.post("/api/upload", upload.single("image"), (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-    const fileUrl = `/uploads/${req.file.filename}`;
-    res.json({ url: fileUrl });
+  app.post("/api/upload", (req, res, next) => {
+    upload.single("image")(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: `Multer error: ${err.message}` });
+      } else if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+      
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+      
+      const fileUrl = `/uploads/${req.file.filename}`;
+      res.json({ url: fileUrl });
+    });
   });
 
   // Health check
@@ -73,6 +85,15 @@ async function startServer() {
       res.sendFile(path.join(__dirname, "dist", "index.html"));
     });
   }
+
+  // Global error handler to ensure JSON responses for API routes
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error(err);
+    if (req.path.startsWith('/api/')) {
+      return res.status(500).json({ error: err.message || "Internal Server Error" });
+    }
+    next(err);
+  });
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
