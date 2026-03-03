@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { 
   Search, Target, Mail, BarChart, TrendingUp, Zap, 
-  ArrowRight, CheckCircle2, Globe, MousePointer2, ShieldCheck
+  ArrowRight, CheckCircle2, Globe, MousePointer2, ShieldCheck,
+  Share2, FileText, MousePointerClick
 } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
@@ -71,16 +72,42 @@ export const ServiceMarketing: React.FC = () => {
       <section className="py-section bg-brand-lightGrey">
         <div className="container">
           <div className="text-center mb-24">
-            <h2 className="text-h2 text-brand-secondary">Growth Deliverables</h2>
-            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">Full-funnel marketing architecture for high-growth firms.</p>
+            <h2 className="text-h2 text-brand-secondary">Dominate the Digital Landscape</h2>
+            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">
+              Our full-suite marketing architecture is engineered to capture attention, build authority, and drive measurable revenue growth.
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <Deliverable icon={<Search />} title="Technical SEO" desc="Climb to Page 1 with rigorous on-page, off-page, and technical audits." />
-            <Deliverable icon={<Target />} title="High-ROI PPC" desc="Laser-targeted Google and Meta ads that focus on conversion, not clicks." />
-            <Deliverable icon={<Mail />} title="Lead Nurture" desc="Automated email and SMS sequences that turn cold browsers into loyal buyers." />
-            <Deliverable icon={<Globe />} title="Content Authority" desc="Strategy-led articles and whitepapers that build brand trust and SEO weight." />
-            <Deliverable icon={<BarChart />} title="Live ROI Dashboards" desc="Transparent, real-time reporting showing exactly where your budget goes." />
-            <Deliverable icon={<MousePointer2 />} title="CPA Optimization" desc="Continuous A/B testing to lower your cost-per-acquisition month over month." />
+            <Deliverable 
+              icon={<Target />} 
+              title="PPC Ads (Google & Meta)" 
+              desc="Laser-targeted campaigns that focus on conversion, not just clicks. We optimize for the lowest CPA and highest lead quality." 
+            />
+            <Deliverable 
+              icon={<Share2 />} 
+              title="Social Media Marketing" 
+              desc="Build a loyal community and drive organic traffic through high-impact content and data-driven engagement strategies." 
+            />
+            <Deliverable 
+              icon={<Mail />} 
+              title="E-Marketing & Newsletters" 
+              desc="Turn your database into a revenue engine with automated email sequences and newsletters that nurture leads into repeat buyers." 
+            />
+            <Deliverable 
+              icon={<FileText />} 
+              title="Content Marketing" 
+              desc="Strategy-led articles, whitepapers, and case studies that establish your brand as a market leader while boosting SEO weight." 
+            />
+            <Deliverable 
+              icon={<Search />} 
+              title="Strategic SEO" 
+              desc="Climb to Page 1 with rigorous on-page, off-page, and technical audits designed for long-term organic dominance." 
+            />
+            <Deliverable 
+              icon={<MousePointerClick />} 
+              title="Conversion Optimization" 
+              desc="We don't just send traffic; we turn it into buyers. Continuous A/B testing and heatmap analysis to maximize your site's ROI." 
+            />
           </div>
           <div className="mt-20 text-center">
             <Link to="/booking">
