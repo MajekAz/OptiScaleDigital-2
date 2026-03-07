@@ -13,133 +13,294 @@ export const ServiceAI: React.FC = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="AI Automation UK | Intelligent Business Workflows"
-        description="Reduce operational overheads with custom AI agents and intelligent business automation."
+        title="AI Automation Solutions | OptiScale Digital LTD"
+        description="Streamline your business with intelligent AI automation and Google Workspace solutions. Eliminate repetitive tasks and scale faster without expensive software."
       />
 
-      {/* 1. Hero with Service Promise */}
-      <section className="relative py-24 lg:py-48 bg-brand-secondary text-white overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
+      {/* HERO SECTION */}
+      <section className="relative py-24 lg:py-32 bg-brand-secondary text-white overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20">
           <img 
             src={IMAGES.services.aiHero} 
             alt="AI Automation Background" 
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-secondary/90 via-brand-secondary/70 to-brand-secondary"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/80 to-transparent"></div>
         </div>
 
-        <div className="container relative z-10 text-center">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-xs font-bold uppercase tracking-widest mb-8">
-            The Digital Workforce
-          </div>
-          <h1 className="text-h1 mb-6 max-w-4xl mx-auto leading-tight">
-            Scale Without <span className="text-brand-accent">Headcount.</span>
-          </h1>
-          <p className="text-2xl font-medium text-white/90 mb-6 max-w-3xl mx-auto">
-            Work Less. Earn More. Intelligent Business Automation.
-          </p>
-          <p className="text-lg text-brand-textGrey mb-12 max-w-[65ch] mx-auto leading-relaxed">
-            We deploy custom AI agents that reclaim 20+ hours of team time every single week. We engineer intelligent workflows that handle the drudgery with perfect precision and zero burnout.
-          </p>
-          <div className="flex justify-center">
-            <Link to="/contact">
-              <Button variant="primary" className="px-12 py-5 text-lg bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none shadow-2xl shadow-brand-accent/20 hover:shadow-brand-accent/40 transition-all">
-                Request a Live Demo
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Problem → Solution Narrative */}
-      <section className="py-section bg-white">
-        <div className="container max-w-5xl">
-          <div className="grid md:grid-cols-2 gap-20 items-center">
-            <div>
-              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">The Problem</span>
-              <h2 className="text-h3 text-brand-secondary mt-2 mb-6 max-w-md">Manual Labor is Stifling Your Growth.</h2>
-              <p className="text-brand-textGrey mb-6 leading-relaxed max-w-[65ch]">
-                Your best team members are losing 40% of their day to data entry, lead follow-ups, and repetitive support queries. This "operational drag" costs UK businesses billions annually.
-              </p>
-            </div>
-            <div className="bg-brand-lightGrey p-12 rounded-[2.5rem] border border-brand-accent/20 shadow-xl">
-              <span className="text-brand-accent font-bold uppercase tracking-widest text-xs">The Intelligent Solution</span>
-              <h2 className="text-h3 text-brand-secondary mt-2 mb-6 max-w-md">Custom Intelligent Workflows.</h2>
-              <p className="text-brand-textGrey mb-8 leading-relaxed max-w-[65ch]">
-                We implement AI agents that integrate directly with your CRM, Slack, and Email to automate lead nurture, documentation, and reporting.
-              </p>
-              <div className="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm">
-                <div className="w-12 h-12 bg-brand-accent/10 rounded-full flex items-center justify-center text-brand-accent">
-                   <Clock size={24} />
-                </div>
-                <div>
-                   <p className="font-bold text-brand-secondary">Reclaim 20+ Hours</p>
-                   <p className="text-xs text-brand-textGrey uppercase font-bold">Per Team Member Weekly</p>
-                </div>
-              </div>
+        <div className="container relative z-10">
+          <div className="max-w-4xl">
+            <h1 className="text-h1 mb-6 leading-tight">
+              AI Automation Solutions That <span className="text-brand-accent">Streamline Your Business</span>
+            </h1>
+            <p className="text-xl md:text-2xl font-medium text-white/90 mb-8">
+              We design intelligent automation systems using AI and Google Workspace to eliminate repetitive tasks, improve efficiency, and help your business scale faster.
+            </p>
+            <p className="text-lg text-brand-textGrey mb-12 max-w-3xl leading-relaxed">
+              At OptiScale Digital LTD, we build powerful automation systems using tools such as Google Sheets, Google Forms, Google Docs, Google Drive, Gmail automation, and AI integrations. Our solutions help businesses manage leads, automate workflows, improve communication, and operate more efficiently without relying on expensive monthly software subscriptions.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/contact">
+                <Button variant="primary" className="px-8 py-4 text-lg bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none shadow-lg">
+                  Book a Free Automation Consultation
+                </Button>
+              </Link>
+              <a href="#services">
+                <Button variant="outline" className="px-8 py-4 text-lg border-white text-white hover:bg-white/10">
+                  Explore Automation Services
+                </Button>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Deliverables List */}
-      <section className="py-section bg-brand-lightGrey">
+      {/* INTRODUCTION SECTION */}
+      <section className="py-20 bg-white">
         <div className="container">
-          <div className="text-center mb-24">
-            <h2 className="text-h2 text-brand-secondary">The AI Suite</h2>
-            <p className="text-brand-textGrey mt-6 max-w-[65ch] mx-auto">Enterprise-grade tools for SME scalability.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Deliverable icon={<MessageSquare />} title="Smart Lead Agents" desc="AI-powered chatbots that qualify leads and book calls on your calendar 24/7." />
-            <Deliverable icon={<Workflow />} title="Zero-Touch Syncing" desc="Seamless data flow between HubSpot, Salesforce, and internal spreadsheets." />
-            <Deliverable icon={<Database />} title="Document Intel" desc="Agents that read, categorize, and extract data from invoices and contracts." />
-            <Deliverable icon={<BarChart />} title="Auto-Reporting" desc="Real-time dashboard generation fueled by automated data harvesting." />
-            <Deliverable icon={<Users />} title="HR Automation" desc="Automated onboarding and internal query handling for growing teams." />
-            <Deliverable icon={<ShieldCheck />} title="Privacy-First AI" desc="On-premise or secure cloud models that never share your trade secrets." />
-          </div>
-          <div className="mt-20 text-center">
-            <Link to="/contact">
-              <Button variant="primary" className="px-10 py-5 bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none">
-                Request a Live Demo
-              </Button>
-            </Link>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-h2 text-brand-secondary mb-8">Smart Automation Powered by Google Workspace</h2>
+            <div className="space-y-6 text-lg text-brand-textGrey leading-relaxed text-left">
+              <p>
+                Many businesses waste valuable time on manual tasks such as managing leads, sending follow-up emails, tracking projects, creating reports, and organising data. These repetitive activities slow down productivity and increase operational costs.
+              </p>
+              <p>
+                OptiScale Digital LTD solves this problem by building custom AI-powered automation systems using Google Workspace, including Google Sheets, Forms, Docs, Drive, Gmail, and Apps Script.
+              </p>
+              <p className="font-bold text-brand-secondary">
+                This approach allows businesses to run powerful automation systems without paying for expensive CRM software or complex enterprise platforms.
+              </p>
+              <p>
+                Our automation solutions connect your tools, streamline your processes, and give you a simple but powerful system to manage your business operations.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Process Steps */}
-      <section className="py-section bg-brand-secondary text-white">
-        <div className="container text-center">
-          <h2 className="text-h2 mb-24 max-w-3xl mx-auto">The Road to 100% Efficiency</h2>
-          <div className="grid md:grid-cols-4 gap-12">
-            <Step n="1" t="Audit" d="Mapping every manual step in your sales and ops cycles." />
-            <Step n="2" t="Architect" d="Designing the logic and API integration pathways." />
-            <Step n="3" t="Train" d="Feeding the AI your specific business logic and data." />
-            <Step n="4" t="Deploy" d="Full rollout with 14 days of live technical hyper-care." />
-          </div>
-        </div>
-      </section>
-
-      {/* 5. Benefits */}
-      <section className="py-section bg-white">
+      {/* AI AUTOMATION SERVICES */}
+      <section id="services" className="py-20 bg-brand-lightGrey">
         <div className="container">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <Benefit icon={<Zap />} title="Hyper-Scalability" desc="Increase your capacity 10x without increasing headcount costs." />
-            <Benefit icon={<ShieldCheck />} title="Zero Error Rate" desc="AI doesn't get tired. It processes data perfectly, every single time." />
-            <Benefit icon={<Clock />} title="90-Second Response" desc="Close leads while they're hot, not 12 hours later." />
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary">Our AI Automation Services</h2>
+            <p className="text-brand-textGrey mt-4 max-w-2xl mx-auto">Custom-built solutions designed to save you time and money.</p>
+          </div>
+
+          <div className="grid gap-12">
+            {/* SERVICE 1 */}
+            <ServiceCard 
+              icon={<Database size={48} />}
+              title="Custom Google Workspace CRM Systems"
+              subheading="A fully customised CRM built using Google Workspace."
+              description="We design custom CRM systems using Google Sheets, Google Forms, Google Docs, and Google Drive to help businesses manage leads, track clients, organise projects, and monitor their sales pipeline. This solution gives businesses a powerful CRM without paying expensive monthly subscription fees."
+              workspaceUsage={[
+                "Google Sheets serves as the CRM database",
+                "Google Forms captures leads and automatically updates the CRM",
+                "Google Docs generates contracts, invoices, and reports",
+                "Google Drive stores client files and documents",
+                "Google Apps Script automates workflows and notifications"
+              ]}
+              features={[
+                "Lead database dashboard",
+                "Sales pipeline tracking",
+                "Automated document generation",
+                "Client activity tracking",
+                "Integrated reporting system"
+              ]}
+              benefits={[
+                "No expensive CRM subscriptions",
+                "Fully customisable for each business",
+                "Cloud-based and secure",
+                "Easy team collaboration",
+                "Scalable system for business growth"
+              ]}
+              ctaText="Build My Custom CRM"
+            />
+
+            {/* SERVICE 2 */}
+            <ServiceCard 
+              icon={<Workflow size={48} />}
+              title="Business Workflow Automation"
+              subheading="Automate repetitive tasks across your operations."
+              description="We design automation workflows that eliminate repetitive tasks such as data entry, notifications, reporting, and task management. Our systems ensure that information flows automatically between different parts of your business."
+              workspaceUsage={[
+                "Google Sheets tracks workflow stages",
+                "Google Apps Script automates processes and triggers",
+                "Gmail sends automated notifications and alerts",
+                "Google Drive manages file organisation",
+                "Google Calendar schedules automated tasks"
+              ]}
+              features={[
+                "Task automation workflows",
+                "Automated notifications and alerts",
+                "Data processing automation",
+                "Workflow dashboards",
+                "Automated reporting"
+              ]}
+              benefits={[
+                "Save hours of manual work",
+                "Reduce human error",
+                "Improve team productivity",
+                "Faster business operations",
+                "Streamlined internal processes"
+              ]}
+              ctaText="Automate My Workflow"
+              reverse
+            />
+
+            {/* SERVICE 3 */}
+            <ServiceCard 
+              icon={<Zap size={48} />}
+              title="Lead Generation & Marketing Automation"
+              subheading="Capture and nurture leads automatically."
+              description="We create automated lead generation systems that capture prospects from your website and automatically follow up with them through email and CRM workflows."
+              workspaceUsage={[
+                "Google Forms captures website leads",
+                "Google Sheets tracks leads and customer journeys",
+                "Gmail automation sends follow-up sequences",
+                "Google Apps Script triggers automated lead actions",
+                "Google Drive stores marketing assets"
+              ]}
+              features={[
+                "Automated lead capture forms",
+                "CRM lead tracking dashboard",
+                "Email follow-up automation",
+                "Lead scoring system",
+                "Marketing campaign tracking"
+              ]}
+              benefits={[
+                "Capture more leads from your website",
+                "Improve customer follow-up",
+                "Increase conversion rates",
+                "Better lead organisation",
+                "More efficient marketing"
+              ]}
+              ctaText="Automate My Lead Generation"
+            />
+
+            {/* SERVICE 4 */}
+            <ServiceCard 
+              icon={<MessageSquare size={48} />}
+              title="AI Customer Support & Chatbots"
+              subheading="Provide instant customer support with AI assistants."
+              description="We deploy AI-powered chatbots that answer customer questions, qualify leads, and provide instant responses on your website or messaging platforms."
+              workspaceUsage={[
+                "Google Sheets stores chatbot knowledge base data",
+                "Google Docs manages FAQ content",
+                "Google Apps Script connects chatbot responses to databases",
+                "Gmail sends automated support responses",
+                "Google Drive stores support resources"
+              ]}
+              features={[
+                "AI chatbot implementation",
+                "FAQ automation system",
+                "Lead qualification chat flows",
+                "Customer support automation",
+                "Integration with CRM data"
+              ]}
+              benefits={[
+                "24/7 customer assistance",
+                "Faster responses to inquiries",
+                "Reduced support workload",
+                "Better customer experience",
+                "Increased lead capture"
+              ]}
+              ctaText="Add AI Chat Support"
+              reverse
+            />
+
+            {/* SERVICE 5 */}
+            <ServiceCard 
+              icon={<Cpu size={48} />}
+              title="Make.com & API Automation Integrations"
+              subheading="Connect all your business apps into one intelligent workflow."
+              description="We integrate business tools using automation platforms like Make.com and APIs to ensure that your data flows seamlessly between different systems."
+              workspaceUsage={[
+                "Google Sheets acts as the central automation database",
+                "Google Apps Script connects APIs and automation tools",
+                "Google Drive stores synced files and reports",
+                "Gmail sends automated alerts and updates",
+                "Google Docs generates automated reports"
+              ]}
+              features={[
+                "Cross-platform automation",
+                "API data integrations",
+                "Automated data synchronisation",
+                "App-to-app workflows",
+                "Reporting automation"
+              ]}
+              benefits={[
+                "Eliminate manual data transfers",
+                "Connect all your business tools",
+                "Improve data accuracy",
+                "Faster operations",
+                "Scalable automation infrastructure"
+              ]}
+              ctaText="Integrate My Tools"
+            />
+
+            {/* SERVICE 6 */}
+            <ServiceCard 
+              icon={<Bot size={48} />}
+              title="AI Content & Social Media Automation"
+              subheading="Automate content creation and publishing."
+              description="We implement AI-assisted tools that help businesses create content, manage social media, and schedule posts automatically."
+              workspaceUsage={[
+                "Google Sheets manages content calendars",
+                "Google Docs stores content drafts",
+                "Google Drive stores media assets",
+                "Google Apps Script triggers publishing workflows",
+                "Gmail sends approval notifications"
+              ]}
+              features={[
+                "AI content generation workflows",
+                "Social media scheduling systems",
+                "Content calendar dashboards",
+                "Automated publishing workflows",
+                "Performance tracking"
+              ]}
+              benefits={[
+                "Save time on content creation",
+                "Maintain consistent online presence",
+                "Increase brand visibility",
+                "Improve audience engagement",
+                "Simplify marketing management"
+              ]}
+              ctaText="Automate My Content Marketing"
+              reverse
+            />
           </div>
         </div>
       </section>
 
-      {/* 6. CTA */}
+      {/* WHY CHOOSE OPTISCALE */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-h2 text-brand-secondary">Why Businesses Choose OptiScale for AI Automation</h2>
+          </div>
+          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-8">
+            <WhyPoint title="Custom Built" desc="Automation built specifically for your business needs." />
+            <WhyPoint title="Lower Costs" desc="Google Workspace-based systems with lower software costs." />
+            <WhyPoint title="Scalable" desc="Infrastructure that grows alongside your business." />
+            <WhyPoint title="Seamless" desc="Integration with your existing tools and workflows." />
+            <WhyPoint title="Expert Support" desc="Professional implementation and ongoing support." />
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
       <section className="py-24 bg-brand-accent text-brand-secondary text-center">
         <div className="container">
-          <h2 className="text-h2 mb-8 max-w-2xl mx-auto">Ready to Automate Your ROI?</h2>
-          <p className="text-xl text-brand-secondary/80 mb-12 max-w-[65ch] mx-auto">Schedule a strategy session to see how AI fits your specific business model.</p>
+          <h2 className="text-h2 mb-6">Ready to Automate Your Business?</h2>
+          <p className="text-xl mb-12 max-w-3xl mx-auto">
+            Stop wasting hours on repetitive tasks. Let OptiScale build intelligent automation systems powered by AI and Google Workspace so you can focus on growing your business.
+          </p>
           <Link to="/contact">
-            <Button variant="secondary" className="px-12 py-5 text-lg">Book Strategy Session</Button>
+            <Button variant="secondary" className="px-12 py-5 text-lg font-bold">
+              Book Your Free Automation Strategy Call
+            </Button>
           </Link>
         </div>
       </section>
@@ -147,28 +308,85 @@ export const ServiceAI: React.FC = () => {
   );
 };
 
-const Deliverable = ({ icon, title, desc }: any) => (
-  <div className="p-10 bg-white rounded-3xl border border-brand-borderGrey hover:border-brand-accent transition-all shadow-sm hover:shadow-xl group">
-    <div className="text-brand-accent mb-6 transition-transform group-hover:scale-110">{React.cloneElement(icon, { size: 36 })}</div>
-    <h4 className="text-xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-brand-textGrey text-sm leading-relaxed max-w-[65ch]">{desc}</p>
-  </div>
-);
+const ServiceCard = ({ 
+  icon, title, subheading, description, workspaceUsage, features, benefits, ctaText, reverse = false 
+}: any) => (
+  <div className={`flex flex-col lg:flex-row gap-12 items-start p-8 md:p-12 bg-white rounded-[2.5rem] border border-brand-borderGrey shadow-sm hover:shadow-md transition-shadow ${reverse ? 'lg:flex-row-reverse' : ''}`}>
+    <div className="w-full lg:w-1/2">
+      <div className="text-brand-accent mb-6">{icon}</div>
+      <h3 className="text-h3 text-brand-secondary mb-2">{title}</h3>
+      <p className="text-lg font-bold text-brand-primary mb-4">{subheading}</p>
+      <p className="text-brand-textGrey mb-8 leading-relaxed">{description}</p>
+      
+      <div className="mb-8 p-6 bg-brand-lightGrey rounded-2xl border border-brand-accent/10">
+        <h4 className="font-bold text-brand-secondary mb-4 flex items-center gap-2">
+          <CheckCircle2 className="text-brand-accent" size={20} />
+          How Google Workspace Powers This
+        </h4>
+        <ul className="space-y-2">
+          {workspaceUsage.map((item: string, i: number) => (
+            <li key={i} className="text-sm text-brand-textGrey flex items-start gap-2">
+              <span className="text-brand-accent mt-1">•</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-const Step = ({ n, t, d }: any) => (
-  <div className="text-center">
-    <div className="text-5xl font-black text-white/10 mb-6">{n}</div>
-    <h4 className="text-xl font-bold mb-3">{t}</h4>
-    <p className="text-sm text-gray-400 leading-relaxed">{d}</p>
-  </div>
-);
-
-const Benefit = ({ icon, title, desc }: any) => (
-  <div className="text-center p-8 bg-brand-lightGrey rounded-3xl border border-brand-borderGrey">
-    <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-8 text-brand-accent shadow-md">
-      {React.cloneElement(icon, { size: 36 })}
+      <Link to="/contact">
+        <Button variant="primary" className="w-full sm:w-auto px-8 py-4 bg-brand-accent hover:bg-emerald-600 text-brand-secondary border-none">
+          {ctaText}
+        </Button>
+      </Link>
     </div>
-    <h4 className="text-2xl font-bold mb-3 text-brand-secondary">{title}</h4>
-    <p className="text-brand-textGrey leading-relaxed max-w-[65ch]">{desc}</p>
+
+    <div className="w-full lg:w-1/2 grid sm:grid-cols-2 gap-8">
+      <div>
+        <h4 className="font-bold text-brand-secondary mb-4 uppercase tracking-wider text-xs">Key Features</h4>
+        <ul className="space-y-3">
+          {features.map((feature: string, i: number) => (
+            <li key={i} className="flex items-start gap-3 text-sm text-brand-textGrey">
+              <Check className="text-brand-accent shrink-0 mt-0.5" size={16} />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h4 className="font-bold text-brand-secondary mb-4 uppercase tracking-wider text-xs">Core Benefits</h4>
+        <ul className="space-y-3">
+          {benefits.map((benefit: string, i: number) => (
+            <li key={i} className="flex items-start gap-3 text-sm text-brand-textGrey">
+              <Zap className="text-brand-accent shrink-0 mt-0.5" size={16} />
+              {benefit}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   </div>
 );
+
+const WhyPoint = ({ title, desc }: any) => (
+  <div className="text-center p-6 bg-brand-lightGrey rounded-2xl border border-brand-borderGrey hover:border-brand-accent/30 transition-colors">
+    <h4 className="text-lg font-bold text-brand-secondary mb-3">{title}</h4>
+    <p className="text-sm text-brand-textGrey leading-relaxed">{desc}</p>
+  </div>
+);
+
+const Check = ({ className, size }: any) => (
+  <svg 
+    className={className} 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="3" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
