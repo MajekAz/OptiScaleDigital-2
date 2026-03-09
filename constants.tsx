@@ -28,8 +28,8 @@ export const SCHEMA_ORG_JSON = {
   "@type": "ProfessionalService",
   "name": "OptiScale Digital",
   "url": "https://optiscaledigital.co.uk/",
-  "logo": "https://optiscaledigital.co.uk/og-image.jpg",
-  "image": "https://optiscaledigital.co.uk/og-image.jpg",
+  "logo": "https://optiscaledigital.co.uk/images/logo/company-logo.png",
+  "image": "https://optiscaledigital.co.uk/images/logo/company-logo.png",
   "description": "UK's leading agency for modern web design, strategic digital marketing, and AI automation for startups and SMEs.",
   "address": {
     "@type": "PostalAddress",

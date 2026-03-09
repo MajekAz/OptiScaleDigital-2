@@ -69,9 +69,9 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateMeta('og:title', title);
     updateMeta('og:description', description);
     updateMeta('og:url', canonicalUrl);
-    updateMeta('og:image', "https://optiscaledigital.co.uk/og-image.jpg");
-    updateMeta('og:image:secure_url', "https://optiscaledigital.co.uk/og-image.jpg");
-    updateMeta('og:image:type', "image/jpeg");
+    updateMeta('og:image', "https://optiscaledigital.co.uk/images/logo/company-logo.png");
+    updateMeta('og:image:secure_url', "https://optiscaledigital.co.uk/images/logo/company-logo.png");
+    updateMeta('og:image:type', "image/png");
     updateMeta('og:image:width', "1200");
     updateMeta('og:image:height', "630");
     updateMeta('og:type', 'website');
@@ -91,7 +91,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateTwitter('twitter:card', 'summary_large_image');
     updateTwitter('twitter:title', title);
     updateTwitter('twitter:description', description);
-    updateTwitter('twitter:image', "https://optiscaledigital.co.uk/og-image.jpg");
+    updateTwitter('twitter:image', "https://optiscaledigital.co.uk/images/logo/company-logo.png");
 
   }, [title, description, keywords, canonicalUrl]);
 
