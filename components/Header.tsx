@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
-import { NAV_LINKS } from '../constants';
+import { NAV_LINKS, COMPANY_LINKEDIN } from '../constants';
 import { Logo } from './Logo';
 import { trackLeadGeneration } from '../utils/analytics';
 
@@ -181,7 +181,14 @@ export const Header: React.FC = () => {
             </Link>
             
             <div className="mt-12 flex justify-center gap-8">
-              <a href="#" className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm">LinkedIn</a>
+              <a 
+                href={COMPANY_LINKEDIN} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm"
+              >
+                LinkedIn
+              </a>
               <a href="#" className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm">Twitter</a>
               <a href="#" className="text-white/40 hover:text-brand-cyan transition-colors font-bold uppercase tracking-widest text-sm">Instagram</a>
             </div>

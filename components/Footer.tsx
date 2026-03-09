@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE } from '../constants';
+import { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE, COMPANY_LINKEDIN } from '../constants';
 import { Linkedin, Twitter, Facebook, ExternalLink, Lock } from 'lucide-react';
 import { Logo } from './Logo';
 
@@ -18,7 +18,15 @@ export const Footer: React.FC = () => {
               Transforming UK businesses through intelligent design, AI automation, and data-driven marketing strategies.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-brand-cyan transition-colors" aria-label="LinkedIn"><Linkedin size={20} /></a>
+              <a 
+                href={COMPANY_LINKEDIN} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-brand-cyan transition-colors" 
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
               <a href="#" className="text-gray-400 hover:text-brand-cyan transition-colors" aria-label="Twitter"><Twitter size={20} /></a>
               <a href="#" className="text-gray-400 hover:text-brand-cyan transition-colors" aria-label="Facebook"><Facebook size={20} /></a>
             </div>

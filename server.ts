@@ -110,18 +110,62 @@ async function startServer() {
   app.use("/uploads", express.static(uploadDir));
 
   // 5. Vite / SPA Fallback
+  let vite: any;
+  const serveHtml = async (req: express.Request, res: express.Response) => {
+    try {
+      let htmlPath: string;
+      let html: string;
+      let origin = process.env.APP_URL || `${req.protocol}://${req.get('host')}`;
+      // Remove trailing slash if present
+      origin = origin.replace(/\/$/, "");
+
+      if (process.env.NODE_ENV !== "production") {
+        htmlPath = path.join(__dirname, "index.html");
+        html = fs.readFileSync(htmlPath, "utf-8");
+        if (vite) {
+          html = await vite.transformIndexHtml(req.url, html);
+        }
+      } else {
+        htmlPath = path.join(__dirname, "dist", "index.html");
+        if (fs.existsSync(htmlPath)) {
+          html = fs.readFileSync(htmlPath, "utf-8");
+        } else {
+          // Fallback to root index.html if dist doesn't exist yet
+          htmlPath = path.join(__dirname, "index.html");
+          html = fs.readFileSync(htmlPath, "utf-8");
+        }
+      }
+
+      // Replace the hardcoded production URL with the current origin
+      const modifiedHtml = html.replace(/https:\/\/optiscaledigital\.co\.uk\//g, origin + "/");
+      
+      res.status(200).set({ "Content-Type": "text/html" }).end(modifiedHtml);
+    } catch (e: any) {
+      console.error("Error serving HTML:", e);
+      res.status(500).end(e.message);
+    }
+  };
+
   if (process.env.NODE_ENV !== "production") {
     console.log("Starting in DEVELOPMENT mode");
-    const vite = await createViteServer({
+    vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: "spa",
+      appType: "custom",
     });
     app.use(vite.middlewares);
+    
+    app.get("*", async (req, res, next) => {
+      if (req.path.startsWith('/api') || req.path.includes('.')) {
+        return next();
+      }
+      await serveHtml(req, res);
+    });
   } else {
     console.log("Starting in PRODUCTION mode");
     const distPath = path.join(__dirname, "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) => {
+    app.use(express.static(distPath, { index: false })); // Disable automatic index.html serving
+    
+    app.get("*", async (req, res) => {
       // Ensure we don't serve HTML for missing API calls
       if (req.path.startsWith('/api')) {
         return res.status(404).json({ 
@@ -129,7 +173,7 @@ async function startServer() {
           path: req.path
         });
       }
-      res.sendFile(path.join(distPath, "index.html"));
+      await serveHtml(req, res);
     });
   }
 
