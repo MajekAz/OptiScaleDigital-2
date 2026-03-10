@@ -16,116 +16,15 @@ async function startServer() {
   let vite: any;
   const isProd = process.env.NODE_ENV === "production" || fs.existsSync(path.resolve(__dirname, "dist/index.html")) || fs.existsSync(path.resolve(__dirname, "dist/index.ssr.html"));
   
-  if (isProd) {
-    const rawPath = path.resolve(__dirname, "dist/index.html");
-    const ssrPath = path.resolve(__dirname, "dist/index.ssr.html");
-    if (fs.existsSync(rawPath)) {
-      console.log(`[SSR] Renaming raw template to ${ssrPath}`);
-      fs.renameSync(rawPath, ssrPath);
-    }
-  }
-
-  if (!isProd) {
+  if (process.env.NODE_ENV !== "production") {
     vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: "custom",
+      appType: "spa",
     });
     app.use(vite.middlewares);
   } else {
-    // Serve static assets first, but skip index.html so our catch-all can handle it
-    app.use(express.static(path.resolve(__dirname, "dist"), { 
-      index: false,
-      immutable: true,
-      maxAge: '1y'
-    }));
+    app.use(express.static(path.resolve(__dirname, "dist")));
   }
-
-  app.get("*", async (req, res, next) => {
-    // Skip non-HTML requests (assets, images, etc.)
-    if (req.path.includes('.') && !req.path.endsWith('.html')) {
-      return next();
-    }
-
-    const urlPath = req.path;
-    console.log(`[SSR] Processing request for: ${urlPath}`);
-
-    try {
-      const templatePath = isProd 
-        ? path.resolve(__dirname, "dist/index.ssr.html")
-        : path.resolve(__dirname, "index.html");
-
-      if (!fs.existsSync(templatePath)) {
-        console.error(`[SSR] Template not found at: ${templatePath}`);
-        // Fallback to index.html if ssr version missing
-        const fallbackPath = path.resolve(__dirname, "index.html");
-        if (!fs.existsSync(fallbackPath)) return next();
-        var template = fs.readFileSync(fallbackPath, "utf-8");
-      } else {
-        var template = fs.readFileSync(templatePath, "utf-8");
-      }
-      
-      if (!isProd && vite) {
-        template = await vite.transformIndexHtml(req.originalUrl, template);
-      }
-
-      // Default values
-      let title = "OptiScale Digital | UK Web Design, Marketing & AI Agency";
-      let description = "OptiScale Digital helps startups and SMEs dominate their market through conversion-focused websites, strategic marketing, and smart AI automation.";
-      let image = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop";
-      
-      const protocol = req.headers["x-forwarded-proto"] || req.protocol;
-      const host = req.headers["x-forwarded-host"] || req.get("host");
-      let baseUrl = `${protocol}://${host}`;
-      
-      if (host && !host.includes("localhost") && !host.includes("127.0.0.1")) {
-        baseUrl = baseUrl.replace("http://", "https://");
-      }
-      
-      let canonicalUrl = `${baseUrl}${req.originalUrl}`;
-
-      // Handle Blog Post pages
-      if (urlPath.startsWith("/post/")) {
-        const postId = urlPath.split("/post/")[1];
-        const post = BLOG_POSTS.find((p) => String(p.id) === postId);
-        if (post) {
-          title = `${post.title} | OptiScale Insights`;
-          description = post.excerpt;
-          image = post.image || image;
-        }
-      }
-
-      // Ensure absolute image URL
-      if (image.startsWith("/")) {
-        image = `${baseUrl}${image}`;
-      }
-
-      const imageType = image.endsWith(".png") ? "image/png" : "image/jpeg";
-
-      // Use a more reliable replacement method
-      const html = template
-        .split("__TITLE__").join(title)
-        .split("__DESCRIPTION__").join(description)
-        .split("__IMAGE__").join(image)
-        .split("__IMAGE_TYPE__").join(imageType)
-        .split("__URL__").join(canonicalUrl);
-
-      res.status(200)
-        .set({ 
-          "Content-Type": "text/html",
-          "X-SSR-Processed": "true",
-          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-          "Pragma": "no-cache",
-          "Expires": "0"
-        })
-        .send(html);
-    } catch (e) {
-      console.error(`[SSR] Error processing ${urlPath}:`, e);
-      if (!isProd && vite) {
-        vite.ssrFixStacktrace(e);
-      }
-      next(e);
-    }
-  });
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
