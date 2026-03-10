@@ -14,35 +14,45 @@ async function startServer() {
 
   // Vite middleware for development
   let vite: any;
-  if (process.env.NODE_ENV !== "production") {
+  const isProd = process.env.NODE_ENV === "production" || fs.existsSync(path.resolve(__dirname, "dist/index.html"));
+  
+  if (!isProd) {
     vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "custom",
     });
     app.use(vite.middlewares);
   } else {
-    // Serve static assets but NOT index.html
-    app.use(express.static(path.resolve(__dirname, "dist"), { index: false }));
+    // Serve static assets first, but skip index.html so our catch-all can handle it
+    app.use(express.static(path.resolve(__dirname, "dist"), { 
+      index: false,
+      immutable: true,
+      maxAge: '1y'
+    }));
   }
 
   app.get("*", async (req, res, next) => {
+    // Skip non-HTML requests (assets, images, etc.)
+    if (req.path.includes('.') && !req.path.endsWith('.html')) {
+      return next();
+    }
+
     const urlPath = req.path;
-    console.log(`[SSR] Handling request for: ${urlPath}`);
+    console.log(`[SSR] Processing request for: ${urlPath}`);
 
     try {
-      let template: string;
-      const templatePath = process.env.NODE_ENV !== "production" 
-        ? path.resolve(__dirname, "index.html")
-        : path.resolve(__dirname, "dist/index.html");
+      const templatePath = isProd 
+        ? path.resolve(__dirname, "dist/index.html")
+        : path.resolve(__dirname, "index.html");
 
       if (!fs.existsSync(templatePath)) {
         console.error(`[SSR] Template not found at: ${templatePath}`);
         return next();
       }
 
-      template = fs.readFileSync(templatePath, "utf-8");
+      let template = fs.readFileSync(templatePath, "utf-8");
       
-      if (process.env.NODE_ENV !== "production" && vite) {
+      if (!isProd && vite) {
         template = await vite.transformIndexHtml(req.originalUrl, template);
       }
 
@@ -79,20 +89,23 @@ async function startServer() {
 
       const imageType = image.endsWith(".png") ? "image/png" : "image/jpeg";
 
-      console.log(`[SSR] Replacing tags for ${urlPath}: Title="${title}"`);
-
-      // Replace placeholders
+      // Use a more reliable replacement method
       const html = template
-        .replace(/__TITLE__/g, title)
-        .replace(/__DESCRIPTION__/g, description)
-        .replace(/__IMAGE__/g, image)
-        .replace(/__IMAGE_TYPE__/g, imageType)
-        .replace(/__URL__/g, canonicalUrl);
+        .split("__TITLE__").join(title)
+        .split("__DESCRIPTION__").join(description)
+        .split("__IMAGE__").join(image)
+        .split("__IMAGE_TYPE__").join(imageType)
+        .split("__URL__").join(canonicalUrl);
 
-      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      res.status(200)
+        .set({ 
+          "Content-Type": "text/html",
+          "X-SSR-Processed": "true" 
+        })
+        .send(html);
     } catch (e) {
-      console.error(`[SSR] Error:`, e);
-      if (process.env.NODE_ENV !== "production" && vite) {
+      console.error(`[SSR] Error processing ${urlPath}:`, e);
+      if (!isProd && vite) {
         vite.ssrFixStacktrace(e);
       }
       next(e);
