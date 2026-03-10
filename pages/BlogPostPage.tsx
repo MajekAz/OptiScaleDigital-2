@@ -87,7 +87,11 @@ export const BlogPostPage: React.FC = () => {
 
   return (
     <div className="w-full bg-white min-h-screen pb-20">
-      <SEO title={`${post.title} | OptiScale Insights`} description={post.excerpt} />
+      <SEO 
+        title={`${post.title} | OptiScale Insights`} 
+        description={post.excerpt} 
+        image={post.image}
+      />
 
       <section className="relative w-full overflow-hidden bg-brand-navy pt-16 lg:pt-20">
         <div className="absolute inset-0 z-0">

@@ -5,14 +5,21 @@ interface SEOProps {
   title: string;
   description: string;
   keywords?: string;
+  image?: string;
 }
 
-export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
+export const SEO: React.FC<SEOProps> = ({ title, description, keywords, image }) => {
   const location = useLocation();
   const baseUrl = window.location.origin; 
   // Ensure no trailing slash for consistency
   const canonicalUrl = `${baseUrl}${location.pathname === '/' ? '' : location.pathname.replace(/\/$/, '')}`;
-  const logoUrl = `${baseUrl}/images/logo/company-logo.png`;
+  const defaultImage = `${baseUrl}/images/logo/company-logo.png`;
+  let ogImage = image || defaultImage;
+  
+  // Ensure ogImage is an absolute URL
+  if (ogImage.startsWith('/')) {
+    ogImage = `${baseUrl}${ogImage}`;
+  }
 
   useEffect(() => {
     // 1. Update Title
@@ -70,13 +77,29 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateMeta('og:title', title);
     updateMeta('og:description', description);
     updateMeta('og:url', canonicalUrl);
-    updateMeta('og:image', logoUrl);
-    updateMeta('og:image:secure_url', logoUrl);
-    updateMeta('og:image:type', "image/png");
+    updateMeta('og:image', ogImage);
+    updateMeta('og:image:secure_url', ogImage);
+    updateMeta('og:image:type', ogImage.endsWith('.png') ? "image/png" : "image/jpeg");
     updateMeta('og:image:width', "1200");
     updateMeta('og:image:height', "630");
+    updateMeta('og:image:alt', title);
     updateMeta('og:type', 'website');
+    updateMeta('og:site_name', 'OptiScale Digital');
     updateMeta('og:locale', 'en_GB');
+
+    // 5b. Update Schema.org Tags (Google / WhatsApp)
+    const updateItemprop = (name: string, content: string) => {
+       let el = document.querySelector(`meta[itemprop="${name}"]`);
+       if (!el) {
+         el = document.createElement('meta');
+         el.setAttribute('itemprop', name);
+         document.head.appendChild(el);
+       }
+       el.setAttribute('content', content);
+    };
+    updateItemprop('name', title);
+    updateItemprop('description', description);
+    updateItemprop('image', ogImage);
 
     // 6. Update Twitter Tags
     const updateTwitter = (name: string, content: string) => {
@@ -92,9 +115,11 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords }) => {
     updateTwitter('twitter:card', 'summary_large_image');
     updateTwitter('twitter:title', title);
     updateTwitter('twitter:description', description);
-    updateTwitter('twitter:image', logoUrl);
+    updateTwitter('twitter:image', ogImage);
+    updateTwitter('twitter:image:alt', title);
+    updateTwitter('twitter:site', '@OptiScaleUK');
 
-  }, [title, description, keywords, canonicalUrl, logoUrl]);
+  }, [title, description, keywords, canonicalUrl, ogImage]);
 
   return null;
 };
