@@ -17,11 +17,12 @@ async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: "custom", // Use custom to handle HTML serving ourselves
+      appType: "custom",
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(path.resolve(__dirname, "dist")));
+    // Serve static assets but NOT index.html
+    app.use(express.static(path.resolve(__dirname, "dist"), { index: false }));
   }
 
   app.get("*", async (req, res, next) => {
