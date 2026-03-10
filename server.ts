@@ -14,8 +14,17 @@ async function startServer() {
 
   // Vite middleware for development
   let vite: any;
-  const isProd = process.env.NODE_ENV === "production" || fs.existsSync(path.resolve(__dirname, "dist/index.html"));
+  const isProd = process.env.NODE_ENV === "production" || fs.existsSync(path.resolve(__dirname, "dist/index.html")) || fs.existsSync(path.resolve(__dirname, "dist/index.ssr.html"));
   
+  if (isProd) {
+    const rawPath = path.resolve(__dirname, "dist/index.html");
+    const ssrPath = path.resolve(__dirname, "dist/index.ssr.html");
+    if (fs.existsSync(rawPath)) {
+      console.log(`[SSR] Renaming raw template to ${ssrPath}`);
+      fs.renameSync(rawPath, ssrPath);
+    }
+  }
+
   if (!isProd) {
     vite = await createViteServer({
       server: { middlewareMode: true },
@@ -42,23 +51,26 @@ async function startServer() {
 
     try {
       const templatePath = isProd 
-        ? path.resolve(__dirname, "dist/index.html")
+        ? path.resolve(__dirname, "dist/index.ssr.html")
         : path.resolve(__dirname, "index.html");
 
       if (!fs.existsSync(templatePath)) {
         console.error(`[SSR] Template not found at: ${templatePath}`);
-        return next();
+        // Fallback to index.html if ssr version missing
+        const fallbackPath = path.resolve(__dirname, "index.html");
+        if (!fs.existsSync(fallbackPath)) return next();
+        var template = fs.readFileSync(fallbackPath, "utf-8");
+      } else {
+        var template = fs.readFileSync(templatePath, "utf-8");
       }
-
-      let template = fs.readFileSync(templatePath, "utf-8");
       
       if (!isProd && vite) {
         template = await vite.transformIndexHtml(req.originalUrl, template);
       }
 
       // Default values
-      let title = "OptiScale Digital | UK Web Design & AI Automation Agency";
-      let description = "Scale your UK business with high-performance web design and custom AI automation. We build the infrastructure for your success.";
+      let title = "OptiScale Digital | UK Web Design, Marketing & AI Agency";
+      let description = "OptiScale Digital helps startups and SMEs dominate their market through conversion-focused websites, strategic marketing, and smart AI automation.";
       let image = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop";
       
       const protocol = req.headers["x-forwarded-proto"] || req.protocol;
@@ -100,7 +112,10 @@ async function startServer() {
       res.status(200)
         .set({ 
           "Content-Type": "text/html",
-          "X-SSR-Processed": "true" 
+          "X-SSR-Processed": "true",
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+          "Pragma": "no-cache",
+          "Expires": "0"
         })
         .send(html);
     } catch (e) {
