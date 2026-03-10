@@ -26,49 +26,50 @@ async function startServer() {
   }
 
   app.get("*", async (req, res, next) => {
-    const url = req.originalUrl;
+    const urlPath = req.path;
+    console.log(`[SSR] Handling request for: ${urlPath}`);
 
     try {
       let template: string;
-      if (process.env.NODE_ENV !== "production") {
-        template = fs.readFileSync(path.resolve(__dirname, "index.html"), "utf-8");
-        template = await vite.transformIndexHtml(url, template);
-      } else {
-        template = fs.readFileSync(path.resolve(__dirname, "dist/index.html"), "utf-8");
+      const templatePath = process.env.NODE_ENV !== "production" 
+        ? path.resolve(__dirname, "index.html")
+        : path.resolve(__dirname, "dist/index.html");
+
+      if (!fs.existsSync(templatePath)) {
+        console.error(`[SSR] Template not found at: ${templatePath}`);
+        return next();
+      }
+
+      template = fs.readFileSync(templatePath, "utf-8");
+      
+      if (process.env.NODE_ENV !== "production" && vite) {
+        template = await vite.transformIndexHtml(req.originalUrl, template);
       }
 
       // Default values
       let title = "OptiScale Digital | UK Web Design & AI Automation Agency";
       let description = "Scale your UK business with high-performance web design and custom AI automation. We build the infrastructure for your success.";
-      // Use a high-quality Unsplash image as default for better social previews
       let image = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop";
       
-      // Robust base URL detection for Cloud Run / Proxies
       const protocol = req.headers["x-forwarded-proto"] || req.protocol;
       const host = req.headers["x-forwarded-host"] || req.get("host");
       let baseUrl = `${protocol}://${host}`;
       
-      // Force https for production domains
       if (host && !host.includes("localhost") && !host.includes("127.0.0.1")) {
         baseUrl = baseUrl.replace("http://", "https://");
       }
       
-      let canonicalUrl = `${baseUrl}${url}`;
+      let canonicalUrl = `${baseUrl}${req.originalUrl}`;
 
       // Handle Blog Post pages
-      if (url.startsWith("/post/")) {
-        const postId = url.split("/post/")[1];
+      if (urlPath.startsWith("/post/")) {
+        const postId = urlPath.split("/post/")[1];
         const post = BLOG_POSTS.find((p) => String(p.id) === postId);
         if (post) {
           title = `${post.title} | OptiScale Insights`;
           description = post.excerpt;
           image = post.image || image;
         }
-      } else if (url === "/" || url === "") {
-        // For home page, we can use the logo if specifically requested, 
-        // but a hero image is usually better for social media.
-        // If the user specifically wants the logo, we can set it here.
-        // image = "/images/logo/company-logo.png"; 
       }
 
       // Ensure absolute image URL
@@ -77,6 +78,8 @@ async function startServer() {
       }
 
       const imageType = image.endsWith(".png") ? "image/png" : "image/jpeg";
+
+      console.log(`[SSR] Replacing tags for ${urlPath}: Title="${title}"`);
 
       // Replace placeholders
       const html = template
@@ -88,7 +91,8 @@ async function startServer() {
 
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
-      if (process.env.NODE_ENV !== "production") {
+      console.error(`[SSR] Error:`, e);
+      if (process.env.NODE_ENV !== "production" && vite) {
         vite.ssrFixStacktrace(e);
       }
       next(e);
