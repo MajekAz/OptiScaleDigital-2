@@ -39,8 +39,19 @@ async function startServer() {
       // Default values
       let title = "OptiScale Digital | UK Web Design & AI Automation Agency";
       let description = "Scale your UK business with high-performance web design and custom AI automation. We build the infrastructure for your success.";
-      let image = "/images/logo/company-logo.png";
-      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      // Use a high-quality Unsplash image as default for better social previews
+      let image = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop";
+      
+      // Robust base URL detection for Cloud Run / Proxies
+      const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+      const host = req.headers["x-forwarded-host"] || req.get("host");
+      let baseUrl = `${protocol}://${host}`;
+      
+      // Force https for production domains
+      if (host && !host.includes("localhost") && !host.includes("127.0.0.1")) {
+        baseUrl = baseUrl.replace("http://", "https://");
+      }
+      
       let canonicalUrl = `${baseUrl}${url}`;
 
       // Handle Blog Post pages
@@ -52,6 +63,11 @@ async function startServer() {
           description = post.excerpt;
           image = post.image || image;
         }
+      } else if (url === "/" || url === "") {
+        // For home page, we can use the logo if specifically requested, 
+        // but a hero image is usually better for social media.
+        // If the user specifically wants the logo, we can set it here.
+        // image = "/images/logo/company-logo.png"; 
       }
 
       // Ensure absolute image URL
@@ -59,11 +75,14 @@ async function startServer() {
         image = `${baseUrl}${image}`;
       }
 
+      const imageType = image.endsWith(".png") ? "image/png" : "image/jpeg";
+
       // Replace placeholders
       const html = template
         .replace(/__TITLE__/g, title)
         .replace(/__DESCRIPTION__/g, description)
         .replace(/__IMAGE__/g, image)
+        .replace(/__IMAGE_TYPE__/g, imageType)
         .replace(/__URL__/g, canonicalUrl);
 
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
