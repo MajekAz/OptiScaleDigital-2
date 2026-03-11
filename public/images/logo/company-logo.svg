@@ -1,0 +1,7 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="white"/>
+  <!-- Large Blue Star -->
+  <path d="M400 315 C 450 315, 500 265, 500 215 C 500 265, 550 315, 600 315 C 550 315, 500 365, 500 415 C 500 365, 450 315, 400 315 Z" fill="#2563eb" transform="translate(50, 0) scale(1.5)"/>
+  <!-- Small Purple Star -->
+  <path d="M650 200 C 680 200, 710 170, 710 140 C 710 170, 740 200, 770 200 C 740 200, 710 230, 710 260 C 710 230, 680 200, 650 200 Z" fill="#a855f7" transform="translate(80, -20) scale(1.2)"/>
+</svg>

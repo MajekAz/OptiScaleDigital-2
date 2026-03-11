@@ -18,6 +18,7 @@ import { Terms } from './pages/Terms';
 import { CookiePolicy } from './pages/CookiePolicy';
 import { DataSecurity } from './pages/DataSecurity';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { FixLogo } from './pages/FixLogo';
 
 const App: React.FC = () => {
   return (
@@ -36,6 +37,7 @@ const App: React.FC = () => {
           <Route path="/booking" element={<Booking />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/fix-logo" element={<FixLogo />} />
           
           {/* Legal & Security Routes */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

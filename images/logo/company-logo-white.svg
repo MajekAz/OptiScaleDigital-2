@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 150" width="450" height="150">
-    <g style="transform-origin: 80px 70px;">
-        <path d="M70 30 Q90 70 130 75 Q90 80 70 120 Q50 80 10 75 Q50 70 70 30 Z" fill="#2563EB"/>
-        <path d="M120 20 Q130 40 150 45 Q130 50 120 70 Q110 50 90 45 Q110 40 120 20 Z" fill="#8B5CF6" opacity="0.9"/>
-    </g>
-    <text x="170" y="80" font-family="Arial, sans-serif" font-weight="900" font-size="34" fill="#FFFFFF">OptiScale</text>
-    <text x="172" y="110" font-family="Arial, sans-serif" font-size="16" fill="#CBD5E1" letter-spacing="3">DIGITAL LTD</text>
-</svg>
