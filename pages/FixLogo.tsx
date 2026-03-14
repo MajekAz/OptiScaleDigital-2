@@ -21,12 +21,21 @@ export const FixLogo: React.FC = () => {
     formData.append('logo', file);
 
     try {
-      const response = await fetch('/api/fix-logo', {
+      const response = await fetch(`${window.location.origin}/api/v1/fix-logo-unique?t=${Date.now()}`, {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('Failed to parse JSON:', text);
+        const snippet = text.substring(0, 100).replace(/</g, '&lt;');
+        throw new Error(`Server returned an invalid response: "${snippet}..."`);
+      }
+
       if (data.success) {
         setStatus('success');
         setMessage('Logo updated successfully! Facebook will now be able to see it.');
@@ -39,12 +48,22 @@ export const FixLogo: React.FC = () => {
     }
   };
 
+  const checkConnection = async () => {
+    try {
+      const response = await fetch(`${window.location.origin}/api/test?t=${Date.now()}`);
+      const data = await response.json();
+      alert(`Connection successful: ${data.message}`);
+    } catch (error: any) {
+      alert(`Connection failed: ${error.message}`);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-indigo-50 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border-t-4 border-indigo-600">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Social Sharing Fixer</h1>
-          <p className="text-slate-600">Upload your logo here to fix the Facebook preview issue.</p>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">Social Sharing Fixer v1.3</h1>
+          <p className="text-slate-600 italic">Freshly updated to bypass cache issues.</p>
         </div>
 
         <div className="space-y-6">
@@ -102,7 +121,13 @@ export const FixLogo: React.FC = () => {
             </div>
           )}
 
-          <div className="text-xs text-slate-400 text-center">
+          <div className="text-xs text-slate-400 text-center space-y-2">
+            <button 
+              onClick={checkConnection}
+              className="text-indigo-600 hover:underline"
+            >
+              Check Server Connection
+            </button>
             <p>After uploading, please wait 5 minutes for the system to sync.</p>
           </div>
         </div>

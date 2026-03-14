@@ -1,4 +1,5 @@
 
+// Version 1.2
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -37,7 +38,7 @@ const App: React.FC = () => {
           <Route path="/booking" element={<Booking />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/fix-logo" element={<FixLogo />} />
+          <Route path="/fix-my-logo" element={<FixLogo />} />
           
           {/* Legal & Security Routes */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

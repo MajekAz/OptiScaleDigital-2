@@ -200,7 +200,15 @@
 <link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-brand-lightGrey text-brand-darkText antialiased">
-    <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+    <!-- Debug: v1.3 -->
+    <div id="root">
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif;">
+        <p>Loading Social Sharing Fixer v1.3...</p>
+      </div>
+    </div>
+    <script>
+      console.log("Index.html script running");
+    </script>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
