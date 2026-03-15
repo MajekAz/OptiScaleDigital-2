@@ -5,57 +5,58 @@ interface LogoProps {
   className?: string;
 }
 
-export const Logo: React.FC<LogoProps> = ({ light = false, className = "h-10 w-auto" }) => {
-  // Brand Colors based on provided SVG
+export const Logo: React.FC<LogoProps> = ({ light = false, className = "h-12 w-auto" }) => {
+  // Brand Colors based on provided image
   const blueStar = '#2563EB';
-  const purpleStar = '#8B5CF6';
-  const textColor = light ? '#FFFFFF' : '#1E293B';
-  const subTextColor = light ? '#CBD5E1' : '#64748B';
+  const purpleStar = '#9366F1'; // Slightly more vibrant purple
+  const textColor = light ? '#FFFFFF' : '#2D2D2D';
 
   return (
     <svg 
-      viewBox="0 0 480 150" 
+      viewBox="0 0 500 160" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g style={{ transformOrigin: '80px 70px' }}>
-        {/* Main Blue Star */}
+      {/* Stars Group */}
+      <g>
+        {/* Main Blue Star - Larger, on the left */}
         <path 
-          d="M70 30 Q90 70 130 75 Q90 80 70 120 Q50 80 10 75 Q50 70 70 30 Z" 
+          d="M70 20 Q75 75 130 80 Q75 85 70 140 Q65 85 10 80 Q65 75 70 20 Z" 
           fill={blueStar}
         />
-        {/* Accent Purple Star */}
+        {/* Accent Purple Star - Smaller, top right of blue star */}
         <path 
-          d="M120 20 Q130 40 150 45 Q130 50 120 70 Q110 50 90 45 Q110 40 120 20 Z" 
-          fill={purpleStar} 
-          fillOpacity="0.9"
+          d="M130 15 Q135 45 165 50 Q135 55 130 85 Q125 55 95 50 Q125 45 130 15 Z" 
+          fill={purpleStar}
         />
       </g>
       
-      {/* OptiScale Text - Increased Size */}
-      <text 
-        x="170" 
-        y="80" 
-        fontFamily="Arial, sans-serif" 
-        fontWeight="900" 
-        fontSize="38" 
-        fill={textColor}
-      >
-        OptiScale
-      </text>
-      
-      {/* DIGITAL LTD Subtext - Increased Size */}
-      <text 
-        x="172" 
-        y="112" 
-        fontFamily="Arial, sans-serif" 
-        fontSize="18" 
-        fill={subTextColor} 
-        letterSpacing="3"
-      >
-        DIGITAL LTD
-      </text>
+      {/* Text Group - Stacked and Bold Uppercase */}
+      <g>
+        <text 
+          x="185" 
+          y="70" 
+          fontFamily="Inter, system-ui, sans-serif" 
+          fontWeight="800" 
+          fontSize="52" 
+          fill={textColor}
+          letterSpacing="-0.02em"
+        >
+          OPTISCALE
+        </text>
+        <text 
+          x="185" 
+          y="125" 
+          fontFamily="Inter, system-ui, sans-serif" 
+          fontWeight="800" 
+          fontSize="52" 
+          fill={textColor}
+          letterSpacing="-0.02em"
+        >
+          DIGITAL
+        </text>
+      </g>
     </svg>
   );
 };
