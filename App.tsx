@@ -11,6 +11,7 @@ import { ServiceAI } from './pages/ServiceAI';
 import { ServiceMarketing } from './pages/ServiceMarketing';
 import { Blog } from './pages/Blog';
 import { BlogPostPage } from './pages/BlogPostPage';
+import { CaseStudyPage } from './pages/CaseStudyPage';
 import { Contact } from './pages/Contact';
 import { Booking } from './pages/Booking';
 import { ThankYou } from './pages/ThankYou';
@@ -20,6 +21,8 @@ import { CookiePolicy } from './pages/CookiePolicy';
 import { DataSecurity } from './pages/DataSecurity';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { FixLogo } from './pages/FixLogo';
+import { CreativeServices } from './pages/CreativeServices';
+import { DesignBrief } from './pages/DesignBrief';
 
 const App: React.FC = () => {
   return (
@@ -32,8 +35,11 @@ const App: React.FC = () => {
           <Route path="/services/web-design" element={<ServiceWebDesign />} />
           <Route path="/services/ai-automation" element={<ServiceAI />} />
           <Route path="/services/digital-marketing" element={<ServiceMarketing />} />
+          <Route path="/services/creative" element={<CreativeServices />} />
+          <Route path="/design-brief" element={<DesignBrief />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/post/:id" element={<BlogPostPage />} />
+          <Route path="/case-study/:id" element={<CaseStudyPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/thank-you" element={<ThankYou />} />

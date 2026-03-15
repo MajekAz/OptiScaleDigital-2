@@ -10,6 +10,7 @@ import { NewsletterForm } from '../components/NewsletterForm';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 import { trackLeadGeneration } from '../utils/analytics';
+import { CASE_STUDIES } from '../data/caseStudies';
 
 export const Home: React.FC = () => {
   return (
@@ -160,8 +161,8 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Features & Benefits Section */}
-      <section className="py-section bg-white">
+      {/* 6. Features & Benefits Section */}
+      <section className="py-section bg-brand-lightGrey">
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-h2 text-brand-secondary mb-6">Why Choose OptiScale?</h2>
@@ -288,5 +289,31 @@ const ProcessStep: React.FC<{num: string, title: string, desc: string, icon: any
     </div>
     <h4 className="text-xl font-bold mb-2 relative z-10">{title}</h4>
     <p className="text-sm text-gray-400 leading-relaxed relative z-10">{desc}</p>
+  </div>
+);
+
+const CaseStudyCard: React.FC<{study: any}> = ({ study }) => (
+  <div className="group bg-white rounded-3xl border border-brand-borderGrey overflow-hidden hover:shadow-2xl transition-all duration-500">
+    <div className="relative h-64 overflow-hidden">
+      <img src={study.image} alt={study.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+      <div className="absolute top-4 left-4 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+        {study.category}
+      </div>
+    </div>
+    <div className="p-8">
+      <h3 className="text-xl font-bold text-brand-secondary mb-4 group-hover:text-brand-primary transition-colors">{study.title}</h3>
+      <p className="text-brand-textGrey text-sm mb-6 line-clamp-2">{study.challenge}</p>
+      <div className="space-y-3 mb-8">
+        {study.results.slice(0, 2).map((result: string, idx: number) => (
+          <div key={idx} className="flex items-center gap-2 text-brand-secondary font-bold text-sm">
+            <TrendingUp size={16} className="text-brand-accent" />
+            {result}
+          </div>
+        ))}
+      </div>
+      <Link to={`/case-study/${study.id}`} className="inline-flex items-center gap-2 text-brand-primary font-bold text-sm uppercase tracking-widest group-hover:gap-4 transition-all">
+        Read Case Study <ArrowRight size={16} />
+      </Link>
+    </div>
   </div>
 );

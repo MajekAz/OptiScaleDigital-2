@@ -18,6 +18,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: 'Web Design', path: '/services/web-design' },
       { label: 'Digital Marketing', path: '/services/digital-marketing' },
       { label: 'AI Automation', path: '/services/ai-automation' },
+      { label: 'Creative Services', path: '/services/creative' },
     ]
   },
   { label: 'Blog', path: '/blog' },

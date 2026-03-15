@@ -27,3 +27,15 @@ export interface NavLink {
   path: string;
   subLinks?: NavLink[];
 }
+
+export interface CaseStudy {
+  id: string;
+  title: string;
+  client: string;
+  category: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  image: string;
+  fullStory?: string;
+}

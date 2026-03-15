@@ -4,7 +4,7 @@ import {
   ArrowRight, Code, Bot, TrendingUp, Monitor, Smartphone, 
   Zap, Search, Layers, RefreshCw, PenTool, ShoppingCart, 
   ShieldCheck, CheckCircle2, Clock, Workflow, Database, 
-  Target, BarChart3, MousePointer2, Globe
+  Target, BarChart3, MousePointer2, Globe, Palette, Instagram, Presentation
 } from 'lucide-react';
 import { Button } from '../components/Button';
 import { IMAGES } from '../assets';
@@ -55,7 +55,7 @@ export const Services: React.FC = () => {
       {/* 2. Core Services Grid */}
       <section className="py-section bg-white border-b border-brand-borderGrey">
         <div className="container">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <ServiceOverviewCard 
               icon={<Code size={32} />}
               title="Web Design"
@@ -73,6 +73,12 @@ export const Services: React.FC = () => {
               title="AI Automation"
               description="Custom agents and workflows that reclaim 20+ hours of team time every single week."
               link="#ai-automation"
+            />
+            <ServiceOverviewCard 
+              icon={<Palette size={32} />}
+              title="Creative Services"
+              description="High-impact visuals and brand identities that stop the scroll and drive clicks."
+              link="#creative-services"
             />
           </div>
         </div>
@@ -187,7 +193,55 @@ export const Services: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. Synergy Section */}
+      {/* 6. Creative Services Section */}
+      <section id="creative-services" className="py-section bg-white">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="grid grid-cols-2 gap-6">
+                <div className="p-6 bg-brand-lightGrey rounded-2xl border border-brand-borderGrey">
+                  <Palette className="text-brand-primary mb-4" size={32} />
+                  <h4 className="font-bold text-brand-secondary mb-2">Brand Identity</h4>
+                  <p className="text-xs text-brand-textGrey">Logos and full brand kits.</p>
+                </div>
+                <div className="p-6 bg-brand-lightGrey rounded-2xl border border-brand-borderGrey">
+                  <Zap className="text-brand-primary mb-4" size={32} />
+                  <h4 className="font-bold text-brand-secondary mb-2">Ad Creative</h4>
+                  <p className="text-xs text-brand-textGrey">High-conversion display ads.</p>
+                </div>
+                <div className="p-6 bg-brand-lightGrey rounded-2xl border border-brand-borderGrey">
+                  <Instagram className="text-brand-primary mb-4" size={32} />
+                  <h4 className="font-bold text-brand-secondary mb-2">Social Assets</h4>
+                  <p className="text-xs text-brand-textGrey">Engaging posts & banners.</p>
+                </div>
+                <div className="p-6 bg-brand-lightGrey rounded-2xl border border-brand-borderGrey">
+                  <Presentation className="text-brand-primary mb-4" size={32} />
+                  <h4 className="font-bold text-brand-secondary mb-2">Pitch Decks</h4>
+                  <p className="text-xs text-brand-textGrey">Investor-ready presentations.</p>
+                </div>
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
+              <span className="text-brand-primary font-bold uppercase tracking-widest text-xs">Visual Authority</span>
+              <h2 className="text-h2 text-brand-secondary mt-2 mb-6 max-w-md">Design That Stops the Scroll.</h2>
+              <p className="text-lg text-brand-textGrey mb-8 max-w-[65ch]">
+                In a digital-first world, your visuals are your first impression. We combine AI-driven strategy with world-class creative to build assets that drive clicks and conversions.
+              </p>
+              <div className="space-y-4 mb-10">
+                <DeliverableItem text="Strategic Logo & Brand Identity" />
+                <DeliverableItem text="High-Conversion Ad Creatives" />
+                <DeliverableItem text="Social Media Asset Packs" />
+                <DeliverableItem text="Investor-Ready Pitch Decks" />
+              </div>
+              <Link to="/services/creative">
+                <Button variant="outline">Explore Creative Services</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Synergy Section */}
       <section className="py-section bg-brand-secondary text-white">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
