@@ -23,6 +23,7 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { FixLogo } from './pages/FixLogo';
 import { CreativeServices } from './pages/CreativeServices';
 import { DesignBrief } from './pages/DesignBrief';
+import { BrandAssets } from './pages/BrandAssets';
 
 const App: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Route path="/services/digital-marketing" element={<ServiceMarketing />} />
           <Route path="/services/creative" element={<CreativeServices />} />
           <Route path="/design-brief" element={<DesignBrief />} />
+          <Route path="/brand-assets" element={<BrandAssets />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/post/:id" element={<BlogPostPage />} />
           <Route path="/case-study/:id" element={<CaseStudyPage />} />

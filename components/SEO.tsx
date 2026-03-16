@@ -13,7 +13,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords, image })
   const baseUrl = window.location.origin; 
   // Ensure no trailing slash for consistency
   const canonicalUrl = `${baseUrl}${location.pathname === '/' ? '' : location.pathname.replace(/\/$/, '')}`;
-  const defaultImage = `${baseUrl}/images/logo/company-logo.png`;
+  const defaultImage = `${baseUrl}/images/logo/company-logo.svg`;
   let ogImage = image || defaultImage;
   
   // Ensure ogImage is an absolute URL
@@ -79,7 +79,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords, image })
     updateMeta('og:url', canonicalUrl);
     updateMeta('og:image', ogImage);
     updateMeta('og:image:secure_url', ogImage);
-    updateMeta('og:image:type', ogImage.endsWith('.png') ? "image/png" : "image/jpeg");
+    updateMeta('og:image:type', ogImage.endsWith('.svg') ? "image/svg+xml" : ogImage.endsWith('.png') ? "image/png" : "image/jpeg");
     updateMeta('og:image:width', "1200");
     updateMeta('og:image:height', "630");
     updateMeta('og:image:alt', title);
