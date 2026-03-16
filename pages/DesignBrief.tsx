@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from 'motion/react';
 type FormData = {
   // Step 1: The Basics
   contactName: string;
+  contactEmail: string;
   contactRole: string;
   companyName: string;
   website: string;
@@ -32,15 +33,18 @@ type FormData = {
   // Step 3: The Brand DNA
   brandAdjectives: string;
   avoidColors: string;
+  technicalRequirements: string;
   
   // Step 4: The Audience & Inspiration
   targetAudience: string;
   inspirationLinks: string;
   competitorVisuals: string;
+  deadline: string;
 };
 
 const INITIAL_DATA: FormData = {
   contactName: '',
+  contactEmail: '',
   contactRole: '',
   companyName: '',
   website: '',
@@ -52,9 +56,11 @@ const INITIAL_DATA: FormData = {
   dimensions: '',
   brandAdjectives: '',
   avoidColors: '',
+  technicalRequirements: '',
   targetAudience: '',
   inspirationLinks: '',
   competitorVisuals: '',
+  deadline: '',
 };
 
 export const DesignBrief: React.FC = () => {
@@ -88,14 +94,20 @@ export const DesignBrief: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Gather all form data into a JSON object
+      // Map data to the specific JSON structure requested for the CRM
       const submissionData = {
-        ...formData,
-        filesCount: files.length,
-        fileNames: files.map(f => f.name).join(', '),
+        formType: "Design_Briefs",
+        name: formData.contactName,
+        email: formData.contactEmail,
+        projectType: formData.selectedPackage,
+        description: formData.specificAssets,
+        details: `Vibe: ${formData.brandAdjectives}. Tech: ${formData.technicalRequirements}. Avoid: ${formData.avoidColors}. Dimensions: ${formData.dimensions}`,
+        timeline: formData.deadline,
+        // Additional metadata
+        company: formData.companyName,
+        website: formData.website,
         submittedAt: new Date().toLocaleString('en-GB'),
-        source: 'Design Brief Form',
-        formType: 'design-brief'
+        filesCount: files.length
       };
 
       await fetch(CRM_ENDPOINT, {
@@ -107,8 +119,10 @@ export const DesignBrief: React.FC = () => {
         body: JSON.stringify(submissionData),
       });
 
-      // Redirect to success state
+      // Show success message and reset form
       setIsSuccess(true);
+      setFormData(INITIAL_DATA);
+      setFiles([]);
     } catch (error) {
       console.error('Submission failed:', error);
     } finally {
@@ -162,7 +176,7 @@ export const DesignBrief: React.FC = () => {
                     
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Primary Contact Name & Role</label>
+                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Full Name & Role</label>
                         <input 
                           type="text" 
                           name="contactName"
@@ -172,16 +186,41 @@ export const DesignBrief: React.FC = () => {
                           onChange={handleInputChange}
                           className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
                         />
-                        <p className="text-[10px] text-gray-500 italic">Who has the final say on approvals?</p>
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Company Name & Website</label>
+                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Email Address</label>
+                        <input 
+                          type="email" 
+                          name="contactEmail"
+                          placeholder="jane@company.com"
+                          required
+                          value={formData.contactEmail}
+                          onChange={handleInputChange}
+                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Company Name</label>
                         <input 
                           type="text" 
                           name="companyName"
-                          placeholder="e.g. OptiScale, optiscale.digital"
+                          placeholder="e.g. OptiScale"
                           required
                           value={formData.companyName}
+                          onChange={handleInputChange}
+                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Website URL</label>
+                        <input 
+                          type="text" 
+                          name="website"
+                          placeholder="optiscale.digital"
+                          value={formData.website}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
                         />
@@ -310,6 +349,17 @@ export const DesignBrief: React.FC = () => {
                       />
                     </div>
 
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Technical Requirements</label>
+                      <textarea 
+                        name="technicalRequirements"
+                        placeholder="e.g. Must be high-res for print, specific font files provided, mobile-first layout..."
+                        value={formData.technicalRequirements}
+                        onChange={handleInputChange}
+                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-24 resize-none text-gray-900 placeholder:text-gray-400"
+                      />
+                    </div>
+
                     <div className="space-y-4">
                       <label className="text-sm font-bold text-gray-600 uppercase tracking-widest block">Brand Guidelines & Assets</label>
                       <div 
@@ -402,6 +452,19 @@ export const DesignBrief: React.FC = () => {
                         className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-32 resize-none text-gray-900 placeholder:text-gray-400"
                       />
                     </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Expected Launch Date / Deadline</label>
+                      <input 
+                        type="text" 
+                        name="deadline"
+                        placeholder="e.g. End of Q2, October 15th"
+                        required
+                        value={formData.deadline}
+                        onChange={handleInputChange}
+                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
+                      />
+                    </div>
                   </div>
                 )}
 
@@ -431,7 +494,12 @@ export const DesignBrief: React.FC = () => {
                       disabled={isSubmitting}
                       className="rounded-full px-10 py-3 gap-2 shadow-[0_0_30px_rgba(37,99,235,0.3)]"
                     >
-                      {isSubmitting ? 'Syncing with CRM...' : 'Submit Brief'} <Send size={18} />
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Syncing...
+                        </span>
+                      ) : 'Submit Brief'} <Send size={18} />
                     </Button>
                   )}
                 </div>
@@ -448,7 +516,7 @@ export const DesignBrief: React.FC = () => {
                 </div>
                 <h2 className="text-3xl font-black mb-4 tracking-tighter text-gray-900">Brief Received!</h2>
                 <p className="text-gray-600 mb-10 max-w-md mx-auto leading-relaxed">
-                  Your project card has been automatically created in our system. A creative lead will review your brand DNA and reach out within 24 hours.
+                  We will be in touch shortly. Your project card has been automatically created in our system. A creative lead will review your brand DNA and reach out within 24 hours.
                 </p>
                 <Button 
                   variant="ghost" 
