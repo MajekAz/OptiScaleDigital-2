@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
+import { CRM_ENDPOINT } from '../constants';
 import { motion, AnimatePresence } from 'motion/react';
 
 type FormData = {
@@ -86,10 +87,27 @@ export const DesignBrief: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call to CRM/Google Workspace
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Submitting to CRM:', { ...formData, filesCount: files.length });
+      // Gather all form data into a JSON object
+      const submissionData = {
+        ...formData,
+        filesCount: files.length,
+        fileNames: files.map(f => f.name).join(', '),
+        submittedAt: new Date().toLocaleString('en-GB'),
+        source: 'Design Brief Form',
+        formType: 'design-brief'
+      };
+
+      await fetch(CRM_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(submissionData),
+      });
+
+      // Redirect to success state
       setIsSuccess(true);
     } catch (error) {
       console.error('Submission failed:', error);
