@@ -18,48 +18,30 @@ type FormData = {
   // Step 1: The Basics
   contactName: string;
   contactEmail: string;
-  contactRole: string;
-  companyName: string;
-  website: string;
   selectedPackage: string;
   
   // Step 2: The Project Scope
-  specificAssets: string;
-  primaryGoal: string;
-  copyStatus: 'ready' | 'placeholder';
-  copyText: string;
-  dimensions: string;
+  goal: string;
+  projectUrgency: string;
   
   // Step 3: The Brand DNA
-  brandAdjectives: string;
-  avoidColors: string;
-  technicalRequirements: string;
+  brand: string;
+  brandColour: string;
   
   // Step 4: The Audience & Inspiration
   targetAudience: string;
-  inspirationLinks: string;
-  competitorVisuals: string;
   deadline: string;
 };
 
 const INITIAL_DATA: FormData = {
   contactName: '',
   contactEmail: '',
-  contactRole: '',
-  companyName: '',
-  website: '',
   selectedPackage: '',
-  specificAssets: '',
-  primaryGoal: '',
-  copyStatus: 'ready',
-  copyText: '',
-  dimensions: '',
-  brandAdjectives: '',
-  avoidColors: '',
-  technicalRequirements: '',
+  goal: '',
+  projectUrgency: '',
+  brand: '',
+  brandColour: '',
   targetAudience: '',
-  inspirationLinks: '',
-  competitorVisuals: '',
   deadline: '',
 };
 
@@ -100,12 +82,9 @@ export const DesignBrief: React.FC = () => {
         name: formData.contactName,
         email: formData.contactEmail,
         projectType: formData.selectedPackage,
-        description: formData.specificAssets,
-        details: `Vibe: ${formData.brandAdjectives}. Tech: ${formData.technicalRequirements}. Avoid: ${formData.avoidColors}. Dimensions: ${formData.dimensions}`,
+        description: formData.goal,
+        details: `Brand: ${formData.brand}. Colour: ${formData.brandColour}. Urgency: ${formData.projectUrgency}. Audience: ${formData.targetAudience}`,
         timeline: formData.deadline,
-        // Additional metadata
-        company: formData.companyName,
-        website: formData.website,
         submittedAt: new Date().toLocaleString('en-GB'),
         filesCount: files.length
       };
@@ -201,32 +180,6 @@ export const DesignBrief: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Company Name</label>
-                        <input 
-                          type="text" 
-                          name="companyName"
-                          placeholder="e.g. OptiScale"
-                          required
-                          value={formData.companyName}
-                          onChange={handleInputChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Website URL</label>
-                        <input 
-                          type="text" 
-                          name="website"
-                          placeholder="optiscale.digital"
-                          value={formData.website}
-                          onChange={handleInputChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
-                        />
-                      </div>
-                    </div>
-
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Selected Service</label>
                       <select 
@@ -258,70 +211,25 @@ export const DesignBrief: React.FC = () => {
                     </h2>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Specific Assets Needed</label>
+                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Goal</label>
                       <textarea 
-                        name="specificAssets"
+                        name="goal"
                         placeholder="e.g. 2 Meta Ads, 1 Flyer, Logo Refresh"
                         required
-                        value={formData.specificAssets}
+                        value={formData.goal}
                         onChange={handleInputChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-24 resize-none text-gray-900 placeholder:text-gray-400"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Primary Goal</label>
+                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Project Urgency</label>
                       <input 
                         type="text" 
-                        name="primaryGoal"
-                        placeholder="e.g. Drive event sign-ups, lower ad CPA"
+                        name="projectUrgency"
+                        placeholder="e.g. High priority, ASAP, Next 2 weeks"
                         required
-                        value={formData.primaryGoal}
-                        onChange={handleInputChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
-                      />
-                    </div>
-
-                    <div className="space-y-4">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest block">Content Status</label>
-                      <div className="flex gap-4">
-                        <button 
-                          type="button"
-                          onClick={() => setFormData(prev => ({ ...prev, copyStatus: 'ready' }))}
-                          className={`flex-1 p-4 rounded-xl border transition-all text-sm font-bold ${formData.copyStatus === 'ready' ? 'border-brand-primary bg-brand-primary/10 text-brand-primary' : 'border-gray-200 bg-white text-gray-600'}`}
-                        >
-                          Copy is Ready
-                        </button>
-                        <button 
-                          type="button"
-                          onClick={() => setFormData(prev => ({ ...prev, copyStatus: 'placeholder' }))}
-                          className={`flex-1 p-4 rounded-xl border transition-all text-sm font-bold ${formData.copyStatus === 'placeholder' ? 'border-brand-primary bg-brand-primary/10 text-brand-primary' : 'border-gray-200 bg-white text-gray-600'}`}
-                        >
-                          Use Placeholder
-                        </button>
-                      </div>
-                    </div>
-
-                    {formData.copyStatus === 'ready' && (
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Paste Your Copy Here</label>
-                        <textarea 
-                          name="copyText"
-                          placeholder="Paste headlines, body text, and CTAs here..."
-                          value={formData.copyText}
-                          onChange={handleInputChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-32 resize-none text-gray-900 placeholder:text-gray-400"
-                        />
-                      </div>
-                    )}
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Dimensions & Formats</label>
-                      <input 
-                        type="text" 
-                        name="dimensions"
-                        placeholder="e.g. 1080x1080px for Instagram, Print-ready PDF"
-                        value={formData.dimensions}
+                        value={formData.projectUrgency}
                         onChange={handleInputChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
                       />
@@ -337,26 +245,15 @@ export const DesignBrief: React.FC = () => {
                     </h2>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Brand Vibe (3 Adjectives)</label>
+                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Brand</label>
                       <input 
                         type="text" 
-                        name="brandAdjectives"
+                        name="brand"
                         placeholder="e.g. Minimalist, Authoritative, Edgy"
                         required
-                        value={formData.brandAdjectives}
+                        value={formData.brand}
                         onChange={handleInputChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Technical Requirements</label>
-                      <textarea 
-                        name="technicalRequirements"
-                        placeholder="e.g. Must be high-res for print, specific font files provided, mobile-first layout..."
-                        value={formData.technicalRequirements}
-                        onChange={handleInputChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-24 resize-none text-gray-900 placeholder:text-gray-400"
                       />
                     </div>
 
@@ -395,12 +292,12 @@ export const DesignBrief: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Colors to Avoid</label>
+                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Brand Colour</label>
                       <input 
                         type="text" 
-                        name="avoidColors"
+                        name="brandColour"
                         placeholder="e.g. No yellow, avoid neon green"
-                        value={formData.avoidColors}
+                        value={formData.brandColour}
                         onChange={handleInputChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
                       />
@@ -427,29 +324,6 @@ export const DesignBrief: React.FC = () => {
                         value={formData.targetAudience}
                         onChange={handleInputChange}
                         className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-24 resize-none text-gray-900 placeholder:text-gray-400"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Inspiration Links (2-3)</label>
-                      <textarea 
-                        name="inspirationLinks"
-                        placeholder="Links to designs or competitors you love..."
-                        required
-                        value={formData.inspirationLinks}
-                        onChange={handleInputChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-24 resize-none text-gray-900 placeholder:text-gray-400"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Competitor Visual Gaps</label>
-                      <textarea 
-                        name="competitorVisuals"
-                        placeholder="What do your competitors get wrong visually that you want to get right?"
-                        value={formData.competitorVisuals}
-                        onChange={handleInputChange}
-                        className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all h-32 resize-none text-gray-900 placeholder:text-gray-400"
                       />
                     </div>
 
