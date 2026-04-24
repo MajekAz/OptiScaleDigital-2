@@ -18,6 +18,7 @@ type FormData = {
   // Step 1: The Basics
   contactName: string;
   contactEmail: string;
+  contactPhone: string;
   selectedPackage: string;
   
   // Step 2: The Project Scope
@@ -36,6 +37,7 @@ type FormData = {
 const INITIAL_DATA: FormData = {
   contactName: '',
   contactEmail: '',
+  contactPhone: '',
   selectedPackage: '',
   goal: '',
   projectUrgency: '',
@@ -81,6 +83,7 @@ export const DesignBrief: React.FC = () => {
         formType: "Design_Briefs",
         name: formData.contactName,
         email: formData.contactEmail,
+        phone: formData.contactPhone,
         projectType: formData.selectedPackage,
         description: formData.goal,
         details: `Brand: ${formData.brand}. Colour: ${formData.brandColour}. Urgency: ${formData.projectUrgency}. Audience: ${formData.targetAudience}`,
@@ -174,6 +177,17 @@ export const DesignBrief: React.FC = () => {
                           placeholder="jane@company.com"
                           required
                           value={formData.contactEmail}
+                          onChange={handleInputChange}
+                          className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-bold text-gray-600 uppercase tracking-widest">Telephone</label>
+                        <input 
+                          type="tel" 
+                          name="contactPhone"
+                          placeholder="+44 7000 000000"
+                          value={formData.contactPhone}
                           onChange={handleInputChange}
                           className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all text-gray-900 placeholder:text-gray-400"
                         />

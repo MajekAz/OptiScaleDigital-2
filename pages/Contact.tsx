@@ -15,6 +15,7 @@ export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     service: 'Web Design',
     message: '',
     gdpr: false
@@ -152,6 +153,17 @@ export const Contact: React.FC = () => {
                     placeholder="john@company.com"
                     value={formData.email}
                     onChange={e => setFormData({...formData, email: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Telephone</label>
+                  <input 
+                    type="tel" 
+                    id="phone"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan focus:border-transparent outline-none transition-all"
+                    placeholder="+44 7000 000000"
+                    value={formData.phone}
+                    onChange={e => setFormData({...formData, phone: e.target.value})}
                   />
                 </div>
                 <div>

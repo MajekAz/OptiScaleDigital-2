@@ -7,6 +7,7 @@ import {
   ChevronRight, 
   User, 
   Mail, 
+  Phone,
   MessageSquare, 
   Loader2, 
   AlertCircle, 
@@ -82,6 +83,7 @@ export const Booking: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     service: 'General Consultation',
     notes: '',
     gdpr: false
@@ -368,6 +370,28 @@ export const Booking: React.FC = () => {
                     {formData.service}
                   </span>
                 </div>
+
+                {formData.email && (
+                  <div className="flex items-center gap-4 text-brand-blue dark:text-brand-cyan font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center">
+                      <Mail size={20} />
+                    </div>
+                    <span className="text-sm">
+                      {formData.email}
+                    </span>
+                  </div>
+                )}
+
+                {formData.phone && (
+                  <div className="flex items-center gap-4 text-brand-blue dark:text-brand-cyan font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-brand-blue/10 flex items-center justify-center">
+                      <Phone size={20} />
+                    </div>
+                    <span className="text-sm">
+                      {formData.phone}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-4">
@@ -399,6 +423,21 @@ export const Booking: React.FC = () => {
                       placeholder="email@company.com"
                       value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 ml-1">Telephone</label>
+                  <div className="relative">
+                    <Phone className="absolute left-4 top-3.5 text-gray-400" size={18} />
+                    <input 
+                      type="tel" 
+                      id="phone"
+                      className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan outline-none transition-all placeholder:text-gray-400"
+                      placeholder="+44 7000 000000"
+                      value={formData.phone}
+                      onChange={e => setFormData({...formData, phone: e.target.value})}
                     />
                   </div>
                 </div>

@@ -17,6 +17,7 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
 }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +40,7 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
         body: JSON.stringify({
           name,
           email,
+          phone,
           formType: 'newsletter',
           source: 'Newsletter Opt-in Form',
           timestamp: new Date().toISOString()
@@ -49,6 +51,7 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
       setIsSuccess(true);
       setName('');
       setEmail('');
+      setPhone('');
     } catch (err) {
       console.error('Newsletter submission error:', err);
       setError("Something went wrong. Please try again.");
@@ -109,6 +112,17 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
                 placeholder="Work Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/50 transition-all"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <div className="flex-1 relative">
+              <input 
+                type="tel" 
+                placeholder="Telephone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/50 transition-all"
               />
             </div>
