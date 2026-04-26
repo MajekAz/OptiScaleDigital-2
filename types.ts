@@ -39,3 +39,13 @@ export interface CaseStudy {
   image: string;
   fullStory?: string;
 }
+
+export interface PortfolioItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  link: string;
+  displayLink: string;
+}

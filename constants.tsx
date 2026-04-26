@@ -21,6 +21,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: 'Creative Services', path: '/services/creative' },
     ]
   },
+  { label: 'Portfolio', path: '/portfolio' },
   { label: 'Blog', path: '/blog' },
   { label: 'Contact', path: '/contact' },
 ];

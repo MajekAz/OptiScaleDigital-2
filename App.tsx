@@ -24,6 +24,7 @@ import { FixLogo } from './pages/FixLogo';
 import { CreativeServices } from './pages/CreativeServices';
 import { DesignBrief } from './pages/DesignBrief';
 import { BrandAssets } from './pages/BrandAssets';
+import { Portfolio } from './pages/Portfolio';
 
 const App: React.FC = () => {
   return (
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Route path="/services/ai-automation" element={<ServiceAI />} />
           <Route path="/services/digital-marketing" element={<ServiceMarketing />} />
           <Route path="/services/creative" element={<CreativeServices />} />
+          <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/design-brief" element={<DesignBrief />} />
           <Route path="/brand-assets" element={<BrandAssets />} />
           <Route path="/blog" element={<Blog />} />
