@@ -59,7 +59,7 @@ export const Contact: React.FC = () => {
 
     try {
       // Send data to Google CRM
-      await fetch("https://script.google.com/macros/s/AKfycbH5UNssa1lJV0_xeGx2D4Wh9j3_dkzhdT7qddjyrKrYE5Uv2lHvAjxzDWo81eGHdCCpA/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbwH5UNssa1lJV0_xeGx2D4Wh9j3_dkzhdT7qddjyrKrYE5Uv2lHvAjxzDWo81eGHdCCpA/exec", {
         method: "POST",
         mode: "no-cors",
         headers: {
