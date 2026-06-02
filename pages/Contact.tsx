@@ -55,7 +55,7 @@ export const Contact: React.FC = () => {
       consent: formData.consent === true
     };
 
-    console.log("Contact form payload:", payload);
+    console.log("CONTACT FORM PAYLOAD:", payload);
 
     try {
       // Send data to Google CRM
