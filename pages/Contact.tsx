@@ -13,11 +13,11 @@ export const Contact: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: 'Web Design',
-    message: '',
+    name: "",
+    email: "",
+    phone: "",
+    service: "Web Design",
+    message: "",
     consent: false
   });
 
@@ -46,19 +46,18 @@ export const Contact: React.FC = () => {
     setError(null);
 
     const payload = {
-      formType: "contact",
       name: formData.name || "",
       email: formData.email || "",
-      phone: formData.phone || "",
-      service: formData.service || "",
       message: formData.message || "",
+      service: formData.service || "",
+      formType: "contact",
+      phone: formData.phone || "",
       consent: formData.consent === true
     };
 
     console.log("CONTACT FORM PAYLOAD:", payload);
 
     try {
-      // Send data to Google CRM
       await fetch("https://script.google.com/macros/s/AKfycbwH5UNssa1lJV0_xeGx2D4Wh9j3_dkzhdT7qddjyrKrYE5Uv2lHvAjxzDWo81eGHdCCpA/exec", {
         method: "POST",
         mode: "no-cors",
@@ -68,25 +67,21 @@ export const Contact: React.FC = () => {
         body: JSON.stringify(payload)
       });
 
-      // Track conversion in GA4
-      trackLeadGeneration('Send Message', 'Contact Form');
+      trackLeadGeneration("Send Message", "Contact Form");
 
-      alert("Thank you. Your enquiry has been submitted.");
-
-      // Reset form
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: 'Web Design',
-        message: '',
+        name: "",
+        email: "",
+        phone: "",
+        service: "Web Design",
+        message: "",
         consent: false
       });
 
-      // Redirect to thank you page
-      navigate('/thank-you');
+      navigate("/thank-you");
+
     } catch (err) {
-      console.error('Submission error:', err);
+      console.error("Submission error:", err);
       setError("Failed to send message. Please try again or email us directly.");
     } finally {
       setIsSubmitting(false);
@@ -168,7 +163,6 @@ export const Contact: React.FC = () => {
                 )}
                 
                 <div>
-                  <input type="hidden" name="formType" value="contact" />
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                   <input 
                     type="text" 
