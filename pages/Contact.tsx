@@ -18,27 +18,48 @@ export const Contact: React.FC = () => {
     phone: '',
     service: 'Web Design',
     message: '',
-    gdpr: false
+    consent: false
   });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type } = e.target;
+
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({
+        ...prev,
+        [name]: checked
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
-    try {
-      const payload = {
-        formType: "contact",
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        service: formData.service,
-        message: formData.message,
-        consent: formData.gdpr ? true : false
-      };
+    const payload = {
+      formType: "contact",
+      name: formData.name || "",
+      email: formData.email || "",
+      phone: formData.phone || "",
+      service: formData.service || "",
+      message: formData.message || "",
+      consent: formData.consent === true
+    };
 
+    console.log("Contact form payload:", payload);
+
+    try {
       // Send data to Google CRM
-      await fetch("https://script.google.com/macros/s/AKfycbwH5UNssa1lJV0_xeGx2D4Wh9j3_dkzhdT7qddjyrKrYE5Uv2lHvAjxzDWo81eGHdCCpA/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbH5UNssa1lJV0_xeGx2D4Wh9j3_dkzhdT7qddjyrKrYE5Uv2lHvAjxzDWo81eGHdCCpA/exec", {
         method: "POST",
         mode: "no-cors",
         headers: {
@@ -49,6 +70,18 @@ export const Contact: React.FC = () => {
 
       // Track conversion in GA4
       trackLeadGeneration('Send Message', 'Contact Form');
+
+      alert("Thank you. Your enquiry has been submitted.");
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        service: 'Web Design',
+        message: '',
+        consent: false
+      });
 
       // Redirect to thank you page
       navigate('/thank-you');
@@ -140,11 +173,12 @@ export const Contact: React.FC = () => {
                   <input 
                     type="text" 
                     id="name"
+                    name="name"
                     required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan focus:border-transparent outline-none transition-all"
                     placeholder="John Doe"
                     value={formData.name}
-                    onChange={e => setFormData({...formData, name: e.target.value})}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -152,11 +186,12 @@ export const Contact: React.FC = () => {
                   <input 
                     type="email" 
                     id="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan focus:border-transparent outline-none transition-all"
                     placeholder="john@company.com"
                     value={formData.email}
-                    onChange={e => setFormData({...formData, email: e.target.value})}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -164,19 +199,21 @@ export const Contact: React.FC = () => {
                   <input 
                     type="tel" 
                     id="phone"
+                    name="phone"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan focus:border-transparent outline-none transition-all"
                     placeholder="+44 7000 000000"
                     value={formData.phone}
-                    onChange={e => setFormData({...formData, phone: e.target.value})}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
                   <label htmlFor="service" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Service Interested In</label>
                   <select 
                     id="service"
+                    name="service"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan focus:border-transparent outline-none transition-all"
                     value={formData.service}
-                    onChange={e => setFormData({...formData, service: e.target.value})}
+                    onChange={handleChange}
                   >
                     <option>Web Design</option>
                     <option>AI Automation</option>
@@ -188,25 +225,27 @@ export const Contact: React.FC = () => {
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
                   <textarea 
                     id="message"
+                    name="message"
                     required
                     rows={4}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-blue dark:focus:ring-brand-cyan focus:border-transparent outline-none transition-all resize-none"
                     placeholder="Tell us about your project..."
                     value={formData.message}
-                    onChange={e => setFormData({...formData, message: e.target.value})}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
 
                 <div className="flex items-start gap-2">
                   <input 
                     type="checkbox" 
-                    id="gdpr" 
+                    id="consent" 
+                    name="consent"
                     required
                     className="mt-1 w-4 h-4 text-brand-blue rounded border-gray-300 focus:ring-brand-blue"
-                    checked={formData.gdpr}
-                    onChange={e => setFormData({...formData, gdpr: e.target.checked})}
+                    checked={formData.consent}
+                    onChange={handleChange}
                   />
-                  <label htmlFor="gdpr" className="text-xs text-gray-500 dark:text-gray-400">
+                  <label htmlFor="consent" className="text-xs text-gray-500 dark:text-gray-400">
                     I agree to OptiScale Digital storing my data for the purpose of this enquiry. See our Privacy Policy for more details.
                   </label>
                 </div>
