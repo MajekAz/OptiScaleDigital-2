@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Mail, Phone, MapPin, AlertCircle, Loader2 } from 'lucide-react';
-import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_ADDRESS, CRM_ENDPOINT } from '../constants';
+import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_ADDRESS } from '../constants';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
 import { trackLeadGeneration } from '../utils/analytics';
@@ -27,20 +27,24 @@ export const Contact: React.FC = () => {
     setError(null);
 
     try {
+      const payload = {
+        formType: "contact",
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        service: formData.service,
+        message: formData.message,
+        consent: formData.gdpr ? true : false
+      };
+
       // Send data to Google CRM
-      // Using text/plain to avoid CORS preflight issues with no-cors mode
-      await fetch(CRM_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
+      await fetch("https://script.google.com/macros/s/AKfycbwH5UNssa1lJV0_xeGx2D4Wh9j3_dkzhdT7qddjyrKrYE5Uv2lHvAjxzDWo81eGHdCCpA/exec", {
+        method: "POST",
+        mode: "no-cors",
         headers: {
-          'Content-Type': 'text/plain',
+          "Content-Type": "text/plain;charset=utf-8"
         },
-        body: JSON.stringify({
-          ...formData,
-          formType: 'contact',
-          source: 'Contact Form',
-          timestamp: new Date().toISOString()
-        }),
+        body: JSON.stringify(payload)
       });
 
       // Track conversion in GA4
