@@ -25,6 +25,7 @@ import { CreativeServices } from './pages/CreativeServices';
 import { DesignBrief } from './pages/DesignBrief';
 import { BrandAssets } from './pages/BrandAssets';
 import { Portfolio } from './pages/Portfolio';
+import { ClientOnboarding } from './pages/ClientOnboarding';
 
 const App: React.FC = () => {
   return (
@@ -49,6 +50,8 @@ const App: React.FC = () => {
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/fix-my-logo" element={<FixLogo />} />
+          <Route path="/onboarding" element={<ClientOnboarding />} />
+          <Route path="/client-onboarding" element={<ClientOnboarding />} />
           
           {/* Legal & Security Routes */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
