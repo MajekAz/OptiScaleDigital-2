@@ -1,5 +1,6 @@
 {
   "name": "OptiScale Digital LTD",
   "description": "Professional business website for a UK-based agency specializing in Website Design, AI Automation, and Digital Marketing.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

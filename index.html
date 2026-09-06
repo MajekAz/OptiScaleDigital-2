@@ -35,15 +35,48 @@
     <meta name="twitter:description" content="OptiScale Digital helps startups and SMEs dominate their market through conversion-focused websites, strategic marketing, and smart AI automation.">
     <meta name="twitter:image" content="https://ais-pre-6oprst6ycem5c452bbz72e-107205014740.europe-west2.run.app/images/logo/company-logo.svg">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4SM3069P2"></script>
+    <!-- Google Consent Mode v2 & Google Tag (gtag.js) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+
+      // Read stored consent synchronously if previously saved
+      var initialAnalytics = 'denied';
+      var initialMarketing = 'denied';
+
+      try {
+        var rawConsent = localStorage.getItem('optiscale_consent_preferences');
+        if (rawConsent) {
+          var parsed = JSON.parse(rawConsent);
+          if (parsed && typeof parsed.analytics === 'boolean') {
+            initialAnalytics = parsed.analytics ? 'granted' : 'denied';
+          }
+          if (parsed && typeof parsed.marketing === 'boolean') {
+            initialMarketing = parsed.marketing ? 'granted' : 'denied';
+          }
+        }
+      } catch (e) {}
+
+      // Establish Google Consent Mode v2 default states BEFORE tag loads
+      gtag('consent', 'default', {
+        'analytics_storage': initialAnalytics,
+        'ad_storage': initialMarketing,
+        'ad_user_data': initialMarketing,
+        'ad_personalization': initialMarketing,
+        'functionality_storage': 'granted',
+        'security_storage': 'granted',
+        'personalization_storage': 'granted',
+        'wait_for_update': 500
+      });
+
       gtag('js', new Date());
 
-      gtag('config', 'G-V4SM3069P2');
+      // Configure GA4 with send_page_view: false to allow React Router to track virtual pageviews
+      gtag('config', 'G-V4SM3069P2', {
+        send_page_view: false
+      });
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4SM3069P2"></script>
 
     <!-- Favicon Configuration -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">

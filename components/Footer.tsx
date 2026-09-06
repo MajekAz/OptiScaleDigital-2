@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE, COMPANY_LINKEDIN } from '../constants';
 import { Linkedin, Twitter, Facebook, ExternalLink, Lock } from 'lucide-react';
 import { Logo } from './Logo';
+import { openCookiePreferences } from '../utils/consentManager';
 
 export const Footer: React.FC = () => {
   return (
@@ -98,11 +99,18 @@ export const Footer: React.FC = () => {
             <p>&copy; {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
             <p className="mt-1">Registration No. Registered in England & Wales: 16937899</p>
           </div>
-          <div className="flex flex-wrap gap-6 justify-center md:justify-end">
-            <Link to="/privacy-policy" className="hover:text-gray-300">Privacy Policy</Link>
-            <Link to="/cookie-policy" className="hover:text-gray-300">Cookie Policy</Link>
-            <Link to="/terms" className="hover:text-gray-300">Terms of Service</Link>
-            <Link to="/data-security" className="hover:text-gray-300">Data Security</Link>
+          <div className="flex flex-wrap gap-6 justify-center md:justify-end items-center">
+            <Link to="/privacy-policy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
+            <Link to="/cookie-policy" className="hover:text-gray-300 transition-colors">Cookie Policy</Link>
+            <button 
+              type="button" 
+              onClick={openCookiePreferences} 
+              className="hover:text-brand-cyan text-gray-400 hover:underline transition-colors cursor-pointer"
+            >
+              Cookie Preferences
+            </button>
+            <Link to="/terms" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
+            <Link to="/data-security" className="hover:text-gray-300 transition-colors">Data Security</Link>
           </div>
         </div>
       </div>

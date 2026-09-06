@@ -1,6 +1,8 @@
 import React from 'react';
 import { COMPANY_EMAIL } from '../constants';
 import { SEO } from '../components/SEO';
+import { openCookiePreferences } from '../utils/consentManager';
+import { Sliders } from 'lucide-react';
 
 export const CookiePolicy: React.FC = () => {
   return (
@@ -44,23 +46,40 @@ export const CookiePolicy: React.FC = () => {
                 <tbody>
                   <tr className="border-b border-gray-100">
                     <td className="p-4 font-semibold">Strictly Necessary</td>
-                    <td className="p-4">Essential for the website to function correctly. These cannot be disabled.</td>
+                    <td className="p-4">Essential for the website to function correctly, maintain security, and store your cookie choices. These cannot be disabled.</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="p-4 font-semibold">Performance/Analytics</td>
-                    <td className="p-4">Help us understand how visitors interact with our website by collecting anonymous information.</td>
+                    <td className="p-4 font-semibold">Analytics & Performance</td>
+                    <td className="p-4">Help us understand how visitors interact with our website via Google Analytics 4 (anonymised traffic data and page metrics). Only loaded with your consent.</td>
                   </tr>
                   <tr className="border-b border-gray-100">
-                    <td className="p-4 font-semibold">Functionality</td>
-                    <td className="p-4">Allow the website to remember choices you make (such as your user name, language or the region you are in).</td>
+                    <td className="p-4 font-semibold">Marketing & Advertising</td>
+                    <td className="p-4">Measure marketing campaigns and deliver relevant agency services on Meta/Facebook. Strictly blocked until explicit consent is granted.</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h2 className="text-xl font-bold text-brand-navy mt-8 mb-4">4. Managing Cookies</h2>
+            <h2 className="text-xl font-bold text-brand-navy mt-8 mb-4">4. Managing Your Cookie Preferences</h2>
             <p className="mb-4">
-              You can change your cookie preferences at any time by changing your browser settings. You can block cookies by activating the setting on your browser that allows you to refuse the setting of all or some cookies. However, if you use your browser settings to block all cookies (including essential cookies) you may not be able to access all or parts of our site.
+              You can review, customise, or withdraw your cookie consent at any time using our on-site preference manager:
+            </p>
+            <div className="my-6 p-6 rounded-2xl bg-brand-light border border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-brand-navy text-base mb-1">Update Your Consent Settings</h3>
+                <p className="text-xs text-gray-500">Toggle Analytics and Marketing tracking on or off whenever you wish.</p>
+              </div>
+              <button
+                type="button"
+                onClick={openCookiePreferences}
+                className="px-5 py-2.5 bg-brand-navy hover:bg-brand-blue text-white text-sm font-semibold rounded-xl shadow-md transition-colors inline-flex items-center gap-2 shrink-0 cursor-pointer"
+              >
+                <Sliders className="w-4 h-4 text-brand-cyan" />
+                Manage Cookie Preferences
+              </button>
+            </div>
+            <p className="mb-4">
+              Alternatively, you can manage cookies through your web browser settings by blocking or deleting cookies. Please note that disabling essential cookies may impact core website functionality.
             </p>
 
             <h2 className="text-xl font-bold text-brand-navy mt-8 mb-4">5. More Information</h2>
