@@ -5,7 +5,7 @@ import { Mail, Phone, MapPin, AlertCircle, Loader2 } from 'lucide-react';
 import { COMPANY_EMAIL, COMPANY_PHONE, COMPANY_ADDRESS } from '../constants';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
-import { trackLeadGeneration } from '../utils/analytics';
+import { trackContactFormSubmitted, trackPhone, trackEmail } from '../utils/analytics';
 
 export const Contact: React.FC = () => {
   const navigate = useNavigate();
@@ -66,8 +66,14 @@ export const Contact: React.FC = () => {
         },
         body: JSON.stringify(payload)
       });
-
-      trackLeadGeneration("Send Message", "Contact Form");
+ 
+      // Fire contact form conversion event only after successful CRM transmission
+      trackContactFormSubmitted({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        service: formData.service,
+      });
 
       setFormData({
         name: "",
@@ -138,7 +144,13 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white">Email Us</h3>
-                    <a href={`mailto:${COMPANY_EMAIL}`} className="text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan">{COMPANY_EMAIL}</a>
+                    <a 
+                      href={`mailto:${COMPANY_EMAIL}`} 
+                      onClick={() => trackEmail(COMPANY_EMAIL, 'Contact Page')}
+                      className="text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan"
+                    >
+                      {COMPANY_EMAIL}
+                    </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -147,7 +159,13 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 dark:text-white">Call Us</h3>
-                    <a href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`} className="text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan">{COMPANY_PHONE}</a>
+                    <a 
+                      href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`} 
+                      onClick={() => trackPhone(COMPANY_PHONE, 'Contact Page')}
+                      className="text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-cyan"
+                    >
+                      {COMPANY_PHONE}
+                    </a>
                   </div>
                 </div>
               </div>

@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight, Star } from 'lucide-react';
 import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 import { PORTFOLIO_ITEMS } from '../data/portfolio';
+import { trackPortfolioView } from '../utils/analytics';
 
 export const Portfolio: React.FC = () => {
+  useEffect(() => {
+    trackPortfolioView('Portfolio Directory', 'all_projects');
+  }, []);
   return (
     <div className="w-full">
       <SEO 
@@ -135,6 +139,7 @@ const PortfolioCard: React.FC<{ item: any }> = ({ item }) => (
         href={item.link} 
         target="_blank" 
         rel="noopener noreferrer"
+        onClick={() => trackPortfolioView(item.title, item.id)}
         className="block"
       >
         <Button variant="outline" className="w-full py-4 rounded-xl border-white/10 text-white hover:bg-white/5 gap-3 group/btn justify-center text-white">

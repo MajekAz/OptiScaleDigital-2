@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Loader2, CheckCircle, Send } from 'lucide-react';
 import { Button } from './Button';
 import { CRM_ENDPOINT } from '../constants';
+import { trackNewsletterSignup } from '../utils/analytics';
 
 interface NewsletterFormProps {
   className?: string;
@@ -46,6 +47,9 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
           timestamp: new Date().toISOString()
         }),
       });
+
+      // Track genuine newsletter conversion outcome
+      trackNewsletterSignup('Newsletter Form');
 
       // Since no-cors doesn't allow reading the response, we assume success
       setIsSuccess(true);

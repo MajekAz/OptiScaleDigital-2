@@ -1,4 +1,5 @@
 import React from 'react';
+import { trackWhatsApp } from '../utils/analytics';
 
 export const WhatsAppButton: React.FC = () => {
   return (
@@ -6,6 +7,7 @@ export const WhatsAppButton: React.FC = () => {
       href="https://wa.me/447440323065"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackWhatsApp('Floating Button')}
       className="fixed bottom-6 right-6 z-40 bg-[#25D366] text-white p-3 md:p-4 rounded-full shadow-2xl hover:bg-[#20bd5a] transition-all duration-300 transform hover:scale-110 flex items-center justify-center group"
       aria-label="Chat on WhatsApp"
     >

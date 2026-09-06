@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Home } from 'lucide-react';
 import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
+import { trackBlogCta } from '../utils/analytics';
 
 export const ThankYou: React.FC = () => {
   return (
@@ -50,7 +51,10 @@ export const ThankYou: React.FC = () => {
                 <Home size={18} /> Return Home
               </Button>
             </Link>
-            <Link to="/blog">
+            <Link 
+              to="/blog"
+              onClick={() => trackBlogCta('Read Our Blog', 'Thank You Page')}
+            >
               <Button className="flex items-center gap-2">
                 Read Our Blog <ArrowRight size={18} />
               </Button>

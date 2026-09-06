@@ -7,6 +7,7 @@ import { SEO } from '../components/SEO';
 import { BlogPost } from '../types';
 
 import { BLOG_POSTS } from '../data/blogPosts';
+import { trackBlogCta } from '../utils/analytics';
 
 export const Blog: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -59,7 +60,12 @@ export const Blog: React.FC = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
-                <Link to={`/post/${post.id}`} key={post.id} className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300">
+                <Link 
+                  to={`/post/${post.id}`} 
+                  key={post.id} 
+                  onClick={() => trackBlogCta('Read Article', post.title)}
+                  className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                >
                   <div className="aspect-[16/9] overflow-hidden bg-gray-100 relative">
                      {post.image ? (
                         <img 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { 
@@ -8,8 +8,12 @@ import {
 } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
+import { trackServicePageView } from '../utils/analytics';
 
 export const ServiceMarketing: React.FC = () => {
+  useEffect(() => {
+    trackServicePageView('Digital Marketing', '/services/digital-marketing');
+  }, []);
   return (
     <div className="w-full">
       <SEO 

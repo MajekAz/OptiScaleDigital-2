@@ -5,6 +5,7 @@ import { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_EMAIL, COMPANY_PHONE, COMPANY_LI
 import { Linkedin, Twitter, Facebook, ExternalLink, Lock } from 'lucide-react';
 import { Logo } from './Logo';
 import { openCookiePreferences } from '../utils/consentManager';
+import { trackEmail, trackPhone } from '../utils/analytics';
 
 export const Footer: React.FC = () => {
   return (
@@ -84,11 +85,23 @@ export const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2">
                 <span>📧</span>
-                <a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a>
+                <a 
+                  href={`mailto:${COMPANY_EMAIL}`} 
+                  onClick={() => trackEmail(COMPANY_EMAIL, 'Footer')}
+                  className="hover:text-white"
+                >
+                  {COMPANY_EMAIL}
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <span>📞</span>
-                <a href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`} className="hover:text-white">{COMPANY_PHONE}</a>
+                <a 
+                  href={`tel:${COMPANY_PHONE.replace(/\s/g, '')}`} 
+                  onClick={() => trackPhone(COMPANY_PHONE, 'Footer')}
+                  className="hover:text-white"
+                >
+                  {COMPANY_PHONE}
+                </a>
               </li>
             </ul>
           </div>

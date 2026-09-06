@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { 
@@ -8,9 +8,12 @@ import {
 } from 'lucide-react';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
-import { trackLeadGeneration } from '../utils/analytics';
+import { trackLeadGeneration, trackServicePageView } from '../utils/analytics';
 
 export const ServiceWebDesign: React.FC = () => {
+  useEffect(() => {
+    trackServicePageView('Web Design', '/services/web-design');
+  }, []);
   return (
     <div className="w-full">
       <SEO 

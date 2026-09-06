@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
@@ -17,6 +17,7 @@ import {
 import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 import { IMAGES } from '../assets';
+import { trackServicePageView, trackPricingCta } from '../utils/analytics';
 
 const services = [
   {
@@ -70,6 +71,9 @@ const services = [
 ];
 
 export const CreativeServices: React.FC = () => {
+  useEffect(() => {
+    trackServicePageView('Creative Services', '/services/creative');
+  }, []);
 
   return (
     <div className="w-full bg-white text-gray-900 selection:bg-brand-primary/10">
@@ -225,10 +229,18 @@ export const CreativeServices: React.FC = () => {
             <p className="text-white font-bold text-lg lg:text-xl tracking-tight">Ready to start your creative project?</p>
           </div>
           <div className="flex items-center gap-4 w-full sm:w-auto">
-            <Link to="/booking" className="flex-1 sm:flex-none">
+            <Link 
+              to="/booking" 
+              onClick={() => trackPricingCta('Book a Call', 'Creative Services Sticky Bar')}
+              className="flex-1 sm:flex-none"
+            >
               <Button variant="secondary" className="w-full sm:w-auto px-8 py-3 rounded-full !bg-white !text-brand-primary hover:!bg-gray-100 shadow-none border-none">Book a Call</Button>
             </Link>
-            <Link to="/contact" className="flex-1 sm:flex-none">
+            <Link 
+              to="/contact" 
+              onClick={() => trackPricingCta('Get a Quote', 'Creative Services Sticky Bar')}
+              className="flex-1 sm:flex-none"
+            >
               <Button variant="ghost" className="w-full sm:w-auto px-8 py-3 rounded-full text-white hover:bg-white/10 border border-white/30">Get a Quote</Button>
             </Link>
           </div>

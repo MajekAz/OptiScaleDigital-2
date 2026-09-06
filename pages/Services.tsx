@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, Code, Bot, TrendingUp, Monitor, Smartphone, 
@@ -9,9 +9,12 @@ import {
 import { Button } from '../components/Button';
 import { IMAGES } from '../assets';
 import { SEO } from '../components/SEO';
-import { trackLeadGeneration } from '../utils/analytics';
+import { trackLeadGeneration, trackServicePageView, trackPricingCta } from '../utils/analytics';
 
 export const Services: React.FC = () => {
+  useEffect(() => {
+    trackServicePageView('All Services', '/services');
+  }, []);
   return (
     <div className="w-full">
       <SEO 
@@ -186,7 +189,10 @@ export const Services: React.FC = () => {
             />
           </div>
           <div className="flex justify-center">
-            <Link to="/services/digital-marketing">
+            <Link 
+              to="/services/digital-marketing"
+              onClick={() => trackPricingCta('Marketing Packages', 'Services Page')}
+            >
               <Button variant="outline">View Marketing Packages</Button>
             </Link>
           </div>

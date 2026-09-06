@@ -13,6 +13,7 @@ import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 import { CRM_ENDPOINT } from '../constants';
 import { motion, AnimatePresence } from 'motion/react';
+import { trackQuoteRequest } from '../utils/analytics';
 
 type FormData = {
   // Step 1: The Basics
@@ -99,6 +100,12 @@ export const DesignBrief: React.FC = () => {
           'Content-Type': 'text/plain',
         },
         body: JSON.stringify(submissionData),
+      });
+
+      // Track quote request successfully submitted
+      trackQuoteRequest({
+        projectType: formData.selectedPackage,
+        budget: formData.projectUrgency,
       });
 
       // Show success message and reset form

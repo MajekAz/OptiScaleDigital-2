@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, TrendingUp, Target, Zap } from 'lucide-react';
 import { CASE_STUDIES } from '../data/caseStudies';
 import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
+import { trackPortfolioView } from '../utils/analytics';
 
 export const CaseStudyPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const study = CASE_STUDIES.find(s => s.id === id);
+
+  useEffect(() => {
+    if (study) {
+      trackPortfolioView(study.title, study.id);
+    }
+  }, [study?.id, study?.title]);
 
   if (!study) {
     return (

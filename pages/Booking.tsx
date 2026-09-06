@@ -22,7 +22,7 @@ import { Button } from '../components/Button';
 import { SEO } from '../components/SEO';
 import { IMAGES } from '../assets';
 import { CRM_ENDPOINT } from '../constants';
-import { trackLeadGeneration } from '../utils/analytics';
+import { trackBooking, trackFreeConsultationRequest } from '../utils/analytics';
 import { motion } from 'motion/react';
 
 // Helper to generate time slots
@@ -160,7 +160,18 @@ export const Booking: React.FC = () => {
         }),
       });
 
-      trackLeadGeneration('Confirm Booking', 'Booking Page');
+      // Track consultation appointment booked & free consultation request submitted
+      trackBooking({
+        date: bookingData.date,
+        time: bookingData.time,
+        service: bookingData.service,
+      });
+
+      trackFreeConsultationRequest({
+        service: bookingData.service,
+        source: 'Booking Calendar',
+      });
+
       navigate('/thank-you');
     } catch (err) {
       console.error('Booking error:', err);
