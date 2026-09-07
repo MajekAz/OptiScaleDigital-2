@@ -14,7 +14,7 @@
  * 1. Necessary:
  *    - Always active; strictly required for site navigation, security, and consent persistence.
  * 2. Analytics:
- *    - Optional. Powered by Google Analytics 4 (G-V4SM3069P2).
+ *    - Optional. Powered by Google Analytics 4 (G-QFYBNQCTYD).
  *    - Follows Google Consent Mode v2.
  * 3. Marketing:
  *    - Optional. Powered by Meta/Facebook Pixel (1627665848697345).
@@ -34,8 +34,26 @@ export const CONSENT_STORAGE_KEY = 'optiscale_consent_preferences';
 export const LEGACY_STORAGE_KEY = 'optiscale_gdpr_consent';
 export const CONSENT_VERSION = '1.0';
 
-export const GA_MEASUREMENT_ID = 'G-V4SM3069P2';
-export const META_PIXEL_ID = '1627665848697345';
+export const GA_MEASUREMENT_ID: string = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_GA_MEASUREMENT_ID) 
+    ? (import.meta.env.VITE_GA_MEASUREMENT_ID as string) 
+    : 'G-QFYBNQCTYD';
+export const META_PIXEL_ID: string = 
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_META_PIXEL_ID) 
+    ? (import.meta.env.VITE_META_PIXEL_ID as string) 
+    : '1627665848697345';
+
+const isDev = typeof import.meta !== 'undefined' && Boolean(import.meta.env?.DEV);
+
+export const isDebugEnabled = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return Boolean(
+    isDev ||
+    window.location.search.includes('debug_mode=true') ||
+    window.location.search.includes('_dbg=1') ||
+    sessionStorage.getItem('optiscale_analytics_debug') === 'true'
+  );
+};
 
 // Event names for reactive UI communication
 export const EVENT_CONSENT_CHANGED = 'optiscale-consent-changed';
@@ -106,8 +124,8 @@ export const updateGoogleConsentMode = (analytics: boolean, marketing: boolean):
 
   if (typeof window.gtag === 'function') {
     window.gtag('consent', 'update', consentConfig);
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[Consent] Google Consent Mode v2 updated:', consentConfig);
+    if (isDebugEnabled()) {
+      console.log('[OptiScale Consent] Google Consent Mode v2 updated:', consentConfig);
     }
   } else {
     // Fallback: queue in dataLayer if gtag is not yet ready
@@ -185,7 +203,7 @@ export const loadMetaPixel = (): void => {
       window.fbq('track', 'PageView');
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       console.log('[Consent] Meta Pixel loaded and initialized with ID:', META_PIXEL_ID);
     }
   } catch (err) {
@@ -201,7 +219,7 @@ export const revokeMetaPixel = (): void => {
   if (typeof window.fbq === 'function') {
     try {
       window.fbq('consent', 'revoke');
-      if (process.env.NODE_ENV === 'development') {
+      if (isDev) {
         console.log('[Consent] Meta Pixel consent revoked.');
       }
     } catch (e) {}

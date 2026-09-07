@@ -12,6 +12,7 @@ import {
   EVENT_CONSENT_CHANGED,
   CookieConsentPreferences,
 } from '../utils/consentManager';
+import { trackPageView } from '../utils/analytics';
 
 export const GDPRBanner: React.FC = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -82,6 +83,7 @@ export const GDPRBanner: React.FC = () => {
     setShowBanner(false);
     setShowPreferences(false);
     setHasDecided(true);
+    trackPageView(window.location.pathname + window.location.search, document.title || 'OptiScale Digital');
   };
 
   const handleRejectNonEssential = () => {
@@ -94,13 +96,16 @@ export const GDPRBanner: React.FC = () => {
   };
 
   const handleSavePreferences = () => {
-    saveConsentPreferences({
+    const prefs = saveConsentPreferences({
       analytics: analyticsEnabled,
       marketing: marketingEnabled,
     });
     setShowBanner(false);
     setShowPreferences(false);
     setHasDecided(true);
+    if (prefs.analytics) {
+      trackPageView(window.location.pathname + window.location.search, document.title || 'OptiScale Digital');
+    }
   };
 
   return (

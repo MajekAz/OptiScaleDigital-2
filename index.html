@@ -71,12 +71,25 @@
 
       gtag('js', new Date());
 
-      // Configure GA4 with send_page_view: false to allow React Router to track virtual pageviews
+      var isGaDebug = false;
+      try {
+        isGaDebug = window.location.search.indexOf('debug_mode=true') !== -1 || 
+                    window.location.search.indexOf('_dbg=1') !== -1;
+      } catch (e) {}
+
+      // Primary GA4 Measurement ID (G-QFYBNQCTYD)
+      gtag('config', '%VITE_GA_MEASUREMENT_ID%', {
+        send_page_view: false,
+        debug_mode: isGaDebug
+      });
+
+      // Legacy GA4 destination (G-V4SM3069P2 / GT-KD2TSS5X) - ensures data continuity without a second script tag
       gtag('config', 'G-V4SM3069P2', {
-        send_page_view: false
+        send_page_view: false,
+        debug_mode: isGaDebug
       });
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V4SM3069P2"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_MEASUREMENT_ID%"></script>
 
     <!-- Favicon Configuration -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">

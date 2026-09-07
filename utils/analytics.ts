@@ -27,6 +27,7 @@ import {
   saveConsentPreferences,
   getStoredConsent,
   hasUserConsented,
+  isDebugEnabled,
 } from './consentManager';
 
 export {
@@ -56,6 +57,7 @@ declare global {
 // In-Memory & Session Deduplication Engine
 // ==============================================================================
 
+const isDev = typeof import.meta !== 'undefined' && Boolean(import.meta.env?.DEV);
 const recentEventsMap = new Map<string, number>();
 const firedConversions = new Set<string>();
 
@@ -75,7 +77,7 @@ const isThrottled = (eventKey: string, cooldownMs: number = 1500): boolean => {
   const now = Date.now();
   const lastTime = recentEventsMap.get(eventKey);
   if (lastTime && now - lastTime < cooldownMs) {
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       console.warn(`[Analytics Deduplication] Throttled duplicate event key: "${eventKey}"`);
     }
     return true;
@@ -120,6 +122,7 @@ export interface TrackingOptions {
   dedupKey?: string;
   cooldownMs?: number;
   oncePerSessionId?: string;
+  sendTo?: string;
 }
 
 /**
@@ -137,7 +140,7 @@ export const trackEvent = (
 
   // Session deduplication check
   if (options.oncePerSessionId && hasAlreadyFiredInSession(options.oncePerSessionId)) {
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       console.log(`[Analytics] Suppressed repeat session conversion: ${options.oncePerSessionId}`);
     }
     return;
@@ -153,11 +156,13 @@ export const trackEvent = (
 
   // 1. Google Analytics 4 (if Analytics consent granted)
   if (isAnalyticsGranted() && typeof window.gtag === 'function') {
-    const enrichedGaParams = {
+    const enrichedGaParams: Record<string, any> = {
       ...gaParams,
       event_id: eventId,
-      send_to: GA_MEASUREMENT_ID,
     };
+    if (options.sendTo) {
+      enrichedGaParams.send_to = options.sendTo;
+    }
     window.gtag('event', gaEventName, enrichedGaParams);
   }
 
@@ -178,8 +183,8 @@ export const trackEvent = (
     window.fbq('track', metaEventName, enrichedMetaParams, eventOptions);
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[Analytics Dispatched] GA4: "${gaEventName}", Meta: "${metaEventName || 'none'}"`, {
+  if (isDebugEnabled()) {
+    console.log(`[OptiScale Analytics] Event Dispatched -> GA4: "${gaEventName}", Meta: "${metaEventName || 'none'}"`, {
       gaParams,
       metaParams,
       eventId,
@@ -610,13 +615,19 @@ export const trackPageView = (pagePath: string, pageTitle?: string): void => {
   if (isThrottled(dedupKey, 1000)) return;
 
   // 1. Google Analytics 4 Virtual Pageview
-  if (isAnalyticsGranted() && typeof window.gtag === 'function') {
+  // Note: Google Consent Mode v2 (initialized in index.html) dynamically governs
+  // whether cookies are stored ('granted') or cookieless pings are sent ('denied').
+  // By not restricting send_to, gtag automatically broadcasts to all configured destinations (G-QFYBNQCTYD & G-V4SM3069P2).
+  if (typeof window.gtag === 'function') {
     window.gtag('event', 'page_view', {
       page_path: pagePath,
       page_title: title,
       page_location: url,
-      send_to: GA_MEASUREMENT_ID,
     });
+  }
+
+  if (isDebugEnabled()) {
+    console.log(`[OptiScale Analytics] PageView -> "${pagePath}" (${title})`);
   }
 
   // 2. Meta Pixel PageView
